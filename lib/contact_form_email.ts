@@ -19,8 +19,9 @@ export const sendEmail = async (data:FormData) => {
 
 
     const headers = new Headers();
+    console.log(process.env.BREVO_API_KEY)
     headers.append("accept","application/json");
-    headers.append("api-key", "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");
+    headers.append("api-key", `${process.env.BREVO_API_KEY}`);
     headers.append("content-type", "application/json")
     const response = await fetch("https://api.brevo.com/v3/smtp/email", {
         method: "POST",
