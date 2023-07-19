@@ -20,12 +20,12 @@ export default function Navbar({ fixed }: NavBarProps) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
   return (
     <>
-      <div className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-slate-800 mb-3">
+      <div className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-gray-900 mb-3">
         <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
           <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
             <a
               className={`${merriweather.className} text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white`}
-              href="#pablo"
+              href="/"
             >
               William Rice
             </a>
@@ -34,7 +34,7 @@ export default function Navbar({ fixed }: NavBarProps) {
               type="button"
               onClick={() => setNavbarOpen(!navbarOpen)}
             >
-              <AiOutlineMenu size={30} />
+              <AiOutlineMenu size={25} />
             </button>
           </div>
           <div
@@ -48,7 +48,7 @@ export default function Navbar({ fixed }: NavBarProps) {
               <li className="nav-item">
                 <a
                   className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                  href="#pablo"
+                  href="#"
                 >
                   <span className={`${merriweather.className} ml-2`}>
                     About
@@ -58,7 +58,7 @@ export default function Navbar({ fixed }: NavBarProps) {
               <li className="nav-item">
                 <a
                   className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                  href="#pablo"
+                  href="/contact"
                 >
                   <span className={`${merriweather.className} ml-2`}>
                     Contact
@@ -68,7 +68,8 @@ export default function Navbar({ fixed }: NavBarProps) {
               <li className="nav-item">
                 <a
                   className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                  href="#pablo"
+                  href="https://williamrice.github.io"
+                  target="blank"
                 >
                   <span className={`${merriweather.className} ml-2`}>
                     Resume
