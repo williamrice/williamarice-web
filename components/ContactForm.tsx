@@ -1,9 +1,11 @@
+"use server";
+
 import React from "react";
 
 const ContactForm = () => {
   return (
     <div className="block w-2/3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-900 dark:border-gray-700 ">
-      <form>
+      <form action={"/api/contact-form"} method="POST">
         <div className="mb-6">
           <label
             htmlFor="email"
