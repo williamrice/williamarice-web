@@ -12,7 +12,7 @@ const ContactForm = () => {
     email: "",
     message: "",
     formError: {
-      isError: true,
+      isError: false,
       message: "",
     },
     formSuccess: false,
