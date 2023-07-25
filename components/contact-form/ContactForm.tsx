@@ -142,7 +142,7 @@ const ContactForm = () => {
           )}
         </button>
       </form>
-      {contactFormState.formError && (
+      {contactFormState.formError.isError && (
         <ErrorEmailBanner message={contactFormState.formError.message} />
       )}
       {contactFormState.formSuccess && <SuccessfulEmailBanner />}
