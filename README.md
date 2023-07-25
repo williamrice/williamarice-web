@@ -1,4 +1,4 @@
-[williamarice.com](williamarice.com)
+[williamarice.com](https://www.williamarice.com)
 
 
 Personal website
