@@ -4,6 +4,8 @@ import React from "react";
 
 import { AiOutlineMenu } from "react-icons/ai";
 import { Merriweather } from "next/font/google";
+import Signin from "./auth-helpers/Signin";
+import { signOut, useSession } from "next-auth/react";
 
 const merriweather = Merriweather({
   subsets: ["latin-ext"],
@@ -12,12 +14,15 @@ const merriweather = Merriweather({
   display: "swap",
 });
 
-interface NavBarProps {
+interface NavBarProps
+{
   fixed?: boolean;
 }
 
-export default function Navbar({ fixed }: NavBarProps) {
+export default function Navbar({ fixed }: NavBarProps)
+{
   const [navbarOpen, setNavbarOpen] = React.useState(false);
+  const { data: session, status } = useSession();
   return (
     <>
       <div className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-gray-900 mb-3">
@@ -77,6 +82,9 @@ export default function Navbar({ fixed }: NavBarProps) {
                 </a>
               </li>
             </ul>
+            {session ? (<div>{session.user?.email}
+              <button onClick={() => signOut()} className="bg-yellow-500 rounded-md p-4">Logout</button>
+            </div>) : (<Signin />)}
           </div>
         </div>
       </div>
