@@ -6,8 +6,8 @@ import React from 'react'
 const Signin = () =>
 {
     return (
-        <button onClick={() => signIn()} className='bg-red-500 rounded-md p-6'>
-            SignIn
+        <button onClick={() => signIn()} className='bg-gray-800 hover:bg-gray-600 rounded-md p-3 mx-1'>
+            Sign In
         </button>
     )
 }

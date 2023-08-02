@@ -6,6 +6,7 @@ import { AiOutlineMenu } from "react-icons/ai";
 import { Merriweather } from "next/font/google";
 import Signin from "./auth-helpers/Signin";
 import { signOut, useSession } from "next-auth/react";
+import UserNavBarImageMenu from "./profile/UserNavBarImageMenu";
 
 const merriweather = Merriweather({
   subsets: ["latin-ext"],
@@ -82,12 +83,13 @@ export default function Navbar({ fixed }: NavBarProps)
                 </a>
               </li>
             </ul>
-            {session ? (<div>{session.user?.email}
-              <button onClick={() => signOut()} className="bg-yellow-500 rounded-md p-4">Logout</button>
-            </div>) : (<Signin />)}
           </div>
+
         </div>
+
       </div>
+      {session ? (<UserNavBarImageMenu />) : (<Signin />)}
+
     </>
   );
 }
