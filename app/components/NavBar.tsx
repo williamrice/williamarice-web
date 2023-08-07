@@ -35,13 +35,17 @@ export default function Navbar({ fixed }: NavBarProps)
             >
               William Rice
             </a>
-            <button
-              className="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
-              type="button"
-              onClick={() => setNavbarOpen(!navbarOpen)}
-            >
-              <AiOutlineMenu size={25} />
-            </button>
+            <div className="flex gap-1">
+              <button
+                className="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
+                type="button"
+                onClick={() => setNavbarOpen(!navbarOpen)}
+              >
+                <AiOutlineMenu size={25} />
+              </button>
+              <div className="lg:hidden">{session ? (<UserNavBarImageMenu />) : (<Signin />)}</div>
+            </div>
+
           </div>
           <div
             className={
@@ -83,12 +87,13 @@ export default function Navbar({ fixed }: NavBarProps)
                 </a>
               </li>
             </ul>
+            <div className="lg:visible xs:invisible">{session ? (<UserNavBarImageMenu />) : (<Signin />)}</div>
+
           </div>
 
         </div>
 
       </div>
-      {session ? (<UserNavBarImageMenu />) : (<Signin />)}
 
     </>
   );

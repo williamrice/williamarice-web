@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.16",
     "@heroicons/react": "^2.0.18",
     "@mui/material": "^5.14.0",
     "@sendinblue/client": "^3.3.1",
