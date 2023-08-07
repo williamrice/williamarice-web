@@ -15,13 +15,6 @@ const UserNavBarImageMenu = () =>
             {session && (
 
                 <div className="flex items center p-2 rounded-full cursor-pointer">
-
-
-
-
-
-
-
                     <Menu as="div" className="relative inline-block text-left">
                         <div>
                             <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ">
@@ -35,7 +28,6 @@ const UserNavBarImageMenu = () =>
                                 ></Image>
                             </Menu.Button>
                         </div>
-
                         <Transition
                             as={Fragment}
                             enter="transition ease-out duration-100"
