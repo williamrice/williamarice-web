@@ -1,7 +1,8 @@
-import Navbar from "@/components/NavBar";
-import Footer from "@/components/Footer";
+import Navbar from "@/app/components/NavBar";
+import Footer from "@/app/components/Footer";
 import "./globals.css";
 import type { Metadata } from "next";
+import { NextAuthProvider } from "./components/auth-helpers/NextAuthProvider";
 
 export const metadata: Metadata = {
   title: "William Rice",
@@ -12,13 +13,16 @@ export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
-}) {
+})
+{
   return (
     <html lang="en">
       <body>
-        <Navbar fixed={false} />
-        {children}
-        <Footer />
+        <NextAuthProvider>
+          <Navbar fixed={false} />
+          {children}
+          <Footer />
+        </NextAuthProvider>
       </body>
     </html>
   );

@@ -4,6 +4,9 @@ import React from "react";
 
 import { AiOutlineMenu } from "react-icons/ai";
 import { Merriweather } from "next/font/google";
+import Signin from "./auth-helpers/Signin";
+import { signOut, useSession } from "next-auth/react";
+import UserNavBarImageMenu from "./profile/UserNavBarImageMenu";
 
 const merriweather = Merriweather({
   subsets: ["latin-ext"],
@@ -12,12 +15,15 @@ const merriweather = Merriweather({
   display: "swap",
 });
 
-interface NavBarProps {
+interface NavBarProps
+{
   fixed?: boolean;
 }
 
-export default function Navbar({ fixed }: NavBarProps) {
+export default function Navbar({ fixed }: NavBarProps)
+{
   const [navbarOpen, setNavbarOpen] = React.useState(false);
+  const { data: session, status } = useSession();
   return (
     <>
       <div className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-gray-900 mb-3">
@@ -29,13 +35,17 @@ export default function Navbar({ fixed }: NavBarProps) {
             >
               William Rice
             </a>
-            <button
-              className="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
-              type="button"
-              onClick={() => setNavbarOpen(!navbarOpen)}
-            >
-              <AiOutlineMenu size={25} />
-            </button>
+            <div className="flex gap-1">
+              <button
+                className="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
+                type="button"
+                onClick={() => setNavbarOpen(!navbarOpen)}
+              >
+                <AiOutlineMenu size={25} />
+              </button>
+              <div className="lg:hidden">{session ? (<UserNavBarImageMenu />) : (<Signin />)}</div>
+            </div>
+
           </div>
           <div
             className={
@@ -77,9 +87,14 @@ export default function Navbar({ fixed }: NavBarProps) {
                 </a>
               </li>
             </ul>
+            <div className="lg:visible xs:invisible">{session ? (<UserNavBarImageMenu />) : (<Signin />)}</div>
+
           </div>
+
         </div>
+
       </div>
+
     </>
   );
 }
