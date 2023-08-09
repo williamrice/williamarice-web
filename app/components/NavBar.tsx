@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 
 import { AiOutlineMenu } from "react-icons/ai";
 import { Merriweather } from "next/font/google";
@@ -90,7 +90,19 @@ export default function Navbar({ fixed }: NavBarProps)
             <div className="lg:visible xs:invisible">{session ? (<UserNavBarImageMenu />) : (<Signin />)}</div>
 
           </div>
-
+          <button
+            onClick={() =>
+            {
+              fetch("/api/user/update", {
+                method: "POST",
+                body: JSON.stringify({
+                  email: session?.user?.email,
+                  isAdmin: true,
+                }),
+              });
+            }}>
+            DB set admin test
+          </button>
         </div>
 
       </div>

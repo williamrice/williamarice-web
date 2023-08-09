@@ -1,12 +1,14 @@
 import React from "react";
 import Image from "next/image";
-import {
-  AiFillGithub,
-  AiFillLinkedin,
-  AiFillTwitterCircle,
-} from "react-icons/ai";
+import
+  {
+    AiFillGithub,
+    AiFillLinkedin,
+    AiFillTwitterCircle,
+  } from "react-icons/ai";
 
-const JumboTron = () => {
+const JumboTron = () =>
+{
   return (
     <section className="bg-white dark:bg-gray-900 rounded-md">
       <div className="py-6 px-4 mx-auto max-w-screen-xl text-center lg:py-10">
