@@ -1,14 +1,12 @@
 import React from "react";
 import Image from "next/image";
-import
-  {
-    AiFillGithub,
-    AiFillLinkedin,
-    AiFillTwitterCircle,
-  } from "react-icons/ai";
+import {
+  AiFillGithub,
+  AiFillLinkedin,
+  AiFillTwitterCircle,
+} from "react-icons/ai";
 
-const JumboTron = () =>
-{
+const JumboTron = () => {
   return (
     <section className="bg-white dark:bg-gray-900 rounded-md">
       <div className="py-6 px-4 mx-auto max-w-screen-xl text-center lg:py-10">
@@ -18,7 +16,7 @@ const JumboTron = () =>
             src="/profile_tie.jpg"
             width={150}
             height={150}
-            className="rounded-full"
+            className="rounded-full hover:scale-125 transition duration-500 ease-in-out transform hover:shadow-2xl"
           />
         </div>
         <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">

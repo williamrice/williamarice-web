@@ -15,13 +15,11 @@ const merriweather = Merriweather({
   display: "swap",
 });
 
-interface NavBarProps
-{
+interface NavBarProps {
   fixed?: boolean;
 }
 
-export default function Navbar({ fixed }: NavBarProps)
-{
+export default function Navbar({ fixed }: NavBarProps) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
   const { data: session, status } = useSession();
   return (
@@ -43,9 +41,10 @@ export default function Navbar({ fixed }: NavBarProps)
               >
                 <AiOutlineMenu size={25} />
               </button>
-              <div className="lg:hidden">{session ? (<UserNavBarImageMenu />) : (<Signin />)}</div>
+              <div className="lg:hidden">
+                {session ? <UserNavBarImageMenu /> : <Signin />}
+              </div>
             </div>
-
           </div>
           <div
             className={
@@ -58,7 +57,7 @@ export default function Navbar({ fixed }: NavBarProps)
               <li className="nav-item">
                 <a
                   className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                  href="#"
+                  href="/about"
                 >
                   <span className={`${merriweather.className} ml-2`}>
                     About
@@ -87,26 +86,12 @@ export default function Navbar({ fixed }: NavBarProps)
                 </a>
               </li>
             </ul>
-            <div className="lg:visible xs:invisible">{session ? (<UserNavBarImageMenu />) : (<Signin />)}</div>
-
+            <div className="lg:visible xs:invisible">
+              {session ? <UserNavBarImageMenu /> : <Signin />}
+            </div>
           </div>
-          <button
-            onClick={() =>
-            {
-              fetch("/api/user/update", {
-                method: "POST",
-                body: JSON.stringify({
-                  email: session?.user?.email,
-                  isAdmin: true,
-                }),
-              });
-            }}>
-            DB set admin test
-          </button>
         </div>
-
       </div>
-
     </>
   );
 }
