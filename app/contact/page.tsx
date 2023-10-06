@@ -1,6 +1,6 @@
 "use server";
 
-import ContactForm from "@/components/components/contact-form/ContactForm";
+import ContactForm from "../../components/contact-form/ContactForm";
 import React from "react";
 
 const ContactPage = () => {
