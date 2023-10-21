@@ -25,6 +25,7 @@ import { useForm } from "react-hook-form";
 import { useTheme } from "next-themes";
 import { useEffect } from "react";
 import { useUser } from "@/hooks/useUser";
+import useSWR from "swr";
 
 const formSchema = z.object({
   theme: z.string({
@@ -32,12 +33,19 @@ const formSchema = z.object({
   }),
 });
 
-function onSubmit(
+async function onSubmit(
   values: z.infer<typeof formSchema>,
   setThemeFunction: Function
 ) {
   // Do something with the form values.
   // ✅ This will be type-safe and validated.
+
+  // using fetch, update the user's theme preference to the POST endpoint /api/user/settings
+  const response = await fetch("/api/user/settings", {
+    method: "POST",
+    body: JSON.stringify(values),
+  });
+  console.log("Response from POST /api/user/settings", response);
   console.log(values);
   setThemeFunction(values.theme);
 }
