@@ -1,0 +1,138 @@
+"use client";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Calendar as CalendarIcon } from "lucide-react";
+import { Calendar } from "@/components/ui/calendar";
+import { cn } from "@/lib/utils";
+import { format } from "date-fns";
+import { isRegularExpressionLiteral } from "typescript";
+import { createFuelTransaction, deleteFuelTransactions } from "../actions";
+import { Dispatch, SetStateAction, useTransition } from "react";
+import { useRouter } from "next/navigation";
+import { revalidatePath, revalidateTag } from "next/cache";
+
+const formSchema = z.object({
+  amount: z.number(),
+  date: z.date({
+    required_error: "A date is required.",
+  }),
+});
+
+type Props = {
+  setShowModal: Dispatch<SetStateAction<boolean>>;
+};
+
+export function FuelTransactionAddForm({ setShowModal }: Props) {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      amount: 0,
+      date: new Date(),
+    },
+  });
+
+  const [isTransitionStarted, startTransition] = useTransition();
+  const router = useRouter();
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    // Do something with the form values.
+    // ✅ This will be type-safe and validated.
+    //
+
+    const result = await createFuelTransaction(values);
+    setShowModal(false);
+    startTransition(router.refresh);
+    return result;
+  }
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <FormField
+          control={form.control}
+          name="date"
+          render={({ field }) => (
+            <FormItem className="flex flex-col">
+              <FormLabel>Date</FormLabel>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant={"outline"}
+                      className={cn(
+                        "w-[240px] pl-3 text-left font-normal",
+                        !field.value && "text-muted-foreground"
+                      )}
+                    >
+                      {field.value ? (
+                        format(field.value, "PPP")
+                      ) : (
+                        <span>Pick a date</span>
+                      )}
+                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={field.value}
+                    onSelect={field.onChange}
+                    disabled={(date) =>
+                      date > new Date() || date < new Date("1900-01-01")
+                    }
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+              <FormDescription>Date you got fuel</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="amount"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Amount</FormLabel>
+              <FormControl>
+                <Input
+                  type="number"
+                  {...field}
+                  onChange={(event) => field.onChange(+event.target.value)}
+                />
+              </FormControl>
+              <FormDescription>
+                This is the amount of fuel you pumped.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button onClick={() => setShowModal(false)} type="submit">
+          Submit
+        </Button>
+      </form>
+    </Form>
+  );
+}

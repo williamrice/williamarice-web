@@ -40,34 +40,26 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-const data: Transaction[] = [
-  {
-    id: "m5gr84i9",
-    amount: 15.86,
-    date: new Date("1/26/2024"),
-  },
-  {
-    id: "m5gri9",
-    amount: 24.2,
-    date: new Date("1/24/2024"),
-  },
-  {
-    id: "m5g84i9",
-    amount: 32.5,
-    date: new Date("1/13/2024"),
-  },
-  {
-    id: "m5g84i9",
-    amount: 32.5,
-    date: new Date("1/13/2023"),
-  },
-];
+import { getFuelTransactions } from "../actions";
+import { Decimal } from "@prisma/client/runtime/library";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Label } from "@/components/ui/label";
+import { FuelTransactionAddForm } from "./FuelTransactionAddForm";
 
-export type Transaction = {
-  id: string;
-  amount: number;
-  date: Date;
-};
+export type Transaction =
+  | {
+      id: string;
+      amount: number | Decimal;
+      date: Date;
+      createdAt: Date;
+      updatedAt: Date;
+      userId?: string;
+    }
+  | undefined;
 
 type Month = {
   name: string;
@@ -79,18 +71,20 @@ export const isWithinMonthYear = (
   columnId: any,
   value: any
 ) => {
-  console.log("filtering");
-  console.log(value);
   const { month, year } = value;
   const date = new Date(row.getValue(columnId));
+
+  console.log(date);
 
   const monthValue = date.getMonth() + 1;
   const yearValue = date.getFullYear();
 
+  console.log(monthValue);
+
   return monthValue === month && yearValue === year;
 };
 
-export const columns: ColumnDef<Transaction>[] = [
+export const columns: ColumnDef<Transaction | undefined>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -142,8 +136,7 @@ export const columns: ColumnDef<Transaction>[] = [
 
       // Format the amount as a dollar amount
       const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
+        style: "decimal",
       }).format(amount);
 
       return <div className="text-right font-medium">{formatted}</div>;
@@ -166,7 +159,7 @@ export const columns: ColumnDef<Transaction>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
+            //   onClick={() => navigator.clipboard.writeText(payment.id)}
             >
               Copy payment ID
             </DropdownMenuItem>
@@ -248,6 +241,8 @@ export default function FuelTransactionListDisplay() {
     value: 1,
   });
   const [year, setYear] = React.useState(2024);
+  const [data, setData] = React.useState<Transaction[] | undefined>([]);
+  const [showModal, setShowModal] = React.useState(false);
 
   React.useEffect(() => {
     setColumnFilters([
@@ -261,6 +256,16 @@ export default function FuelTransactionListDisplay() {
     ]);
   }, [month, year]);
 
+  React.useEffect(() => {
+    async function getTransactions() {
+      const transactions = getFuelTransactions();
+      return transactions || [];
+    }
+    const newData = getTransactions().then((data) => {
+      setData(data || []);
+    });
+  }, [showModal]);
+
   const table = useReactTable({
     data,
     columns,
@@ -270,7 +275,7 @@ export default function FuelTransactionListDisplay() {
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
+    //getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
@@ -287,13 +292,36 @@ export default function FuelTransactionListDisplay() {
     <div className="w-full">
       <div className="flex items-center py-4 gap-2 ">
         <div>
-          <Button
+          {/* <Button
             className="bg-green-200 hover:bg-green-500 text-xs md:text-md"
             variant="outline"
             onClick={() => console.log("clicked")}
           >
             Add Fuel
-          </Button>
+          </Button> */}
+          <Popover open={showModal}>
+            <PopoverTrigger asChild>
+              <Button
+                onClick={() => setShowModal(!showModal)}
+                variant="outline"
+              >
+                Open popover
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-80">
+              <div className="grid gap-4">
+                <div className="space-y-2">
+                  <h4 className="font-medium leading-none">Dimensions</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Set the dimensions for the layer.
+                  </p>
+                </div>
+                <div className="grid gap-2">
+                  <FuelTransactionAddForm setShowModal={setShowModal} />
+                </div>
+              </div>
+            </PopoverContent>
+          </Popover>
         </div>
         <div>
           <DropdownMenu>
@@ -375,54 +403,56 @@ export default function FuelTransactionListDisplay() {
         </DropdownMenu>
       </div>
       <div className="rounded-md border">
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
+        <div className="h-[63vh] relative overflow-auto">
+          <Table>
+            <TableHeader className="sticky top-0 bg-slate-950">
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => {
+                    return (
+                      <TableHead key={header.id}>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </TableHead>
+                    );
+                  })}
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 text-center"
+                  >
+                    No results.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
