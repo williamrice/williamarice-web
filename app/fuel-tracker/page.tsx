@@ -5,7 +5,7 @@ import { PrismaClient } from "@prisma/client";
 import { FuelTransactionAddForm } from "./components/FuelTransactionAddForm";
 const prisma = new PrismaClient();
 
-export const FuelTrackerPage = () => {
+const FuelTrackerPage = () => {
   return (
     <div className="flex justify-center mx-10">
       <FuelTransactionListDisplay />
