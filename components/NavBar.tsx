@@ -2,11 +2,27 @@
 
 import React, { useEffect } from "react";
 
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuIndicator,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  NavigationMenuViewport,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu";
+
 import { AiOutlineMenu } from "react-icons/ai";
 import { Merriweather } from "next/font/google";
 import Signin from "./auth-helpers/Signin";
 import { signOut, useSession } from "next-auth/react";
 import UserNavBarImageMenu from "./profile/UserNavBarImageMenu";
+import Link from "next/link";
+
+import { HiCake } from "react-icons/hi";
+import { cn } from "@/lib/utils";
 
 const merriweather = Merriweather({
   subsets: ["latin-ext"],
@@ -22,6 +38,14 @@ interface NavBarProps {
 export default function Navbar({ fixed }: NavBarProps) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
   const { data: session, status } = useSession();
+
+  const components: { title: string; href: string; description: string }[] = [
+    {
+      title: "Fuel Tracker",
+      href: "/fuel-tracker",
+      description: "Fuel tracker for my work",
+    },
+  ];
   return (
     <>
       <div className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-gray-900 mb-3">
@@ -48,12 +72,53 @@ export default function Navbar({ fixed }: NavBarProps) {
           </div>
           <div
             className={
-              "lg:flex flex-grow items-center" +
+              "lg:flex flex-grow items-center justify-center lg:justify-end" +
               (navbarOpen ? " flex" : " hidden")
             }
             id="example-navbar-danger"
           >
-            <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
+            <NavigationMenu className="flex flex-row gap-2 list-none">
+              <NavigationMenuItem></NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link href="/contact" legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Contact
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link
+                  href="https://williamrice.github.io"
+                  target="_blank"
+                  legacyBehavior
+                  passHref
+                >
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Resume
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger>Apps</NavigationMenuTrigger>
+                  <NavigationMenuContent className="">
+                    <ul className="flex flex-col justify-end w-[200px] gap-3 p-4">
+                      {components.map((component) => (
+                        <ListItem
+                          key={component.title}
+                          title={component.title}
+                          href={component.href}
+                        >
+                          {component.description}
+                        </ListItem>
+                      ))}
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
+
+            {/* <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
               <li className="nav-item">
                 <a
                   className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
@@ -85,7 +150,7 @@ export default function Navbar({ fixed }: NavBarProps) {
                   </span>
                 </a>
               </li>
-            </ul>
+            </ul> */}
             <div className="hidden lg:block">
               {session ? <UserNavBarImageMenu /> : <Signin />}
             </div>
@@ -95,3 +160,28 @@ export default function Navbar({ fixed }: NavBarProps) {
     </>
   );
 }
+const ListItem = React.forwardRef<
+  React.ElementRef<"a">,
+  React.ComponentPropsWithoutRef<"a">
+>(({ className, title, children, ...props }, ref) => {
+  return (
+    <li>
+      <NavigationMenuLink asChild>
+        <a
+          ref={ref}
+          className={cn(
+            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            className
+          )}
+          {...props}
+        >
+          <div className="text-sm font-medium leading-none">{title}</div>
+          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+            {children}
+          </p>
+        </a>
+      </NavigationMenuLink>
+    </li>
+  );
+});
+ListItem.displayName = "ListItem";
