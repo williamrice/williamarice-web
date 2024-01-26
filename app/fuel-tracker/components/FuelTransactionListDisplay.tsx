@@ -267,6 +267,7 @@ export default function FuelTransactionListDisplay() {
   }, [showModal]);
 
   const table = useReactTable({
+    // @ts-ignore next-line
     data,
     columns,
     filterFns: {
