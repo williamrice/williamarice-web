@@ -3,6 +3,7 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
+import { Dispatch, SetStateAction } from "react";
 
 const prisma = new PrismaClient();
 
@@ -14,9 +15,11 @@ type FuelTransaction = {
 export async function createFuelTransaction(values: FuelTransaction) {
   const user = await getServerSession();
   if (!user) {
-    return false;
+    return {
+      success: false,
+    };
   }
-  await prisma.user.update({
+  const result = await prisma.user.update({
     where: {
       email: user?.user?.email as string,
     },
@@ -30,7 +33,7 @@ export async function createFuelTransaction(values: FuelTransaction) {
     },
   });
   revalidatePath("/fuel-tracker");
-  return true;
+  return { ...result, success: true };
 }
 
 export async function getFuelTransactions() {
@@ -64,6 +67,31 @@ export async function deleteFuelTransactions() {
       },
     },
   });
+  revalidatePath("/fuel-tracker");
+  return true;
+}
+
+export async function deleteFuelTransactionById(transactionId: string) {
+  const user = await getServerSession();
+  if (!user) {
+    return false;
+  }
+  try {
+    await prisma.user.update({
+      where: {
+        email: user?.user?.email as string,
+      },
+      data: {
+        fuelTransactions: {
+          delete: {
+            id: transactionId,
+          },
+        },
+      },
+    });
+  } catch (err) {
+    return false;
+  }
   revalidatePath("/fuel-tracker");
   return true;
 }

@@ -40,15 +40,22 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { getFuelTransactions } from "../actions";
+import {
+  deleteFuelTransactions,
+  getFuelTransactions,
+  deleteFuelTransactionById,
+} from "../actions";
 import { Decimal } from "@prisma/client/runtime/library";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Label } from "@/components/ui/label";
 import { FuelTransactionAddForm } from "./FuelTransactionAddForm";
+import { useRouter } from "next/navigation";
+import { SyncLoader } from "react-spinners";
+import { useTheme } from "next-themes";
+import MonthlyFuelProgress from "./MonthlyFuelProgress";
 
 export type Transaction =
   | {
@@ -61,7 +68,7 @@ export type Transaction =
     }
   | undefined;
 
-type Month = {
+export type Month = {
   name: string;
   value: number;
 };
@@ -74,39 +81,35 @@ export const isWithinMonthYear = (
   const { month, year } = value;
   const date = new Date(row.getValue(columnId));
 
-  console.log(date);
-
   const monthValue = date.getMonth() + 1;
   const yearValue = date.getFullYear();
-
-  console.log(monthValue);
 
   return monthValue === month && yearValue === year;
 };
 
 export const columns: ColumnDef<Transaction | undefined>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
+  // {
+  //   id: "select",
+  //   header: ({ table }) => (
+  //     <Checkbox
+  //       checked={
+  //         table.getIsAllPageRowsSelected() ||
+  //         (table.getIsSomePageRowsSelected() && "indeterminate")
+  //       }
+  //       onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+  //       aria-label="Select all"
+  //     />
+  //   ),
+  //   cell: ({ row }) => (
+  //     <Checkbox
+  //       checked={row.getIsSelected()}
+  //       onCheckedChange={(value) => row.toggleSelected(!!value)}
+  //       aria-label="Select row"
+  //     />
+  //   ),
+  //   enableSorting: false,
+  //   enableHiding: false,
+  // },
 
   {
     accessorKey: "date",
@@ -143,33 +146,9 @@ export const columns: ColumnDef<Transaction | undefined>[] = [
     },
   },
   {
-    id: "actions",
-    enableHiding: false,
-    cell: ({ row }) => {
-      const payment = row.original;
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <DotsHorizontalIcon className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-            //   onClick={() => navigator.clipboard.writeText(payment.id)}
-            >
-              Copy payment ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
+    accessorKey: "delete",
+    header: () => <div className="text-right"></div>,
+    cell: ({ row }) => {},
   },
 ];
 
@@ -243,6 +222,13 @@ export default function FuelTransactionListDisplay() {
   const [year, setYear] = React.useState(2024);
   const [data, setData] = React.useState<Transaction[] | undefined>([]);
   const [showModal, setShowModal] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+  const [successFormSubmit, setSuccessFormSubmit] = React.useState(false);
+  const [successDelete, setSuccessDelete] = React.useState(false);
+
+  const { theme } = useTheme();
+
+  const router = useRouter();
 
   React.useEffect(() => {
     setColumnFilters([
@@ -258,13 +244,16 @@ export default function FuelTransactionListDisplay() {
 
   React.useEffect(() => {
     async function getTransactions() {
+      setLoading(true);
       const transactions = getFuelTransactions();
       return transactions || [];
     }
     const newData = getTransactions().then((data) => {
       setData(data || []);
+      router.refresh();
+      setLoading(false);
     });
-  }, [showModal]);
+  }, [successFormSubmit, successDelete]);
 
   const table = useReactTable({
     // @ts-ignore next-line
@@ -291,34 +280,37 @@ export default function FuelTransactionListDisplay() {
 
   return (
     <div className="w-full">
-      <div className="flex items-center py-4 gap-2 ">
+      {/* @ts-ignore next-line */}
+      <MonthlyFuelProgress month={month} year={year} data={data} />
+      <div className="flex justify-center items-center py-4 gap-2">
         <div>
-          {/* <Button
-            className="bg-green-200 hover:bg-green-500 text-xs md:text-md"
-            variant="outline"
-            onClick={() => console.log("clicked")}
-          >
-            Add Fuel
-          </Button> */}
           <Popover open={showModal}>
             <PopoverTrigger asChild>
               <Button
                 onClick={() => setShowModal(!showModal)}
                 variant="outline"
               >
-                Open popover
+                Add Fuel
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-80">
+            <PopoverContent
+              side="top"
+              sideOffset={20}
+              align="start"
+              alignOffset={30}
+            >
               <div className="grid gap-4">
                 <div className="space-y-2">
-                  <h4 className="font-medium leading-none">Dimensions</h4>
+                  <h4 className="font-medium leading-none">Fuel Transaction</h4>
                   <p className="text-sm text-muted-foreground">
-                    Set the dimensions for the layer.
+                    Add a new fuel transaction
                   </p>
                 </div>
                 <div className="grid gap-2">
-                  <FuelTransactionAddForm setShowModal={setShowModal} />
+                  <FuelTransactionAddForm
+                    setShowModal={setShowModal}
+                    setSuccessFormSubmit={setSuccessFormSubmit}
+                  />
                 </div>
               </div>
             </PopoverContent>
@@ -376,35 +368,9 @@ export default function FuelTransactionListDisplay() {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              Columns <ChevronDownIcon className="ml-2 h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                );
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu>
       </div>
       <div className="rounded-md border">
-        <div className="h-[63vh] relative overflow-auto">
+        <div className="h-96 relative overflow-auto">
           <Table>
             <TableHeader className="sticky top-0 bg-slate-950">
               {table.getHeaderGroups().map((headerGroup) => (
@@ -424,59 +390,73 @@ export default function FuelTransactionListDisplay() {
                 </TableRow>
               ))}
             </TableHeader>
-            <TableBody>
-              {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}
-                  >
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </TableCell>
-                    ))}
+            {loading ? (
+              <TableBody>
+                {[...Array(8)].map((i) => (
+                  <TableRow key={i}>
+                    <TableCell colSpan={columns.length} align="center">
+                      <SyncLoader
+                        size={10}
+                        color={theme === "light" ? "black" : "white"}
+                      />
+                    </TableCell>
                   </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell
-                    colSpan={columns.length}
-                    className="h-24 text-center"
-                  >
-                    No results.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
+                ))}
+              </TableBody>
+            ) : (
+              <TableBody>
+                {table.getRowModel().rows?.length ? (
+                  table.getRowModel().rows.map((row) => (
+                    <TableRow
+                      key={row.id}
+                      data-state={row.getIsSelected() && "selected"}
+                    >
+                      {row.getVisibleCells().map((cell) =>
+                        cell.column.id === "delete" ? (
+                          <TableCell className="flex justify-center items-center h-full w-full">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="hover:bg-red-500"
+                              onClick={() => {
+                                setSuccessDelete(false);
+                                const result = deleteFuelTransactionById(
+                                  row.original?.id as string
+                                ).then((result) => {
+                                  if (result) {
+                                    router.refresh();
+                                    setSuccessDelete(true);
+                                  }
+                                });
+                              }}
+                            >
+                              Delete
+                            </Button>
+                          </TableCell>
+                        ) : (
+                          <TableCell key={cell.id}>
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </TableCell>
+                        )
+                      )}
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell
+                      colSpan={columns.length}
+                      className="h-24 text-center"
+                    >
+                      No results.
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            )}
           </Table>
-        </div>
-      </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div>
-        <div className="space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
         </div>
       </div>
     </div>

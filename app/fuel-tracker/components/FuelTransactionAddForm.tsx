@@ -26,12 +26,15 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { isRegularExpressionLiteral } from "typescript";
 import { createFuelTransaction, deleteFuelTransactions } from "../actions";
-import { Dispatch, SetStateAction, useTransition } from "react";
+import { Dispatch, SetStateAction, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { revalidatePath, revalidateTag } from "next/cache";
+import { BarLoader } from "react-spinners";
 
 const formSchema = z.object({
-  amount: z.number(),
+  amount: z.number().nonnegative({
+    message: "Amount must be a positive number.",
+  }),
   date: z.date({
     required_error: "A date is required.",
   }),
@@ -39,28 +42,37 @@ const formSchema = z.object({
 
 type Props = {
   setShowModal: Dispatch<SetStateAction<boolean>>;
+  setSuccessFormSubmit: Dispatch<SetStateAction<boolean>>;
 };
 
-export function FuelTransactionAddForm({ setShowModal }: Props) {
+export function FuelTransactionAddForm({
+  setShowModal,
+  setSuccessFormSubmit,
+}: Props) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      amount: 0,
       date: new Date(),
     },
   });
 
   const [isTransitionStarted, startTransition] = useTransition();
   const router = useRouter();
+  const [isCreating, setIsCreating] = useState(false);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     //
-
+    setIsCreating(true);
+    setSuccessFormSubmit(false);
     const result = await createFuelTransaction(values);
-    setShowModal(false);
     startTransition(router.refresh);
+    if (result.success) {
+      setIsCreating(false);
+      setSuccessFormSubmit(true);
+      setShowModal(false);
+    }
     return result;
   }
 
@@ -71,7 +83,7 @@ export function FuelTransactionAddForm({ setShowModal }: Props) {
           control={form.control}
           name="date"
           render={({ field }) => (
-            <FormItem className="flex flex-col">
+            <FormItem className="flex flex-col ">
               <FormLabel>Date</FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
@@ -129,9 +141,17 @@ export function FuelTransactionAddForm({ setShowModal }: Props) {
             </FormItem>
           )}
         />
-        <Button onClick={() => setShowModal(false)} type="submit">
-          Submit
-        </Button>
+        <div className="flex justify-center gap-2 w-full">
+          <Button className="bg-green-200 hover:bg-green-500" type="submit">
+            {isCreating ? <BarLoader width={48} /> : "Submit"}
+          </Button>
+          <Button
+            className="bg-red-200 hover:bg-red-500"
+            onClick={() => setShowModal(false)}
+          >
+            Cancel
+          </Button>
+        </div>
       </form>
     </Form>
   );
