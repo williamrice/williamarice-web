@@ -250,7 +250,6 @@ export default function FuelTransactionListDisplay() {
     }
     const newData = getTransactions().then((data) => {
       setData(data || []);
-      router.refresh();
       setLoading(false);
     });
   }, [successFormSubmit, successDelete]);
@@ -413,7 +412,10 @@ export default function FuelTransactionListDisplay() {
                     >
                       {row.getVisibleCells().map((cell) =>
                         cell.column.id === "delete" ? (
-                          <TableCell className="flex justify-center items-center h-full w-full">
+                          <TableCell
+                            key={cell.id}
+                            className="flex justify-center items-center h-full w-full"
+                          >
                             <Button
                               variant="outline"
                               size="sm"
