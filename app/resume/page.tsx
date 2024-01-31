@@ -75,7 +75,7 @@ const ResumePage = () => {
                     {skill.keywords?.map((keyword: any, index: number) => (
                       <div
                         key={index}
-                        className=" border-2 border-white-200 rounded-full"
+                        className=" border-2 border-white-200 rounded-full my-1"
                       >
                         <p className="p-2 text-xs">{keyword}</p>
                       </div>
@@ -93,7 +93,8 @@ const ResumePage = () => {
                   <CardHeader>
                     <CardTitle>{work.position}</CardTitle>
                     <CardDescription>
-                      {work.name} - {work.location}
+                      <p>{work.name}</p>
+                      <p>{work.location}</p>
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="md:flex md:flex-wrap gap-2 justify-center ">
@@ -150,7 +151,7 @@ const ResumePage = () => {
                   {education.courses.map((course: any, index: number) => (
                     <div
                       key={index}
-                      className=" border-2 border-white-200 rounded-full"
+                      className=" border-2 border-white-200 rounded-full my-1"
                     >
                       <p className="p-2 text-xs">{course}</p>
                     </div>
@@ -212,11 +213,11 @@ const ResumePage = () => {
                   <CardHeader>
                     <CardTitle>{interest.name}</CardTitle>
                   </CardHeader>
-                  <CardContent className="md:flex md:flex-wrap gap-2 justify-center ">
+                  <CardContent className="md:flex md:flex-wrap gap-2 justify-center">
                     {interest.keywords.map((course: any, index: number) => (
                       <div
                         key={index}
-                        className=" border-2 border-white-200 rounded-full"
+                        className=" border-2 border-white-200 rounded-full my-1"
                       >
                         <p className="p-2 text-xs">{course}</p>
                       </div>
