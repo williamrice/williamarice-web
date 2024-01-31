@@ -74,3 +74,16 @@
     @apply bg-background text-foreground;
   }
 }
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+
+
+#__next {
+  background: blue;
+  height: 100%;
+}
