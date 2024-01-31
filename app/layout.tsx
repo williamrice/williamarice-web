@@ -26,7 +26,7 @@ export default function RootLayout({
           <NextAuthProvider>
             <Navbar fixed={true} />
 
-            <div className="flex flex-col min-h-screen items-center justify-center w-full">
+            <div className="flex flex-col min-h-screen items-center justify-center">
               <main className="mb-auto h-full">{children}</main>
               <div className="h-[150px] w-full clear-both"></div>
               <Footer />
