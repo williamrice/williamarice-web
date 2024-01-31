@@ -87,12 +87,7 @@ export default function Navbar({ fixed }: NavBarProps) {
                 </Link>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link
-                  href="https://williamrice.github.io"
-                  target="_blank"
-                  legacyBehavior
-                  passHref
-                >
+                <Link href="/resume" legacyBehavior passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     Resume
                   </NavigationMenuLink>

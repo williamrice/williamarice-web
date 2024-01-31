@@ -24,9 +24,13 @@ export default function RootLayout({
           enableSystem={true}
         >
           <NextAuthProvider>
-            <Navbar fixed={false} />
-            {children}
-            <Footer />
+            <Navbar fixed={true} />
+
+            <div className="flex flex-col min-h-screen items-center justify-center">
+              <main className="mb-auto h-full">{children}</main>
+              <div className="h-[150px] w-full clear-both"></div>
+              <Footer />
+            </div>
           </NextAuthProvider>
         </ThemeProvider>
       </body>

@@ -4,7 +4,7 @@ import SocialLinks from "./SocialLinks";
 
 const Footer = () => {
   return (
-    <footer className="fixed bottom-0 left-0 z-20 w-full p-4 bg-white border-t border-gray-200 shadow md:flex-col md:items-center md:justify-center md:p-6 dark:bg-gray-900 dark:border-gray-600">
+    <footer className="fixed inset-x-0 bottom-0 z-20 h-[150px] w-full p-4 bg-white border-t border-gray-200 shadow md:flex-col md:items-center md:justify-center md:p-6 dark:bg-gray-900 dark:border-gray-600">
       <div className="flex justify-center gap-4 mb-2">
         <SocialLinks />
       </div>
