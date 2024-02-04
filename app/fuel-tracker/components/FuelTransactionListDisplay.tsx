@@ -216,8 +216,8 @@ export default function FuelTransactionListDisplay() {
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
   const [month, setMonth] = React.useState<Month>({
-    name: "January",
-    value: 1,
+    name: new Date().toLocaleString("default", { month: "long" }),
+    value: new Date().getMonth() + 1,
   });
   const [year, setYear] = React.useState(2024);
   const [data, setData] = React.useState<Transaction[] | undefined>([]);
