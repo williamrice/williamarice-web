@@ -4,6 +4,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { NextAuthProvider } from "@/components/auth-helpers/NextAuthProvider";
 import { ThemeProvider } from "@/components/theme-provider";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   title: "William Rice",
@@ -18,6 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="h-screen">
+        <SpeedInsights />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
