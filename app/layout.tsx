@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { NextAuthProvider } from "@/components/auth-helpers/NextAuthProvider";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
   title: "William Rice",
@@ -35,6 +36,7 @@ export default function RootLayout({
             </div>
           </NextAuthProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
