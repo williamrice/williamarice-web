@@ -11,7 +11,7 @@ const FuelAppInfoComponent = () => {
           Curious to what the{" "}
           <span className="font-bold">Fuel Tracker App</span> is?
         </h1>
-        <p>
+        <p className="p-2">
           The fuel tracker app is an application that I created to help me keep
           up with my fuel usage at work. We are alloted 180 gallons of fuel per
           month. There is no way to tell how much fuel I have left, so I created

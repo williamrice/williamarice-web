@@ -8,7 +8,6 @@ const prisma = new PrismaClient();
 
 const FuelTrackerPage = async () => {
   const session = await getServerSession();
-  console.log(session);
 
   return (
     <div className="flex justify-center mx-auto max-w-7xl">
