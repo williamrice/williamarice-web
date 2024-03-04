@@ -13,6 +13,21 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import SectionHeader from "./components/SectionHeader";
+import { workerData } from "worker_threads";
+
+function getFormattedDate(date: string) {
+  const originalDate = new Date(date);
+  const formattedDate = new Date(
+    originalDate.getFullYear(),
+    originalDate.getMonth(),
+    originalDate.getDate() + 1
+  ).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+  return formattedDate;
+}
 
 const ResumePage = () => {
   const imageUrl =
@@ -105,12 +120,12 @@ const ResumePage = () => {
                       {/* <p className="text-sm mb-1">Dates Employed</p> */}
                       <div className="gap-2">
                         <p className="text-xs">
-                          {new Date(work.startDate).toLocaleDateString()}
+                          {getFormattedDate(work.startDate)}
                         </p>
                         <p className="text-xs">&nbsp; - &nbsp;</p>
                         <p className="text-xs">
                           {work.endDate
-                            ? new Date(work.endDate).toLocaleDateString()
+                            ? getFormattedDate(work.endDate)
                             : "Present"}
                         </p>
                       </div>
@@ -171,9 +186,7 @@ const ResumePage = () => {
                   <CardContent className="flex md:flex-wrap gap-2 justify-center ">
                     <div className="border-2 border-white-200 rounded-md h-fit w-fit p-4">
                       <p className="text-sm">Issued On:</p>
-                      <p className="text-xs">
-                        {new Date(cert.date).toLocaleDateString()}
-                      </p>
+                      <p className="text-xs">{getFormattedDate(cert.date)}</p>
                     </div>
                   </CardContent>
                 </Card>
@@ -191,9 +204,7 @@ const ResumePage = () => {
                 </CardHeader>
                 <CardContent className="flex justify-center">
                   <div className="border-2 rounded-md w-48 p-4">
-                    <p className="text-xs">
-                      {new Date(vol.startDate).toLocaleDateString()}
-                    </p>
+                    <p className="text-xs">{getFormattedDate(vol.startDate)}</p>
                     <p className="text-xs">&nbsp; - &nbsp;</p>
                     <p className="text-xs">
                       {vol.endDate
