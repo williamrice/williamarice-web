@@ -18,7 +18,7 @@ const SocialLinks = () => {
           className="hover:text-blue-700 cursor-pointer"
         />
       </a>
-      <a href="https:www.twitter.com/bill2rice" target="blank">
+      <a href="https://www.twitter.com/bill2rice" target="blank">
         <AiFillTwitterCircle
           size={size}
           className="hover:text-sky-500 cursor-pointer"
