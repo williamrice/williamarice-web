@@ -23,6 +23,7 @@ import Link from "next/link";
 
 import { HiCake } from "react-icons/hi";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 const merriweather = Merriweather({
   subsets: ["latin-ext"],
@@ -48,26 +49,23 @@ export default function Navbar({ fixed }: NavBarProps) {
   ];
   return (
     <>
-      <div className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-gray-900 mb-3">
+      <div className="relative flex flex-wrap items-center justify-between px-2 py-3  mb-3">
         <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
           <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
-            <a
-              className={`${merriweather.className} flex justify-center items-center text-sm font-bold leading-relaxed mr-4 py-2 whitespace-nowrap uppercase text-white`}
-              href="/"
-            >
-              William Rice
-            </a>
+            <Image
+              src="/images/billy_joker.png"
+              width={90}
+              height={90}
+              alt="logo"
+            />
             <div className="flex gap-1">
               <button
-                className="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
+                className="text-black cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
                 type="button"
                 onClick={() => setNavbarOpen(!navbarOpen)}
               >
                 <AiOutlineMenu size={25} />
               </button>
-              <div className="lg:hidden">
-                {session ? <UserNavBarImageMenu /> : <Signin />}
-              </div>
             </div>
           </div>
           <div
@@ -146,9 +144,6 @@ export default function Navbar({ fixed }: NavBarProps) {
                 </a>
               </li>
             </ul> */}
-            <div className="hidden lg:block">
-              {session ? <UserNavBarImageMenu /> : <Signin />}
-            </div>
           </div>
         </div>
       </div>

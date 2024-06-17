@@ -19,23 +19,18 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="h-screen">
+      <body className="h-screen w-full">
         <SpeedInsights />
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem={true}
-        >
-          <NextAuthProvider>
-            <Navbar fixed={true} />
 
-            <div className="flex flex-col min-h-screen items-center justify-center">
-              <main className="mb-auto h-full w-full">{children}</main>
-              <div className="h-[150px] w-full clear-both"></div>
-              <Footer />
-            </div>
-          </NextAuthProvider>
-        </ThemeProvider>
+        <NextAuthProvider>
+          <Navbar fixed={true} />
+
+          <div className="flex flex-col min-h-screen items-center justify-center">
+            <main className="mb-auto h-full w-full">{children}</main>
+            <div className="h-[150px] w-full clear-both"></div>
+            <Footer />
+          </div>
+        </NextAuthProvider>
         <Analytics />
       </body>
     </html>
