@@ -46,6 +46,7 @@ model User {
     sessions         Session[]
     settings         UserSettings?
     fuelTransactions FuelTransaction[]
+    bets             Bet[]
 }
 
 model VerificationToken {
@@ -76,4 +77,23 @@ model FuelTransaction {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
     user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Bet {
+    id          String   @id @default(cuid())
+    userId      String
+    amountBet   Decimal
+    amountWon   Decimal
+    status      Status
+    description String   @default("")
+    date        DateTime
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum Status {
+    WIN
+    LOSS
+    PENDING
 }
