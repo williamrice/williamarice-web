@@ -1,177 +1,100 @@
 "use client";
 
-import React, { useEffect } from "react";
+import { HamburgerMenuIcon } from "@radix-ui/react-icons";
+import { Code2Icon } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuIndicator,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  NavigationMenuViewport,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
+export default function NavBar() {
+  const [isOpen, setIsOpen] = useState(false);
 
-import { AiOutlineMenu } from "react-icons/ai";
-import { Merriweather } from "next/font/google";
-import Signin from "./auth-helpers/Signin";
-import { signOut, useSession } from "next-auth/react";
-import UserNavBarImageMenu from "./profile/UserNavBarImageMenu";
-import Link from "next/link";
+  const router = useRouter();
 
-import { HiCake } from "react-icons/hi";
-import { cn } from "@/lib/utils";
-import Image from "next/image";
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
 
-const merriweather = Merriweather({
-  subsets: ["latin-ext"],
-  weight: "400",
-  style: "normal",
-  display: "swap",
-});
-
-interface NavBarProps {
-  fixed?: boolean;
-}
-
-export default function Navbar({ fixed }: NavBarProps) {
-  const [navbarOpen, setNavbarOpen] = React.useState(false);
-  const { data: session, status } = useSession();
-
-  const components: { title: string; href: string; description: string }[] = [
-    {
-      title: "Fuel Tracker",
-      href: "/fuel-tracker",
-      description: "Fuel tracker for my work",
-    },
-  ];
   return (
-    <>
-      <div className="relative flex flex-wrap items-center justify-between px-2 py-3 shadow-md">
-        <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
-          <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
-            <Image
-              src="/images/billy_joker.png"
-              width={90}
-              height={90}
-              alt="logo"
-            />
-            <div className="flex gap-1">
-              <button
-                className="text-black cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
-                type="button"
-                onClick={() => setNavbarOpen(!navbarOpen)}
-              >
-                <AiOutlineMenu size={25} />
-              </button>
-            </div>
-          </div>
-          <div
-            className={
-              "lg:flex flex-grow items-center justify-center lg:justify-end" +
-              (navbarOpen ? " flex" : " hidden")
-            }
-            id="example-navbar-danger"
-          >
-            <NavigationMenu className="flex flex-row gap-2 list-none">
-              <NavigationMenuItem></NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link href="/contact" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Contact
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link href="/resume" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Resume
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuList>
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger>Apps</NavigationMenuTrigger>
-                  <NavigationMenuContent className="">
-                    <ul className="flex flex-col justify-end w-[200px] gap-3 p-4">
-                      {components.map((component) => (
-                        <ListItem
-                          key={component.title}
-                          title={component.title}
-                          href={component.href}
-                        >
-                          {component.description}
-                        </ListItem>
-                      ))}
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-              </NavigationMenuList>
-            </NavigationMenu>
+    <div className="relative">
+      {/* Header with Icon on the Left and Hamburger Menu on the Right */}
+      <div className="flex justify-between items-center p-4 bg-gray-100">
+        {/* Left Icon */}
 
-            {/* <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
-              <li className="nav-item">
-                <a
-                  className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                  href="/about"
-                >
-                  <span className={`${merriweather.className} ml-2`}>
-                    About
-                  </span>
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
-                  className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                  href="/contact"
-                >
-                  <span className={`${merriweather.className} ml-2`}>
-                    Contact
-                  </span>
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
-                  className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                  href="https://williamrice.github.io"
-                  target="blank"
-                >
-                  <span className={`${merriweather.className} ml-2`}>
-                    Resume
-                  </span>
-                </a>
-              </li>
-            </ul> */}
-          </div>
+        <span
+          className="flex gap-1 items-center ml-2 text-lg font-semibold text-gray-800"
+          onClick={() => router.push("/")}
+        >
+          <Code2Icon size={40} />
+          William Rice
+        </span>
+
+        {/* Hamburger Icon */}
+        <button
+          className="md:hidden p-2 focus:outline-none focus:ring"
+          onClick={toggleMenu}
+          aria-label="Toggle menu"
+        >
+          <HamburgerMenuIcon className="w-6 h-6" />
+        </button>
+      </div>
+
+      {/* Sidebar Menu */}
+      <div
+        className={`fixed inset-0 bg-gray-800 bg-opacity-75 z-50 transform transition-transform duration-300 ease-in-out ${
+          isOpen ? "translate-x-0" : "translate-x-full"
+        } md:translate-x-0 md:static md:bg-transparent md:flex md:items-center md:justify-between md:w-full`}
+      >
+        <div className="relative w-64 md:w-auto bg-white md:bg-transparent h-full md:h-auto ml-auto">
+          {/* Close Button */}
+          <button
+            className="absolute top-4 right-4 md:hidden p-2 focus:outline-none focus:ring"
+            onClick={toggleMenu}
+            aria-label="Close menu"
+          >
+            <svg
+              className="w-6 h-6 text-gray-800"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+
+          <nav className="flex flex-col items-start p-4 md:flex-row md:space-x-6 md:p-0 md:items-center w-full h-full">
+            <a
+              href="#"
+              className="block px-2 py-2 mt-2 text-sm font-semibold text-gray-800 rounded hover:bg-gray-200 md:hover:bg-transparent md:text-gray-900"
+            >
+              Home
+            </a>
+            <a
+              href="#"
+              className="block px-2 py-2 mt-2 text-sm font-semibold text-gray-800 rounded hover:bg-gray-200 md:hover:bg-transparent md:text-gray-900"
+            >
+              About
+            </a>
+            <a
+              href="#"
+              className="block px-2 py-2 mt-2 text-sm font-semibold text-gray-800 rounded hover:bg-gray-200 md:hover:bg-transparent md:text-gray-900"
+            >
+              Services
+            </a>
+            <a
+              href="#"
+              className="block px-2 py-2 mt-2 text-sm font-semibold text-gray-800 rounded hover:bg-gray-200 md:hover:bg-transparent md:text-gray-900"
+            >
+              Contact
+            </a>
+          </nav>
         </div>
       </div>
-    </>
+    </div>
   );
 }
-const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
-  return (
-    <li>
-      <NavigationMenuLink asChild>
-        <a
-          ref={ref}
-          className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
-          )}
-          {...props}
-        >
-          <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
-        </a>
-      </NavigationMenuLink>
-    </li>
-  );
-});
-ListItem.displayName = "ListItem";
