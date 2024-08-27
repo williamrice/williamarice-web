@@ -62,12 +62,14 @@ const FeaturedProjects = () => {
         <h1 className="text-3xl font-bold">Featured Projects</h1>
       </div>
 
-      {dummyProjectData.map((project) => {
-        if (!project.featured) {
-          return null;
-        }
-        return <ProjectCard key={project.id} project={project} />;
-      })}
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 sm-grid-cols-1 gap-4">
+        {dummyProjectData.map((project) => {
+          if (!project.featured) {
+            return null;
+          }
+          return <ProjectCard key={project.id} project={project} />;
+        })}
+      </div>
     </div>
   );
 };

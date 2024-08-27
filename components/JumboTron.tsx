@@ -12,8 +12,8 @@ import ContactButton from "./ContactButton";
 const JumboTron = () => {
   return (
     <section className="bg-[url('/images/header.jpg')] bg-right lg:bg-center bg-cover bg-no-repeat rounded-md min-h-[400px] w-full">
-      <div className="lg:grid lg:grid-cols-3 min-h-[600px] flex justify-center items-center bg-[rgba(0,0,0,0.5)] bg-blend-overlay">
-        <div className=" h-full lg:col-span-2 flex flex-col items-center justify-center">
+      <div className=" min-h-[600px] flex justify-center items-center bg-[rgba(0,0,0,0.5)] bg-blend-overlay">
+        <div className=" h-full flex flex-col items-center justify-center">
           <Image
             src="/images/william_rice-headshot.png"
             width={200}
