@@ -22,7 +22,8 @@ export default function RootLayout({
     <html lang="en">
       <body className="h-screen w-full">
         <SpeedInsights />
-
+        <ThemeProvider>
+          <NextAuthProvider>
             <div className="flex flex-col min-h-screen items-center justify-center">
               <main className="mb-auto h-full w-full">{children}</main>
               <Toaster />
