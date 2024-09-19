@@ -46,6 +46,7 @@ model User {
     sessions         Session[]
     settings         UserSettings?
     fuelTransactions FuelTransaction[]
+    bets             Bet[]
 }
 
 model VerificationToken {
