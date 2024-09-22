@@ -21,10 +21,11 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           className="rounded-md"
           width={600}
           height={600}
+          unoptimized={true}
         />
       </div>
       <div>
-        <h2 className="text-3xl font-bold m-2">{project.title}</h2>
+        <h2 className="text-3xl font-bold m-2 text-center">{project.title}</h2>
         <div className="flex justify-center m-2">
           {project.technologies.map((technology) => {
             return (
@@ -53,7 +54,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
         ) : null}
         {project.liveUrl !== "" ? (
           <Link
-            href={project.liveUrl}
+            href={project.liveUrl ? project.liveUrl : "#"}
             target="_blank"
             className="hover:scale-110 transition-all ease-in-out text-left font-bold flex justify-center items-center border-2 border-gray-500 p-4 gap-1 rounded-md"
           >

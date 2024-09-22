@@ -8,11 +8,9 @@ function HeaderTypeAnimation() {
       cursor={false}
       className="lg:text-4xl text-2xl font-bold text-center text-white"
       sequence={[
-        "I am a programmer",
+        "I am a Dad",
         2000,
-        "I am a hiking enthusiast",
-        2000,
-        "I am a learner",
+        "I am Passionate About Tech",
         2000,
         "I am a Software Developer",
         2000,

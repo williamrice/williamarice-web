@@ -1,100 +1,85 @@
 "use client";
 
-import { HamburgerMenuIcon } from "@radix-ui/react-icons";
-import { Code2Icon } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import { Menu, X } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import Signin from "./auth-helpers/Signin";
 
-export default function NavBar() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const router = useRouter();
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
-  return (
-    <div className="relative">
-      {/* Header with Icon on the Left and Hamburger Menu on the Right */}
-      <div className="flex justify-between items-center p-4 bg-gray-100">
-        {/* Left Icon */}
-
-        <span
-          className="flex gap-1 items-center ml-2 text-lg font-semibold text-gray-800"
-          onClick={() => router.push("/")}
-        >
-          <Code2Icon size={40} />
-          William Rice
-        </span>
-
-        {/* Hamburger Icon */}
-        <button
-          className="md:hidden p-2 focus:outline-none focus:ring"
-          onClick={toggleMenu}
-          aria-label="Toggle menu"
-        >
-          <HamburgerMenuIcon className="w-6 h-6" />
-        </button>
-      </div>
-
-      {/* Sidebar Menu */}
-      <div
-        className={`fixed inset-0 bg-gray-800 bg-opacity-75 z-50 transform transition-transform duration-300 ease-in-out ${
-          isOpen ? "translate-x-0" : "translate-x-full"
-        } md:translate-x-0 md:static md:bg-transparent md:flex md:items-center md:justify-between md:w-full`}
-      >
-        <div className="relative w-64 md:w-auto bg-white md:bg-transparent h-full md:h-auto ml-auto">
-          {/* Close Button */}
-          <button
-            className="absolute top-4 right-4 md:hidden p-2 focus:outline-none focus:ring"
-            onClick={toggleMenu}
-            aria-label="Close menu"
-          >
-            <svg
-              className="w-6 h-6 text-gray-800"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-
-          <nav className="flex flex-col items-start p-4 md:flex-row md:space-x-6 md:p-0 md:items-center w-full h-full">
-            <a
-              href="#"
-              className="block px-2 py-2 mt-2 text-sm font-semibold text-gray-800 rounded hover:bg-gray-200 md:hover:bg-transparent md:text-gray-900"
-            >
-              Home
-            </a>
-            <a
-              href="#"
-              className="block px-2 py-2 mt-2 text-sm font-semibold text-gray-800 rounded hover:bg-gray-200 md:hover:bg-transparent md:text-gray-900"
-            >
-              About
-            </a>
-            <a
-              href="#"
-              className="block px-2 py-2 mt-2 text-sm font-semibold text-gray-800 rounded hover:bg-gray-200 md:hover:bg-transparent md:text-gray-900"
-            >
-              Services
-            </a>
-            <a
-              href="#"
-              className="block px-2 py-2 mt-2 text-sm font-semibold text-gray-800 rounded hover:bg-gray-200 md:hover:bg-transparent md:text-gray-900"
-            >
-              Contact
-            </a>
-          </nav>
-        </div>
-      </div>
-    </div>
-  );
+interface MenuItem {
+  name: string;
+  href: string;
 }
+
+const menuItems: MenuItem[] = [
+  { name: "Home", href: "/" },
+  { name: "About", href: "/about" },
+  { name: "Contact", href: "/contact" },
+];
+
+const NavBar: React.FC = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+  const router = useRouter();
+  return (
+    <motion.nav
+      className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 transition-all duration-300 ${
+        isScrolled ? "h-16 bg-blue-600" : "h-20 bg-transparent"
+      }`}
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ type: "spring", stiffness: 120, damping: 20 }}
+    >
+      <motion.div
+        className="text-white font-bold text-xl cursor-pointer"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        onClick={() => {
+          router.push("/");
+        }}
+      >
+        William Rice
+      </motion.div>
+
+      <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
+        <SheetTrigger asChild>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="text-white hover:bg-transparent hover:text-white hover:scale-120 transition-all ease-in-out"
+          >
+            <Menu className="h-6 w-6" />
+          </Button>
+        </SheetTrigger>
+        <SheetContent side="right" className="w-full sm:w-[400px] bg-blue-600">
+          <nav className="flex flex-col space-y-4 mt-16">
+            {menuItems.map((item) => (
+              <motion.a
+                key={item.name}
+                href={`${item.href.toLowerCase()}`}
+                className="text-white text-2xl font-semibold"
+                whileHover={{ scale: 1.1, x: 10 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {item.name}
+              </motion.a>
+            ))}
+          </nav>
+        </SheetContent>
+      </Sheet>
+    </motion.nav>
+  );
+};
+
+export default NavBar;
