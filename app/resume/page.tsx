@@ -47,7 +47,6 @@ const ResumePage = () => {
       setDataLoading(false);
     }
     getData();
-    console.log(data);
     return () => {};
   }, []);
 
