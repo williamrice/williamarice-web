@@ -3,59 +3,11 @@ import Link from "next/link";
 import React from "react";
 import { AiFillEye, AiFillGithub } from "react-icons/ai";
 import ProjectCard from "./ProjectCard";
+import { Project } from "@prisma/client";
+import { getAllProjects } from "@/actions/projects";
 
-const dummyProjectData = [
-  {
-    id: 1,
-    title: "Project 1",
-    featured: true,
-    githubUrl: "www.github.com",
-    liveUrl: "www.github.com",
-    description:
-      "Lorem ipsum odor amet, consectetuer adipiscing elit. Felis nulla aenean commodo porta ultrices habitant inceptos suspendisse rutrum. Senectus eros ridiculus platea massa elementum ex curae blandit nam. Penatibus mollis tortor ridiculus; laoreet praesent euismod laoreet. Cubilia mi dui maximus; conubia urna proin aliquam. Adipiscing nullam eleifend vitae metus nostra neque.",
-    problem:
-      "Lorem ipsum odor amet, consectetuer adipiscing elit. Felis nulla aenean commodo porta ultrices habitant inceptos suspendisse rutrum. Senectus eros ridiculus platea massa elementum ex curae blandit nam. Penatibus mollis tortor ridiculus; laoreet praesent euismod laoreet. Cubilia mi dui maximus; conubia urna proin aliquam. Adipiscing nullam eleifend vitae metus nostra neque.",
-    solution:
-      "Lorem ipsum odor amet, consectetuer adipiscing elit. Felis nulla aenean commodo porta ultrices habitant inceptos suspendisse rutrum. Senectus eros ridiculus platea massa elementum ex curae blandit nam. Penatibus mollis tortor ridiculus; laoreet praesent euismod laoreet. Cubilia mi dui maximus; conubia urna proin aliquam. Adipiscing nullam eleifend vitae metus nostra neque.",
-    technologies: ["Typescript", "Next.js", "Tailwind CSS"],
-    featuredImageSrc: "/images/project-1/project_1_sample.jpg",
-    featuredImageAlt: "Project 1 image",
-  },
-  {
-    id: 2,
-    title: "Project 2",
-    featured: true,
-    githubUrl: "www.github.com",
-    liveUrl: "www.github.com",
-    description:
-      "Lorem ipsum odor amet, consectetuer adipiscing elit. Felis nulla aenean commodo porta ultrices habitant inceptos suspendisse rutrum. Senectus eros ridiculus platea massa elementum ex curae blandit nam. Penatibus mollis tortor ridiculus; laoreet praesent euismod laoreet. Cubilia mi dui maximus; conubia urna proin aliquam. Adipiscing nullam eleifend vitae metus nostra neque.",
-    problem:
-      "Lorem ipsum odor amet, consectetuer adipiscing elit. Felis nulla aenean commodo porta ultrices habitant inceptos suspendisse rutrum. Senectus eros ridiculus platea massa elementum ex curae blandit nam. Penatibus mollis tortor ridiculus; laoreet praesent euismod laoreet. Cubilia mi dui maximus; conubia urna proin aliquam. Adipiscing nullam eleifend vitae metus nostra neque.",
-    solution:
-      "Lorem ipsum odor amet, consectetuer adipiscing elit. Felis nulla aenean commodo porta ultrices habitant inceptos suspendisse rutrum. Senectus eros ridiculus platea massa elementum ex curae blandit nam. Penatibus mollis tortor ridiculus; laoreet praesent euismod laoreet. Cubilia mi dui maximus; conubia urna proin aliquam. Adipiscing nullam eleifend vitae metus nostra neque.",
-    technologies: ["Typescript", "Next.js", "Tailwind CSS"],
-    featuredImageSrc: "/images/project-1/project_1_sample.jpg",
-    featuredImageAlt: "Project 1 image",
-  },
-  {
-    id: 3,
-    title: "Project 3",
-    featured: true,
-    githubUrl: "www.github.com",
-    liveUrl: "www.github.com",
-    description:
-      "Lorem ipsum odor amet, consectetuer adipiscing elit. Felis nulla aenean commodo porta ultrices habitant inceptos suspendisse rutrum. Senectus eros ridiculus platea massa elementum ex curae blandit nam. Penatibus mollis tortor ridiculus; laoreet praesent euismod laoreet. Cubilia mi dui maximus; conubia urna proin aliquam. Adipiscing nullam eleifend vitae metus nostra neque.",
-    problem:
-      "Lorem ipsum odor amet, consectetuer adipiscing elit. Felis nulla aenean commodo porta ultrices habitant inceptos suspendisse rutrum. Senectus eros ridiculus platea massa elementum ex curae blandit nam. Penatibus mollis tortor ridiculus; laoreet praesent euismod laoreet. Cubilia mi dui maximus; conubia urna proin aliquam. Adipiscing nullam eleifend vitae metus nostra neque.",
-    solution:
-      "Lorem ipsum odor amet, consectetuer adipiscing elit. Felis nulla aenean commodo porta ultrices habitant inceptos suspendisse rutrum. Senectus eros ridiculus platea massa elementum ex curae blandit nam. Penatibus mollis tortor ridiculus; laoreet praesent euismod laoreet. Cubilia mi dui maximus; conubia urna proin aliquam. Adipiscing nullam eleifend vitae metus nostra neque.",
-    technologies: ["Typescript", "Next.js", "Tailwind CSS"],
-    featuredImageSrc: "/images/project-1/project_1_sample.jpg",
-    featuredImageAlt: "Project 1 image",
-  },
-];
-
-const FeaturedProjects = () => {
+const FeaturedProjects = async () => {
+  const projects = await getAllProjects();
   return (
     <div>
       <div className="flex justify-center m-4">
@@ -63,7 +15,7 @@ const FeaturedProjects = () => {
       </div>
 
       <div className="grid lg:grid-cols-3 md:grid-cols-2 sm-grid-cols-1 gap-4">
-        {dummyProjectData.map((project) => {
+        {projects.map((project: Project) => {
           if (!project.featured) {
             return null;
           }
