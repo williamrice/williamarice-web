@@ -46,7 +46,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
 export async function GET(req: NextRequest, res: NextResponse) {
   const prisma = new PrismaClient();
   const data = await req.json();
-  console.log(data);
   const user = await prisma.user.findUnique({
     where: {
       email: data.email,
