@@ -79,15 +79,28 @@ model FuelTransaction {
 }
 
 model Project {
-    id               Int      @id @default(autoincrement())
+    id               Int            @id @default(autoincrement())
     title            String
-    featured         Boolean
+    featured         Boolean        @default(false)
     githubUrl        String
-    liveUrl          String
-    description      String   @db.Text
-    problem          String   @db.Text
-    solution         String   @db.Text
+    liveUrl          String?
+    description      String         @db.Text
+    problem          String         @db.Text
+    solution         String         @db.Text
+    story            String         @db.Text
     technologies     String[]
     featuredImageSrc String
     featuredImageAlt String
+    createdAt        DateTime       @default(now())
+    updatedAt        DateTime       @updatedAt
+    galleryImages    GalleryImage[]
+}
+
+model GalleryImage {
+    id        Int      @id @default(autoincrement())
+    imagePath String
+    projectId Int
+    project   Project  @relation(fields: [projectId], references: [id])
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
