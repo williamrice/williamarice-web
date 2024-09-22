@@ -3,10 +3,10 @@ import Footer from "@/components//Footer";
 import "./globals.css";
 import type { Metadata } from "next";
 import { NextAuthProvider } from "@/components/auth-helpers/NextAuthProvider";
-import { ThemeProvider } from "@/components/theme-provider";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import { Toaster } from "@/components/ui/toaster";
+import ConditionalNavBar from "@/components/ConditionalNavBar";
 
 export const metadata: Metadata = {
   title: "William Rice",
@@ -22,16 +22,14 @@ export default function RootLayout({
     <html lang="en">
       <body className="h-screen w-full">
         <SpeedInsights />
-        <ThemeProvider>
-          <NextAuthProvider>
-            <div className="flex flex-col min-h-screen items-center justify-center">
-              <main className="mb-auto h-full w-full">{children}</main>
-              <Toaster />
-              <div className="h-[150px] w-full clear-both"></div>
-              <Footer />
-            </div>
-          </NextAuthProvider>
-        </ThemeProvider>
+        <NextAuthProvider>
+          <div className="flex flex-col min-h-screen items-center justify-center">
+            <ConditionalNavBar />
+            <main className="mb-auto h-full w-full">{children}</main>
+            <Toaster />
+            <Footer />
+          </div>
+        </NextAuthProvider>
         <Analytics />
       </body>
     </html>
