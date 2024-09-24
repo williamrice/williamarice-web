@@ -2,9 +2,11 @@
 
 import { revalidatePath } from "next/cache";
 import prisma from "@/app/lib/prisma";
+import { DeleteObjectCommand, S3Client } from "@aws-sdk/client-s3";
 
 interface GalleryImage {
   imagePath: string;
+  s3Key: string;
 }
 
 interface ProjectData {
@@ -16,6 +18,7 @@ interface ProjectData {
   problem: string;
   solution: string;
   story: string;
+  s3Key: string;
   technologies: string;
   featuredImageSrc: string;
   featuredImageAlt: string;
@@ -40,6 +43,7 @@ export async function createProject(data: ProjectData) {
     const processedGalleryImages = galleryImages
       ? galleryImages.map((image: GalleryImage) => ({
           imagePath: image.imagePath,
+          s3Key: image.s3Key,
         }))
       : [];
 
@@ -66,6 +70,25 @@ export async function createProject(data: ProjectData) {
 
 export async function deleteProject(id: number) {
   try {
+    const galleryImages = await prisma.galleryImage.findMany({
+      where: { projectId: id },
+    });
+
+    // delete the project keys from s3
+    galleryImages.forEach(async (image) => {
+      if (image.s3Key) {
+        await deleteFileFromS3(image.s3Key);
+      }
+    });
+
+    const project = await prisma.project.findUnique({
+      where: { id },
+    });
+
+    if (project?.s3Key) {
+      await deleteFileFromS3(project.s3Key);
+    }
+
     // First, delete all associated GalleryImage records
     await prisma.galleryImage.deleteMany({
       where: { projectId: id },
@@ -126,4 +149,22 @@ export async function updateProject(data: ProjectData & { id: number }) {
     console.error("Error updating project:", error);
     return { success: false, error: "Failed to update project" };
   }
+}
+async function deleteFileFromS3(s3Key: string) {
+  if (!s3Key) return;
+
+  const s3Client = new S3Client({
+    region: process.env.AWS_REGION!,
+    credentials: {
+      accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
+      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+    },
+  });
+
+  const command = new DeleteObjectCommand({
+    Bucket: process.env.AWS_BUCKET!,
+    Key: s3Key,
+  });
+
+  const response = await s3Client.send(command);
 }

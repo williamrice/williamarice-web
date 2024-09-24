@@ -8,6 +8,11 @@ import { createProject } from "@/actions/projects";
 import { uploadFile } from "@/actions/upload";
 import { useRouter } from "next/navigation";
 
+interface GalleryUpload {
+  url: string;
+  s3Key: string;
+}
+
 // Define the schema for form validation
 const projectSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -83,7 +88,7 @@ export default function AddProjectForm() {
       }
 
       // Upload gallery images if any
-      let galleryUploads: string[] = [];
+      let galleryUploads: GalleryUpload[] = [];
       if (data.galleryImages && data.galleryImages.length > 0) {
         galleryUploads = await Promise.all(
           data.galleryImages
@@ -106,7 +111,10 @@ export default function AddProjectForm() {
               if (!upload.success) {
                 throw new Error(`Failed to upload gallery image: ${file.name}`);
               }
-              return upload.publicUrl as string;
+              return {
+                url: upload.publicUrl as string,
+                s3Key: upload.key as string,
+              };
             })
         );
       }
@@ -118,6 +126,7 @@ export default function AddProjectForm() {
         problem: data.problem,
         solution: data.solution,
         story: data.story,
+        s3Key: featuredImageUpload.key as string,
         technologies: data.technologies,
         githubUrl: data.githubUrl,
         liveUrl: data.liveUrl,
@@ -125,7 +134,10 @@ export default function AddProjectForm() {
         featuredImageAlt: data.featuredImageAlt,
         featured: data.featured,
         galleryImages: {
-          create: galleryUploads.map((url) => ({ imagePath: url })),
+          create: galleryUploads.map((upload) => ({
+            imagePath: upload.url,
+            s3Key: upload.s3Key,
+          })),
         },
       };
 
@@ -136,7 +148,6 @@ export default function AddProjectForm() {
 
       if (result && result.success) {
         // Handle success (e.g., show a success message, reset form, etc.)
-        console.log("Project created successfully");
         success = true;
       } else {
         // Handle error
