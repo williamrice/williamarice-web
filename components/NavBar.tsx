@@ -6,6 +6,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import Signin from "./auth-helpers/Signin";
 
 interface MenuItem {
@@ -15,7 +16,7 @@ interface MenuItem {
 
 const menuItems: MenuItem[] = [
   { name: "Home", href: "/" },
-  { name: "About", href: "/about" },
+  { name: "Resume", href: "/resume" },
   { name: "Contact", href: "/contact" },
 ];
 
@@ -61,21 +62,33 @@ const NavBar: React.FC = () => {
             <Menu className="h-6 w-6" />
           </Button>
         </SheetTrigger>
-        <SheetContent side="right" className="w-full sm:w-[400px] bg-blue-600">
-          <nav className="flex flex-col space-y-4 mt-16">
-            {menuItems.map((item) => (
-              <motion.a
-                key={item.name}
-                href={`${item.href.toLowerCase()}`}
-                className="text-white text-2xl font-semibold"
-                whileHover={{ scale: 1.1, x: 10 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {item.name}
-              </motion.a>
-            ))}
-          </nav>
+        <SheetContent
+          side="right"
+          className="w-full sm:w-[400px] bg-slate-600 bg-opacity-50 flex items-center justify-center"
+        >
+          <div className="flex flex-col items-center justify-center">
+            <Image
+              src="/images/billy_joker.png"
+              alt="Profile"
+              width={300}
+              height={300}
+              className="rounded-full w-40 h-40 object-cover"
+            />
+            <nav className="flex flex-col space-y-4">
+              {menuItems.map((item) => (
+                <motion.a
+                  key={item.name}
+                  href={`${item.href.toLowerCase()}`}
+                  className="text-white text-2xl font-semibold text-center"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.name}
+                </motion.a>
+              ))}
+            </nav>
+          </div>
         </SheetContent>
       </Sheet>
     </motion.nav>
