@@ -67,6 +67,7 @@ export default function EditProjectForm({ project }: EditProjectFormProps) {
     resolver: zodResolver(projectSchema),
     defaultValues: {
       ...project,
+      githubUrl: project.githubUrl || "",
       liveUrl: project.liveUrl || "",
       technologies: project.technologies.join(", "),
       featuredImageSrc: undefined,

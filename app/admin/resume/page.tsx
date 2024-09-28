@@ -325,6 +325,8 @@ export default function ResumeForm() {
         body: JSON.stringify(convertedData),
       });
 
+      console.log("Response:", response);
+
       if (!response.ok) throw new Error("Failed to update resume");
 
       toast({

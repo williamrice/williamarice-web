@@ -82,7 +82,7 @@ model Project {
     id               Int            @id @default(autoincrement())
     title            String
     featured         Boolean        @default(false)
-    githubUrl        String
+    githubUrl        String?
     liveUrl          String?
     description      String         @db.Text
     problem          String         @db.Text
