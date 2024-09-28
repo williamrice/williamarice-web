@@ -6,12 +6,12 @@ import {
   AiFillTwitterCircle,
 } from "react-icons/ai";
 import HeaderTypeAnimation from "./header-type-animation";
-import ContactButton from "./ContactButton";
+import MainButton from "./MainButton";
 import Header from "./Header";
 
 const JumboTron = () => {
   return (
-    <Header>
+    <Header height="600px">
       <div className=" h-full flex flex-col items-center justify-center">
         <Image
           src="/images/william_rice-headshot.png"
@@ -23,7 +23,7 @@ const JumboTron = () => {
           William Rice
         </h1>
         <HeaderTypeAnimation />
-        <ContactButton />
+        <MainButton text="Contact Me" link="/contact" />
       </div>
       <div className="lg:col-span-1"></div>
     </Header>

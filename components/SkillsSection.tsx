@@ -1,5 +1,6 @@
 import React from "react";
 import "devicon/devicon.min.css";
+import Divider from "./Divider";
 
 interface Skill {
   name: string;
@@ -30,13 +31,14 @@ const skills: Skill[] = [
   { name: "GitHub", iconClass: "devicon-github-original colored" },
 ];
 
-const SkillsSection: React.FC = () => {
+const SkillsSection = () => {
   // shuffle the skills array
   const shuffledSkills = skills.sort(() => 0.5 - Math.random());
   return (
     <div className="bg-gray-200 flex flex-col justify-center items-center w-full px-4 py-8 mb-8">
-      <div className="flex justify-center mb-8">
-        <h1 className="text-4xl font-bold">Skills</h1>
+      <div className="flex flex-col justify-center mb-8">
+        <h2 className="text-4xl font-bold">Skills</h2>
+        <Divider />
       </div>
       <div className="flex flex-wrap max-w-6xl justify-center">
         {shuffledSkills.map((skill, index) => (

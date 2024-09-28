@@ -9,7 +9,7 @@ interface HeaderProps {
 const Header = ({
   children,
   imagePath = "/images/header.jpg",
-  height = "600px",
+  height = "400px",
 }: HeaderProps) => {
   const backgroundImageStyle = `url(${imagePath})`;
   return (

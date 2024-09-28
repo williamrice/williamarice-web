@@ -46,6 +46,7 @@ const projectSchema = z.object({
     .max(6, "Maximum 6 gallery images allowed")
     .optional(),
   featured: z.boolean(),
+  s3Key: z.string().optional(),
 });
 
 export type ProjectFormData = z.infer<typeof projectSchema>;
@@ -70,6 +71,7 @@ export default function EditProjectForm({ project }: EditProjectFormProps) {
       technologies: project.technologies.join(", "),
       featuredImageSrc: undefined,
       galleryImages: undefined,
+      s3Key: project.s3Key || "",
     },
   });
 
@@ -98,6 +100,7 @@ export default function EditProjectForm({ project }: EditProjectFormProps) {
     try {
       // Handle image uploads if new images are provided
       let featuredImageUrl = project.featuredImageSrc;
+      let s3Key = project.s3Key;
       if (data.featuredImageSrc) {
         const formData = new FormData();
         formData.append("file", data.featuredImageSrc);
@@ -114,11 +117,15 @@ export default function EditProjectForm({ project }: EditProjectFormProps) {
 
         if (featuredImageUpload.success) {
           featuredImageUrl = featuredImageUpload.publicUrl;
+          s3Key = featuredImageUpload.s3Key;
         }
       }
 
       // Handle gallery image uploads
-      let galleryUrls = project.galleryImages.map((img) => img.imagePath);
+      let galleryUrls = project.galleryImages.map((img) => ({
+        imagePath: img.imagePath,
+        s3Key: img.s3Key,
+      }));
       if (data.galleryImages && data.galleryImages.length > 0) {
         const newGalleryUploads = await Promise.all(
           data.galleryImages.map(async (file) => {
@@ -136,13 +143,14 @@ export default function EditProjectForm({ project }: EditProjectFormProps) {
               body: formData,
             });
             const upload = await galleryImageResponse.json();
-            return upload.success ? upload.publicUrl : null;
+            return upload.success ? upload : null;
           })
         );
-        galleryUrls = [
-          ...galleryUrls,
-          ...newGalleryUploads.filter((url): url is string => url !== null),
-        ];
+
+        galleryUrls = newGalleryUploads.map((upload) => ({
+          imagePath: upload.publicUrl,
+          s3Key: upload.s3Key,
+        }));
       }
 
       // Prepare project data for update
@@ -151,7 +159,11 @@ export default function EditProjectForm({ project }: EditProjectFormProps) {
         id: project.id,
         featuredImageSrc: featuredImageUrl,
         technologies: data.technologies,
-        galleryImages: galleryUrls.map((url) => ({ imagePath: url })),
+        galleryImages: galleryUrls.map((url) => ({
+          imagePath: url.imagePath,
+          s3Key: url.s3Key || "",
+        })),
+        s3Key: s3Key || "",
       };
 
       // Update the project

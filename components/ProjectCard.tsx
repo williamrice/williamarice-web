@@ -14,7 +14,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
       key={project.id}
       className="p-4 w-full m-4 space-y-2 shadow-md rounded-md border-2 border-gray-300"
     >
-      <div className="w-full flex justify-center">
+      <div className="w-full flex justify-center min-h-[300px]">
         <Image
           src={project.featuredImageSrc}
           alt={project.featuredImageAlt}
@@ -25,7 +25,9 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
         />
       </div>
       <div>
-        <h2 className="text-3xl font-bold m-2 text-center">{project.title}</h2>
+        <h2 className="text-3xl flex justify-center items-center font-bold m-4 text-center min-h-[100px]">
+          {project.title}
+        </h2>
         <div className="flex justify-center m-2">
           {project.technologies.map((technology) => {
             return (
@@ -38,7 +40,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           })}
         </div>
       </div>
-      <div className="my-2 p-2">
+      <div className="my-2 p-2 min-h-[150px]">
         <p className="text-left">{project.description}</p>
       </div>
       <div className="flex justify-center gap-2 m-2">
