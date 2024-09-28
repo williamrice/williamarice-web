@@ -12,7 +12,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
   return (
     <div
       key={project.id}
-      className="p-4 w-full m-4 space-y-2 shadow-md rounded-md border-2 border-gray-300"
+      className="p-4 w-full space-y-2 shadow-md rounded-md border-2 border-gray-300"
     >
       <div className="w-full flex justify-center min-h-[300px]">
         <Image
