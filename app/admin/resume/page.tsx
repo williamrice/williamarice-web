@@ -319,7 +319,7 @@ export default function ResumeForm() {
         })),
       };
 
-      const response = await fetch("/api/admin/resume", {
+      const response = await fetch("/api/admin/resume/update", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(convertedData),
