@@ -11,8 +11,8 @@ import SecondaryButton from "./SecondaryButton";
 const FeaturedProjects = async () => {
   const projects = await getAllProjects();
   return (
-    <div className="my-8">
-      <div className="flex flex-col justify-center m-4">
+    <div className="my-8 max-w-full overflow-hidden">
+      <div className="flex flex-col justify-center my-4">
         <h2 className="text-4xl font-bold">Featured Projects</h2>
         <Divider />
         <div className="flex justify-center">
@@ -22,7 +22,7 @@ const FeaturedProjects = async () => {
         </div>
       </div>
 
-      <div className="grid lg:grid-cols-3 md:grid-cols-2 sm-grid-cols-1 gap-4">
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 sm-grid-cols-1 gap-2">
         {projects.map((project: Project) => {
           if (!project.featured) {
             return null;
