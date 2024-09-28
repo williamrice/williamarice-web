@@ -1,250 +1,346 @@
 "use client";
 
-import Image from "next/image";
-import React, { useEffect } from "react";
+import Header from "@/components/Header";
+import React, { useEffect, useState, useRef } from "react";
 import { SkewLoader } from "react-spinners";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import SectionHeader from "./components/SectionHeader";
-import { workerData } from "worker_threads";
+import { useReactToPrint } from "react-to-print";
+import { FaLinkedin, FaGithub, FaGlobe } from "react-icons/fa";
+import { ResumeType } from "@/app/types/resume";
+import { Resume } from "@prisma/client";
 
-function getFormattedDate(date: string) {
-  const originalDate = new Date(date);
-  const formattedDate = new Date(
-    originalDate.getFullYear(),
-    originalDate.getMonth(),
-    originalDate.getDate() + 1
-  ).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  });
-  return formattedDate;
+function formatDate(dateString: string): string {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("en-US", { year: "numeric", month: "short" });
 }
 
-const ResumePage = () => {
-  const imageUrl =
-    "https://raw.githubusercontent.com/williamrice/williamrice.github.io/main/profile_tie.jpg" as const;
-  const [data, setData] = React.useState<any>(null);
-  const [dataLoading, setDataLoading] = React.useState(false);
+const ResumePage: React.FC = () => {
+  const [data, setData] = useState<ResumeType | null>(null);
+  const [loading, setLoading] = useState(true);
+  const componentRef = useRef(null);
+
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+    pageStyle: `
+      @page {
+        size: auto;
+        margin: 10mm;
+      }
+      @media print {
+        body {
+          -webkit-print-color-adjust: exact;
+          font-size: 10px;
+        }
+        html, body {
+          height: initial !important;
+          overflow: initial !important;
+          -webkit-print-color-adjust: exact;
+        }
+      }
+    `,
+    removeAfterPrint: true,
+    documentTitle: "William_Rice_Resume.pdf",
+  });
 
   useEffect(() => {
-    async function getData() {
-      const res = await fetch(
-        "https://raw.githubusercontent.com/williamrice/williamrice.github.io/main/resume.json",
-        { next: { revalidate: 3600 } }
-      );
-      setDataLoading(true);
-      const data = await res.json();
-      setData(data);
-      setDataLoading(false);
+    async function fetchData() {
+      try {
+        const response = await fetch("/api/admin/resume");
+        if (!response.ok) {
+          throw new Error("Failed to fetch resume data");
+        }
+        const jsonData = (await response.json()) as ResumeType;
+        setData(jsonData);
+      } catch (error) {
+        console.error("Error fetching resume data:", error);
+      } finally {
+        setLoading(false);
+      }
     }
-    getData();
-    console.log(data);
-    return () => {};
+    fetchData();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <SkewLoader color="#4A90E2" />
+      </div>
+    );
+  }
+
+  if (!data) {
+    return <div>Error loading resume data</div>;
+  }
 
   return (
     <>
-      {data ? (
-        // Basic Resume Information
-        <div className="flex justify-center w-full h-full">
-          <div className="flex-col items-center text-center justify-center mt-4 p-4 w-72 md:w-3/4">
-            <Image
-              src={imageUrl}
-              alt="Profile Picture"
-              width={150}
-              height={150}
-              className="rounded-full hover:scale-125 transition duration-500 ease-in-out transform hover:shadow-2xl h-48 w-48 mx-auto my-6"
-            />
-            <div className="flex flex-col justify-center items-center">
-              <p className="text-3xl font-extrabold m-1">
-                {data?.basics?.name}
-              </p>
-              <p className="text-xl text-muted-foreground m-1">
-                {data?.basics?.label}
-              </p>
-              <p className="text-md font-bold mb-2">{data?.basics?.email}</p>
-              <div className="text-wrap text-center align-middle text-xs w-full md:w-3/4 ">
-                <p className="">{data?.basics?.summary}</p>
+      <Header>
+        <div className="h-full flex flex-col items-center justify-center">
+          <h1 className="lg:text-6xl text-4xl font-bold text-center text-white">
+            Resume
+          </h1>
+        </div>
+      </Header>
+      <div className="max-w-4xl mx-auto p-4 sm:p-8">
+        <button
+          onClick={handlePrint}
+          className="mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors duration-200"
+        >
+          Print Resume
+        </button>
+        <div ref={componentRef} className="bg-white text-gray-800 text-sm">
+          <header className="mb-4">
+            <h1 className="text-xl sm:text-2xl font-bold">{data.name}</h1>
+            <p className="text-base sm:text-lg text-gray-600">{data.label}</p>
+            <div className="mt-1 flex flex-col items-start">
+              <div className="flex flex-wrap items-center mb-1">
+                <a
+                  href={`mailto:${data.email}`}
+                  className="mr-2 hover:text-blue-500"
+                >
+                  {data.email}
+                </a>
+                <span className="text-gray-500 mx-2 hidden sm:inline">|</span>
+                <span className="mr-2">{data.phone}</span>
+                <span className="text-gray-500 mx-2 hidden sm:inline">|</span>
+                <span className="mr-2">
+                  {data.city}, {data.region}
+                </span>
+              </div>
+              <div className="flex flex-wrap items-center">
+                <a
+                  href={data.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mr-2 hover:text-blue-500"
+                >
+                  <FaGlobe className="inline mr-1" />
+                  <span className="hidden sm:inline">{data.url}</span>
+                </a>
+                {data.profiles.map((profile, index) => (
+                  <React.Fragment key={index}>
+                    <span className="text-gray-500 mx-2 hidden sm:inline">
+                      |
+                    </span>
+                    <a
+                      href={profile.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mr-2 hover:text-blue-500"
+                    >
+                      {profile.network === "LinkedIn" && (
+                        <FaLinkedin className="inline mr-1" />
+                      )}
+                      {profile.network === "Github" && (
+                        <FaGithub className="inline mr-1" />
+                      )}
+                      <span className="hidden sm:inline">
+                        {profile.username}
+                      </span>
+                    </a>
+                  </React.Fragment>
+                ))}
               </div>
             </div>
+          </header>
 
-            <SectionHeader title="Skills" />
+          <section className="mb-4">
+            <h2 className="text-lg font-semibold border-b border-gray-300 mb-1">
+              Summary
+            </h2>
+            <p className="text-xs sm:text-sm">{data.summary}</p>
+          </section>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-4">
-              {data.skills?.map((skill: any, index: number) => (
-                <Card key={index}>
-                  <CardHeader>
-                    <CardTitle>{skill.name}</CardTitle>
-                    <CardDescription>{skill.level}</CardDescription>
-                  </CardHeader>
-                  <CardContent className="md:flex md:flex-wrap gap-2 justify-center ">
-                    {skill.keywords?.map((keyword: any, index: number) => (
-                      <div
-                        key={index}
-                        className=" border-2 border-white-200 rounded-full my-1"
+          <section className="mb-4">
+            <h2 className="text-lg font-semibold border-b border-gray-300 mb-1">
+              Skills
+            </h2>
+            <div className="flex flex-wrap text-xs sm:text-sm">
+              {data.skills.map((skill, index) => (
+                <div key={index} className="mr-4 mb-1">
+                  <strong>
+                    {skill.name} ({skill.level}):
+                  </strong>{" "}
+                  {skill.keywords.join(", ")}
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="mb-4">
+            <h2 className="text-lg font-semibold border-b border-gray-300 mb-1">
+              Work Experience
+            </h2>
+            {data.work.slice(0, 3).map((job, index) => (
+              <div key={index} className="mb-2">
+                <h3 className="text-sm sm:text-base font-semibold">
+                  {job.position} - {job.name}
+                </h3>
+                <p className="text-xs sm:text-sm text-gray-600">
+                  {job.location}
+                </p>
+                <p className="text-xs sm:text-sm text-gray-500">
+                  {formatDate(job.startDate.toString())} -{" "}
+                  {job.endDate ? formatDate(job.endDate.toString()) : "Present"}
+                </p>
+                <p className="text-xs sm:text-sm mt-1">{job.summary}</p>
+                {job.highlights.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mt-1">
+                    {job.highlights.map((highlight, hIndex) => (
+                      <span
+                        key={hIndex}
+                        className="px-2 py-1 bg-gray-100 rounded-full text-xs sm:text-sm"
                       >
-                        <p className="p-2 text-xs">{keyword}</p>
-                      </div>
+                        {highlight}
+                      </span>
                     ))}
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-            {/* // Resume Employment */}
-            <SectionHeader title="Employment History" />
-
-            <div className="grid grid-cols-1  gap-2 mt-4">
-              {data.work.map((work: any, index: number) => (
-                <Card key={index}>
-                  <CardHeader>
-                    <CardTitle>{work.position}</CardTitle>
-                    <CardDescription>
-                      <p>{work.name}</p>
-                      <p>{work.location}</p>
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="md:flex md:flex-wrap gap-2 justify-center ">
-                    {work.summary}
-                  </CardContent>
-                  <CardContent className="flex justify-center">
-                    <div className="border-2 rounded-md w-48 p-4">
-                      {/* <p className="text-sm mb-1">Dates Employed</p> */}
-                      <div className="gap-2">
-                        <p className="text-xs">
-                          {getFormattedDate(work.startDate)}
-                        </p>
-                        <p className="text-xs">&nbsp; - &nbsp;</p>
-                        <p className="text-xs">
-                          {work.endDate
-                            ? getFormattedDate(work.endDate)
-                            : "Present"}
-                        </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-
-            <SectionHeader title="Education" />
-
-            {data.education.map((education: any, index: number) => (
-              <Card key={index}>
-                <CardHeader>
-                  <CardTitle>{education.studyType}</CardTitle>
-                  <CardDescription>{education.institution}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-md">GPA - {education.score}</p>
-                </CardContent>
-                <CardContent className="md:flex md:flex-wrap gap-2 justify-center ">
-                  <p className="text-xs">
-                    {new Date(education.startDate).getFullYear()}
-                  </p>
-                  <p className="text-xs">&nbsp; - &nbsp;</p>
-                  <p className="text-xs">
-                    {education.endDate
-                      ? new Date(education.endDate).getFullYear()
-                      : "Present"}
-                  </p>
-                </CardContent>
-
-                <CardContent>
-                  <Separator className="my-2" />
-                  <p className="text-lg">Notable Courses</p>
-                </CardContent>
-                <CardContent className="md:flex md:flex-wrap gap-2 justify-center ">
-                  {education.courses.map((course: any, index: number) => (
-                    <div
-                      key={index}
-                      className=" border-2 border-white-200 rounded-full my-1"
-                    >
-                      <p className="p-2 text-xs">{course}</p>
-                    </div>
-                  ))}
-                </CardContent>
-              </Card>
-            ))}
-
-            <SectionHeader title="Certificates" />
-            <div className="grid grid-cols-1 gap-2 mt-4 md:grid-cols-2">
-              {data?.certificates?.map((cert: any, index: number) => (
-                <Card key={index}>
-                  <CardHeader>
-                    <CardTitle className="text-xl">{cert.name}</CardTitle>
-                    <CardDescription>{cert.issuer}</CardDescription>
-                  </CardHeader>
-                  <CardContent className="flex md:flex-wrap gap-2 justify-center ">
-                    <div className="border-2 border-white-200 rounded-md h-fit w-fit p-4">
-                      <p className="text-sm">Issued On:</p>
-                      <p className="text-xs">{getFormattedDate(cert.date)}</p>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-
-            <SectionHeader title="Volunteer Experience" />
-            {data.volunteer.map((vol: any, index: number) => (
-              <Card key={index}>
-                <CardHeader>
-                  <CardTitle>{vol.organization}</CardTitle>
-                  <CardDescription className="text-lg pt-4">
-                    {vol.position}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="flex justify-center">
-                  <div className="border-2 rounded-md w-48 p-4">
-                    <p className="text-xs">{getFormattedDate(vol.startDate)}</p>
-                    <p className="text-xs">&nbsp; - &nbsp;</p>
-                    <p className="text-xs">
-                      {vol.endDate
-                        ? new Date(vol.endDate).toLocaleDateString()
-                        : "Present"}
-                    </p>
                   </div>
-                </CardContent>
-              </Card>
+                )}
+              </div>
             ))}
+          </section>
 
-            <SectionHeader title="Hobbys and Interests" />
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mt-4">
-              {data.interests.map((interest: any, index: number) => (
-                <Card key={index}>
-                  <CardHeader>
-                    <CardTitle>{interest.name}</CardTitle>
-                  </CardHeader>
-                  <CardContent className="md:flex md:flex-wrap gap-2 justify-center">
-                    {interest.keywords.map((course: any, index: number) => (
-                      <div
-                        key={index}
-                        className=" border-2 border-white-200 rounded-full my-1"
+          <section className="mb-4">
+            <h2 className="text-lg font-semibold border-b border-gray-300 mb-1">
+              Education
+            </h2>
+            {data.education.map((edu, index) => (
+              <div key={index} className="mb-2">
+                <h3 className="text-sm sm:text-base font-semibold">
+                  {edu.institution}
+                </h3>
+                <p className="text-xs sm:text-sm">
+                  {edu.studyType} in {edu.area}
+                </p>
+                <p className="text-xs sm:text-sm text-gray-500">
+                  {formatDate(edu.startDate.toString())} -{" "}
+                  {formatDate(edu.endDate.toString())}
+                </p>
+                <p className="text-xs sm:text-sm">GPA: {edu.score}</p>
+                {edu.courses.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mt-1">
+                    {edu.courses.map((course, cIndex) => (
+                      <span
+                        key={cIndex}
+                        className="px-2 py-1 bg-gray-100 rounded-full text-xs sm:text-sm"
                       >
-                        <p className="p-2 text-xs">{course}</p>
-                      </div>
+                        {course}
+                      </span>
                     ))}
-                  </CardContent>
-                </Card>
+                  </div>
+                )}
+              </div>
+            ))}
+          </section>
+
+          <section className="mb-4">
+            <h2 className="text-lg font-semibold border-b border-gray-300 mb-1">
+              Certifications
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {data.certificates.map((cert, index) => (
+                <div
+                  key={index}
+                  className="px-2 py-1 bg-gray-100 rounded-full text-xs sm:text-sm"
+                >
+                  {cert.name} - {cert.issuer} (
+                  {formatDate(cert.date.toString())})
+                </div>
               ))}
             </div>
-          </div>
+          </section>
+
+          <section className="mb-4">
+            <h2 className="text-lg font-semibold border-b border-gray-300 mb-1">
+              Projects
+            </h2>
+            {data.projects.map((project, index) => (
+              <div key={index} className="mb-2">
+                <h3 className="text-sm sm:text-base font-semibold">
+                  {project.name}
+                </h3>
+                {project.url && (
+                  <div className="flex items-start gap-1">
+                    <p className="text-xs sm:text-sm text-gray-500">
+                      Project Link:
+                    </p>
+                    <a
+                      href={project.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs sm:text-sm text-blue-500 hover:underline"
+                    >
+                      {project.url}
+                    </a>
+                  </div>
+                )}
+                <p className="text-xs sm:text-sm text-gray-500">
+                  {formatDate(project.startDate.toString())} -{" "}
+                  {project.endDate
+                    ? formatDate(project.endDate.toString())
+                    : "Present"}
+                </p>
+                <p className="text-xs sm:text-sm">{project.description}</p>
+                <div className="flex flex-wrap gap-2 mt-1">
+                  {project.highlights.map((highlight, hIndex) => (
+                    <span
+                      key={hIndex}
+                      className="px-2 py-1 bg-gray-100 rounded-full text-xs sm:text-sm"
+                    >
+                      {highlight}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </section>
+
+          <section className="mb-4">
+            <h2 className="text-lg font-semibold border-b border-gray-300 mb-1">
+              Volunteer Experience
+            </h2>
+            {data.volunteer.map((vol, index) => (
+              <div key={index} className="mb-2">
+                <h3 className="text-sm sm:text-base font-semibold">
+                  {vol.position} - {vol.organization}
+                </h3>
+                <p className="text-xs sm:text-sm text-gray-500">
+                  {formatDate(vol.startDate.toString())} - Present
+                </p>
+                <p className="text-xs sm:text-sm">{vol.summary}</p>
+                {vol.highlights.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mt-1">
+                    {vol.highlights.map((highlight, hIndex) => (
+                      <span
+                        key={hIndex}
+                        className="px-2 py-1 bg-gray-100 rounded-full text-xs sm:text-sm"
+                      >
+                        {highlight}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </section>
+
+          <section className="mb-4">
+            <h2 className="text-lg font-semibold border-b border-gray-300 mb-1">
+              Interests
+            </h2>
+            <div className="flex flex-wrap gap-2">
+              {data.interests.map((interest, index) => (
+                <div
+                  key={index}
+                  className="px-2 py-1 bg-gray-100 rounded-full text-xs sm:text-sm"
+                >
+                  <strong>{interest.name}:</strong>{" "}
+                  {interest.keywords.join(", ")}
+                </div>
+              ))}
+            </div>
+          </section>
         </div>
-      ) : (
-        <div className="w-full text-center mx-auto mt-10">
-          <SkewLoader color="white" loading={dataLoading} size={30} />
-          <p>Resume Loading</p>
-        </div>
-      )}
+      </div>
     </>
   );
 };

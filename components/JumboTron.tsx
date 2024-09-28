@@ -5,37 +5,28 @@ import {
   AiFillLinkedin,
   AiFillTwitterCircle,
 } from "react-icons/ai";
+import HeaderTypeAnimation from "./header-type-animation";
+import MainButton from "./MainButton";
+import Header from "./Header";
 
 const JumboTron = () => {
   return (
-    <section className="bg-white dark:bg-gray-900 rounded-md">
-      <div className="py-6 px-4 mx-auto max-w-screen-xl text-center lg:py-10">
-        <div className="w-full flex justify-center mb-6">
-          <Image
-            alt="Profile Picture"
-            src="/profile_tie.jpg"
-            width={150}
-            height={150}
-            className="rounded-full hover:scale-125 transition duration-500 ease-in-out transform hover:shadow-2xl"
-          />
-        </div>
-        <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+    <Header height="600px">
+      <div className=" h-full flex flex-col items-center justify-center">
+        <Image
+          src="/images/william_rice-headshot.png"
+          width={200}
+          height={200}
+          alt="William Rice"
+        />
+        <h1 className="lg:text-6xl text-4xl font-bold text-center text-white">
           William Rice
         </h1>
-        <p className="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48 dark:text-gray-400">
-          Welcome to my personal space on the web! I&apos;m just another nerd
-          that enjoys software development, 3d printing, and gaming.
-        </p>
-        <a href="/resume">
-          <button
-            type="button"
-            className="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-md px-8 py-2.5 text-center mr-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800"
-          >
-            View My Resume
-          </button>
-        </a>
+        <HeaderTypeAnimation />
+        <MainButton text="Contact Me" link="/contact" />
       </div>
-    </section>
+      <div className="lg:col-span-1"></div>
+    </Header>
   );
 };
 

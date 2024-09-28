@@ -46,7 +46,6 @@ model User {
     sessions         Session[]
     settings         UserSettings?
     fuelTransactions FuelTransaction[]
-    bets             Bet[]
 }
 
 model VerificationToken {
@@ -79,21 +78,142 @@ model FuelTransaction {
     user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model Bet {
-    id          String   @id @default(cuid())
-    userId      String
-    amountBet   Decimal
-    amountWon   Decimal
-    status      Status
-    description String   @default("")
-    date        DateTime
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @updatedAt
-    user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+model Project {
+    id               Int            @id @default(autoincrement())
+    title            String
+    featured         Boolean        @default(false)
+    githubUrl        String
+    liveUrl          String?
+    description      String         @db.Text
+    problem          String         @db.Text
+    solution         String         @db.Text
+    story            String         @db.Text
+    s3Key            String?
+    technologies     String[]
+    featuredImageSrc String
+    featuredImageAlt String
+    createdAt        DateTime       @default(now())
+    updatedAt        DateTime       @updatedAt
+    galleryImages    GalleryImage[]
 }
 
-enum Status {
-    WIN
-    LOSS
-    PENDING
+model GalleryImage {
+    id        Int      @id @default(autoincrement())
+    imagePath String
+    s3Key     String?
+    projectId Int
+    project   Project  @relation(fields: [projectId], references: [id])
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Resume {
+    id           String                @id @default("1")
+    name         String
+    label        String
+    image        String
+    email        String
+    phone        String
+    url          String
+    summary      String                @db.Text
+    address      String?
+    postalCode   String?
+    city         String
+    countryCode  String
+    region       String
+    profiles     Profile[]
+    skills       Skill[]
+    work         WorkExperience[]
+    education    Education[]
+    certificates Certificate[]
+    projects     ResumeProject[]
+    volunteer    VolunteerExperience[]
+    interests    Interest[]
+    createdAt    DateTime              @default(now())
+    updatedAt    DateTime              @updatedAt
+}
+
+model Profile {
+    id       Int    @id @default(autoincrement())
+    network  String
+    username String
+    url      String
+    resumeId String
+    resume   Resume @relation(fields: [resumeId], references: [id])
+}
+
+model Skill {
+    id       Int      @id @default(autoincrement())
+    name     String
+    level    String
+    keywords String[]
+    resumeId String
+    resume   Resume   @relation(fields: [resumeId], references: [id])
+}
+
+model WorkExperience {
+    id         Int       @id @default(autoincrement())
+    name       String
+    location   String
+    position   String
+    startDate  DateTime
+    endDate    DateTime?
+    summary    String    @db.Text
+    highlights String[]
+    resumeId   String
+    resume     Resume    @relation(fields: [resumeId], references: [id])
+}
+
+model Education {
+    id          Int      @id @default(autoincrement())
+    institution String
+    area        String
+    studyType   String
+    startDate   DateTime
+    endDate     DateTime
+    score       String
+    courses     String[]
+    resumeId    String
+    resume      Resume   @relation(fields: [resumeId], references: [id])
+}
+
+model Certificate {
+    id       Int      @id @default(autoincrement())
+    name     String
+    date     DateTime
+    issuer   String
+    resumeId String
+    resume   Resume   @relation(fields: [resumeId], references: [id])
+}
+
+model ResumeProject {
+    id          Int       @id @default(autoincrement())
+    name        String
+    url         String?
+    startDate   DateTime
+    endDate     DateTime?
+    description String    @db.Text
+    highlights  String[]
+    resumeId    String
+    resume      Resume    @relation(fields: [resumeId], references: [id])
+}
+
+model VolunteerExperience {
+    id           Int       @id @default(autoincrement())
+    organization String
+    position     String
+    startDate    DateTime
+    endDate      DateTime?
+    summary      String    @db.Text
+    highlights   String[]
+    resumeId     String
+    resume       Resume    @relation(fields: [resumeId], references: [id])
+}
+
+model Interest {
+    id       Int      @id @default(autoincrement())
+    name     String
+    keywords String[]
+    resumeId String
+    resume   Resume   @relation(fields: [resumeId], references: [id])
 }

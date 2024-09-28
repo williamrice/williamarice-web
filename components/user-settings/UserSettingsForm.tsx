@@ -45,8 +45,6 @@ async function onSubmit(
     method: "POST",
     body: JSON.stringify(values),
   });
-  console.log("Response from POST /api/user/settings", response);
-  console.log(values);
   setThemeFunction(values.theme);
 }
 
