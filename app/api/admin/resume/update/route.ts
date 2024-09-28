@@ -15,7 +15,6 @@ export async function PUT(
   }
 
   try {
-    console.log("Updating resume...");
     const data = (await request.json()) as ResumeType;
     const updatedResume = await prisma.resume.update({
       where: { id: "1" },
@@ -66,7 +65,6 @@ export async function PUT(
       },
     });
     revalidatePath("/admin/resume");
-    console.log(NextResponse.json(updatedResume));
     return NextResponse.json(updatedResume);
   } catch (error) {
     console.error("Error updating resume:", error);
