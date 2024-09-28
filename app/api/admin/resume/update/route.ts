@@ -2,6 +2,7 @@ import { authOptions } from "@/app/lib/authOptions";
 import prisma from "@/app/lib/prisma";
 import { ResumeType } from "@/app/types/resume";
 import { getServerSession } from "next-auth";
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
 export async function PUT(
@@ -14,6 +15,7 @@ export async function PUT(
   }
 
   try {
+    console.log("Updating resume...");
     const data = (await request.json()) as ResumeType;
     const updatedResume = await prisma.resume.update({
       where: { id: "1" },
@@ -63,7 +65,8 @@ export async function PUT(
         interests: true,
       },
     });
-
+    revalidatePath("/admin/resume");
+    console.log(NextResponse.json(updatedResume));
     return NextResponse.json(updatedResume);
   } catch (error) {
     console.error("Error updating resume:", error);

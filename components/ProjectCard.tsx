@@ -44,7 +44,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
         <p className="text-left">{project.description}</p>
       </div>
       <div className="flex justify-center gap-2 m-2">
-        {project.githubUrl !== "" ? (
+        {project.githubUrl !== "" && project.githubUrl !== null ? (
           <Link
             href={project.githubUrl}
             target="_blank"
