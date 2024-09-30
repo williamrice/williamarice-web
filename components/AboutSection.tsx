@@ -3,7 +3,7 @@ import Image from "next/image";
 import Divider from "./Divider";
 
 const aboutMeText = `
-Hello! I'm William Rice, welcome to my little space on the web. With a background in law enforcement, I bring a unique perspective to software development.
+Hello! I'm William Rice, welcome to my little space on the web. I'm proudly from Eastern Kentucky and I grew up like most kids here as indigent and in unfavorable conditions with my parents being addicted to drugs. I overcame the odds and proudly served my community as a police officer for over 12 years and now I'm working full time as a Software Developer. I've had a lifelong passion for technology and writing code. 
 
 I know several programming languages and frameworks. My experience includes anything from writing Wordpress Plugins in PHP, building video game mods in C++ to full stack web development with React and other frameworks.
 
