@@ -65,6 +65,7 @@ export async function PUT(
       },
     });
     revalidatePath("/admin/resume");
+    revalidatePath("/resume");
     return NextResponse.json(updatedResume);
   } catch (error) {
     console.error("Error updating resume:", error);
