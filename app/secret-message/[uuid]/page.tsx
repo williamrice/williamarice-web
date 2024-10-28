@@ -7,7 +7,10 @@ const SecretMessageSingleViewPage = async ({
 }) => {
   var secretMessage;
   const response = await fetch(
-    `https://secret.williamarice.com/api/Secret/${params.uuid}`
+    `https://secret.williamarice.com/api/Secret/${params.uuid}`,
+    {
+      cache: "no-store",
+    }
   );
   const data = await response.json();
 
