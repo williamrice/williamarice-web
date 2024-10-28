@@ -8,8 +8,6 @@ interface Props {
 }
 
 const SecretMessageView = ({ secretMessage }: Props) => {
-  console.log(secretMessage);
-
   return (
     <div className="min-h-[1200px]">
       <Header>
@@ -27,8 +25,8 @@ const SecretMessageView = ({ secretMessage }: Props) => {
           </div>
         ) : (
           <p>
-            No secret message found. It has already been used or you have the
-            wrong link.
+            No secret message found. The message has been viewed already or you
+            have the wrong link.
           </p>
         )}
       </div>
