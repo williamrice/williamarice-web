@@ -16,9 +16,7 @@ const FeaturedProjects = async () => {
         <h2 className="text-4xl font-bold">Featured Projects</h2>
         <Divider />
         <div className="flex justify-center">
-          <Link href={"/projects"}>
-            <SecondaryButton text="See All Projects" link="/projects" />
-          </Link>
+          <SecondaryButton text="See All Projects" link="/projects" />
         </div>
       </div>
 
