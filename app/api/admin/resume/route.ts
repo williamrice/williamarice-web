@@ -12,7 +12,11 @@ export async function GET(): Promise<
       include: {
         profiles: true,
         skills: true,
-        work: true,
+        work: {
+          orderBy: {
+            id: "asc",
+          },
+        },
         education: true,
         certificates: true,
         projects: true,
