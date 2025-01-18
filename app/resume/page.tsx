@@ -6,7 +6,6 @@ import { SkewLoader } from "react-spinners";
 import { useReactToPrint } from "react-to-print";
 import { FaLinkedin, FaGithub, FaGlobe } from "react-icons/fa";
 import { ResumeType } from "@/app/types/resume";
-import { Resume } from "@prisma/client";
 
 function formatDate(dateString: string): string {
   const date = new Date(dateString);
@@ -16,10 +15,10 @@ function formatDate(dateString: string): string {
 const ResumePage: React.FC = () => {
   const [data, setData] = useState<ResumeType | null>(null);
   const [loading, setLoading] = useState(true);
-  const componentRef = useRef(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
+    contentRef,
     pageStyle: `
       @page {
         size: auto;
@@ -37,7 +36,6 @@ const ResumePage: React.FC = () => {
         }
       }
     `,
-    removeAfterPrint: true,
     documentTitle: "William_Rice_Resume.pdf",
   });
 
@@ -82,12 +80,12 @@ const ResumePage: React.FC = () => {
       </Header>
       <div className="max-w-4xl mx-auto p-4 sm:p-8">
         <button
-          onClick={handlePrint}
+          onClick={() => handlePrint()}
           className="mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors duration-200"
         >
           Print Resume
         </button>
-        <div ref={componentRef} className="bg-white text-gray-800 text-sm">
+        <div ref={contentRef} className="bg-white text-gray-800 text-sm">
           <header className="mb-4">
             <h1 className="text-xl sm:text-2xl font-bold">{data.name}</h1>
             <p className="text-base sm:text-lg text-gray-600">{data.label}</p>
