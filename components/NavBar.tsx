@@ -17,6 +17,7 @@ interface MenuItem {
 const menuItems: MenuItem[] = [
   { name: "Home", href: "/" },
   { name: "Resume", href: "/resume" },
+  { name: "Credentials", href: "/credentials" },
   { name: "Contact", href: "/contact" },
 ];
 

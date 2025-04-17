@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import Divider from "./Divider";
+import SectionHeader from "./SectionHeader";
 
 const AboutSection = () => {
   return (
@@ -17,8 +17,7 @@ const AboutSection = () => {
             />
           </div>
           <div className="w-full md:w-1/2 px-10">
-            <h2 className="text-4xl font-bold mb-8">About Me</h2>
-            <Divider />
+            <SectionHeader title="About Me" />
             <p className="text-lg text-left mb-8">
               Hello! I&apos;m William Rice, welcome to my little space on the
               web. I&apos;m proudly from Eastern Kentucky and I grew up like

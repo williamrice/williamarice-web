@@ -5,7 +5,7 @@ import { AiFillEye, AiFillGithub } from "react-icons/ai";
 import ProjectCard from "./ProjectCard";
 import { Project } from "@prisma/client";
 import { getAllProjects } from "@/actions/projects";
-import Divider from "./Divider";
+import SectionHeader from "./SectionHeader";
 import SecondaryButton from "./SecondaryButton";
 
 const FeaturedProjects = async () => {
@@ -13,8 +13,7 @@ const FeaturedProjects = async () => {
   return (
     <div className="my-8 max-w-full overflow-hidden">
       <div className="flex flex-col justify-center my-4">
-        <h2 className="text-4xl font-bold">Featured Projects</h2>
-        <Divider />
+        <SectionHeader title="Featured Projects" />
         <div className="flex justify-center">
           <SecondaryButton text="See All Projects" link="/projects" />
         </div>
