@@ -42,7 +42,9 @@ const ResumePage: React.FC = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("/api/admin/resume");
+        const response = await fetch("/api/admin/resume", {
+          cache: "no-store",
+        });
         if (!response.ok) {
           throw new Error("Failed to fetch resume data");
         }

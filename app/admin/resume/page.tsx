@@ -218,77 +218,78 @@ export default function ResumeForm() {
     remove: removeInterest,
   } = useFieldArray({ control, name: "interests" });
 
+  // Extract fetchResume function to be reusable
+  const fetchResume = async () => {
+    try {
+      const response = await fetch("/api/admin/resume", {
+        cache: "no-store",
+      });
+      if (!response.ok) throw new Error("Failed to fetch resume");
+      const data: ResumeType = await response.json();
+
+      // Convert dates to strings
+      const formattedData = {
+        ...data,
+        work: data.work?.map((job) => ({
+          ...job,
+          startDate: job.startDate
+            ? new Date(job.startDate).toISOString().split("T")[0]
+            : "",
+          endDate: job.endDate
+            ? new Date(job.endDate).toISOString().split("T")[0]
+            : "",
+        })),
+        education: data.education?.map((edu) => ({
+          ...edu,
+          startDate: edu.startDate
+            ? new Date(edu.startDate).toISOString().split("T")[0]
+            : "",
+          endDate: edu.endDate
+            ? new Date(edu.endDate).toISOString().split("T")[0]
+            : "",
+        })),
+        certificates: data.certificates?.map((cert) => ({
+          ...cert,
+          date: cert.date
+            ? new Date(cert.date).toISOString().split("T")[0]
+            : "",
+        })),
+        projects: data.projects?.map((proj) => ({
+          ...proj,
+          startDate: proj.startDate
+            ? new Date(proj.startDate).toISOString().split("T")[0]
+            : "",
+          endDate: proj.endDate
+            ? new Date(proj.endDate).toISOString().split("T")[0]
+            : "",
+        })),
+        volunteer: data.volunteer?.map((vol) => ({
+          ...vol,
+          startDate: vol.startDate
+            ? new Date(vol.startDate).toISOString().split("T")[0]
+            : "",
+          endDate: vol.endDate
+            ? new Date(vol.endDate).toISOString().split("T")[0]
+            : "",
+        })),
+      };
+
+      reset(formattedData);
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error fetching resume:", error);
+      toast({
+        title: "Error",
+        description: "Failed to load resume data. Please try again.",
+        variant: "destructive",
+      });
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchResume = async () => {
-      try {
-        const response = await fetch("/api/admin/resume", {
-          cache: "no-store",
-        });
-        if (!response.ok) throw new Error("Failed to fetch resume");
-        const data: ResumeType = await response.json();
-
-        // Convert dates to strings
-        const formattedData = {
-          ...data,
-          work: data.work?.map((job) => ({
-            ...job,
-            startDate: job.startDate
-              ? new Date(job.startDate).toISOString().split("T")[0]
-              : "",
-            endDate: job.endDate
-              ? new Date(job.endDate).toISOString().split("T")[0]
-              : "",
-          })),
-          education: data.education?.map((edu) => ({
-            ...edu,
-            startDate: edu.startDate
-              ? new Date(edu.startDate).toISOString().split("T")[0]
-              : "",
-            endDate: edu.endDate
-              ? new Date(edu.endDate).toISOString().split("T")[0]
-              : "",
-          })),
-          certificates: data.certificates?.map((cert) => ({
-            ...cert,
-            date: cert.date
-              ? new Date(cert.date).toISOString().split("T")[0]
-              : "",
-          })),
-          projects: data.projects?.map((proj) => ({
-            ...proj,
-            startDate: proj.startDate
-              ? new Date(proj.startDate).toISOString().split("T")[0]
-              : "",
-            endDate: proj.endDate
-              ? new Date(proj.endDate).toISOString().split("T")[0]
-              : "",
-          })),
-          volunteer: data.volunteer?.map((vol) => ({
-            ...vol,
-            startDate: vol.startDate
-              ? new Date(vol.startDate).toISOString().split("T")[0]
-              : "",
-            endDate: vol.endDate
-              ? new Date(vol.endDate).toISOString().split("T")[0]
-              : "",
-          })),
-        };
-
-        reset(formattedData);
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Error fetching resume:", error);
-        toast({
-          title: "Error",
-          description: "Failed to load resume data. Please try again.",
-          variant: "destructive",
-        });
-        setIsLoading(false);
-      }
-    };
-
     fetchResume();
-  }, [reset]);
+  }, []);
 
   const onSubmit: SubmitHandler<ResumeFormData> = async (data) => {
     setIsSaving(true);
@@ -327,9 +328,10 @@ export default function ResumeForm() {
         body: JSON.stringify(convertedData),
       });
 
-      console.log("Response:", response);
-
       if (!response.ok) throw new Error("Failed to update resume");
+
+      // Refetch the resume data after successful update
+      await fetchResume();
 
       toast({
         title: "Success",

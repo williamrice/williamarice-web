@@ -66,7 +66,13 @@ export async function PUT(
     });
     revalidatePath("/admin/resume");
     revalidatePath("/resume");
-    return NextResponse.json(updatedResume);
+    return NextResponse.json(updatedResume, {
+      headers: {
+        "Cache-Control": "no-store, must-revalidate",
+        Pragma: "no-cache",
+        Expires: "0",
+      },
+    });
   } catch (error) {
     console.error("Error updating resume:", error);
     return NextResponse.json(
