@@ -17,7 +17,8 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
   return (
     <div
       key={project.id}
-      className="p-4 w-full space-y-2 shadow-md rounded-md border-2 border-gray-300 cursor-pointer transition-all ease-in-out hover:scale-105 hover:shadow-2xl"
+      className="p-4 w-full space-y-2 shadow-md rounded-md border-2 border-gray-300 cursor-pointer transition-all ease-in-out hover:scale-105 hover:shadow-2xl transform-gpu"
+      style={{ transformOrigin: "center" }}
       onClick={() => {
         router.push(`/projects/${project.id}`);
       }}

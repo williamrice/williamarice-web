@@ -24,7 +24,13 @@ export async function GET(): Promise<
         interests: true,
       },
     });
-    return NextResponse.json(resume as ResumeType);
+    return NextResponse.json(resume as ResumeType, {
+      headers: {
+        "Cache-Control": "no-store, must-revalidate",
+        Pragma: "no-cache",
+        Expires: "0",
+      },
+    });
   } catch (error) {
     console.error("Error fetching resume:", error);
     return NextResponse.json(
