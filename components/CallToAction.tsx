@@ -6,7 +6,7 @@ import Divider from "./Divider";
 
 const CallToAction = () => {
   return (
-    <div className="bg-gray-500 flex  flex-col justify-center gap-2 p-8 w-full">
+    <div className="bg-gray-800 flex  flex-col justify-center gap-2 p-8 w-full">
       <div className="flex flex-col gap-2 items-center">
         <h2 className="text-5xl text-white font-bold">Get in touch</h2>
         <p className="text-gray-300 align-text-bottom">
