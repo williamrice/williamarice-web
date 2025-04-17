@@ -296,7 +296,7 @@ const ResumePage: React.FC = () => {
 
           <section className="mb-4">
             <h2 className="text-lg font-semibold border-b border-gray-300 mb-1">
-              Volunteer Experience
+              Community Service
             </h2>
             {data.volunteer.map((vol, index) => (
               <div key={index} className="mb-2">
@@ -304,7 +304,8 @@ const ResumePage: React.FC = () => {
                   {vol.position} - {vol.organization}
                 </h3>
                 <p className="text-xs sm:text-sm text-gray-500">
-                  {formatDate(vol.startDate.toString())} - Present
+                  {formatDate(vol.startDate.toString())} -{" "}
+                  {vol.endDate ? formatDate(vol.endDate.toString()) : "Present"}
                 </p>
                 <p className="text-xs sm:text-sm">{vol.summary}</p>
                 {vol.highlights.length > 0 && (

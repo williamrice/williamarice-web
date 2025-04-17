@@ -898,7 +898,7 @@ export default function ResumeForm() {
         </AccordionItem>
 
         <AccordionItem value="volunteer">
-          <AccordionTrigger>Volunteer Experience</AccordionTrigger>
+          <AccordionTrigger>Community Service</AccordionTrigger>
           <AccordionContent>
             {volunteerFields.map((field, index) => (
               <div key={field.id} className="flex flex-col space-y-2 mb-4">
@@ -930,6 +930,11 @@ export default function ResumeForm() {
                     {errors.volunteer[index]?.startDate?.message}
                   </p>
                 )}
+                <Input
+                  {...register(`volunteer.${index}.endDate`)}
+                  placeholder="End Date"
+                  type="date"
+                />
                 <Textarea
                   {...register(`volunteer.${index}.summary`)}
                   placeholder="Summary"
@@ -957,8 +962,8 @@ export default function ResumeForm() {
                   onClick={() => removeVolunteer(index)}
                   variant="destructive"
                 >
-                  <MinusIcon className="mr-2 h-4 w-4" /> Remove Volunteer
-                  Experience
+                  <MinusIcon className="mr-2 h-4 w-4" /> Remove Community
+                  Service
                 </Button>
               </div>
             ))}
@@ -969,12 +974,13 @@ export default function ResumeForm() {
                   organization: "",
                   position: "",
                   startDate: "",
+                  endDate: "",
                   summary: "",
                   highlights: [],
                 })
               }
             >
-              <PlusIcon className="mr-2 h-4 w-4" /> Add Volunteer Experience
+              <PlusIcon className="mr-2 h-4 w-4" /> Add Community Service
             </Button>
           </AccordionContent>
         </AccordionItem>
