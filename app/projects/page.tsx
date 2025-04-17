@@ -23,6 +23,23 @@ export default async function ProjectsPage({
         </h1>
       </Header>
 
+      {/* Project Description */}
+      <div className="max-w-3xl mx-auto px-4 py-8 text-center">
+        <p className="text-lg text-gray-700 mb-4">
+          Here are some of the projects I&apos;ve completed or worked on outside
+          of work. Feel free to check out more of my work on my{" "}
+          <a
+            href="https://github.com/williamarice"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 hover:text-blue-800 underline"
+          >
+            GitHub
+          </a>
+          .
+        </p>
+      </div>
+
       {/* Projects Grid */}
       <main className=" mx-auto px-4 py-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
