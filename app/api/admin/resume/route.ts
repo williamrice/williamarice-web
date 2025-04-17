@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/lib/authOptions";
 import prisma from "@/app/lib/prisma";
 import { ResumeType } from "@/app/types/resume";
+
+// Opt out of caching for all data requests in the route segment
+export const dynamic = "force-dynamic";
 
 export async function GET(): Promise<
   NextResponse<ResumeType | { error: string }>
