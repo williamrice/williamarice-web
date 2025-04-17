@@ -25,6 +25,11 @@ const Footer = () => {
           </a>
         </li>
         <li>
+          <a href="/secret-message" className="mr-4 hover:underline md:mr-6">
+            Secret
+          </a>
+        </li>
+        <li>
           <a href="/contact" className="hover:underline">
             Contact
           </a>
