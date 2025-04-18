@@ -105,6 +105,12 @@ const IndividualProjectPage = async ({
         )}
 
         <div className="flex flex-wrap justify-center gap-4 animate-slideUp">
+          <Link
+            href="/projects"
+            className="flex items-center bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded transition duration-300"
+          >
+            ← Back to Projects
+          </Link>
           {project.githubUrl && (
             <Link
               href={project.githubUrl}

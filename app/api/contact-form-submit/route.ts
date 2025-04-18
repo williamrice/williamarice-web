@@ -1,10 +1,16 @@
-import { sendEmail } from "@/app/lib/contact_form_email";
+import { sendEmail } from "@/app/lib/resend";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  const data = await req.json();
-  const { name, email, message } = data;
-  const result = await sendEmail(name, email, message);
-
-  return NextResponse.json(result);
+  try {
+    const data = await req.json();
+    const { name, email, message } = data;
+    const result = await sendEmail(name, email, message);
+    return result;
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Failed to send email" },
+      { status: 500 }
+    );
+  }
 }
