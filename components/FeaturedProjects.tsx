@@ -19,7 +19,7 @@ const FeaturedProjects = async () => {
         </div>
       </div>
 
-      <div className="grid mx-2 lg:grid-cols-3 md:grid-cols-2 sm-grid-cols-1 gap-6">
+      <div className="grid mx-2 lg:grid-cols-3 md:grid-cols-2 sm-grid-cols-1 gap-6 p-4">
         {projects.map((project: Project) => {
           if (!project.featured) {
             return null;
