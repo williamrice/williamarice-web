@@ -1,6 +1,7 @@
 import React from "react";
 import "devicon/devicon.min.css";
-import Divider from "./Divider";
+import Link from "next/link";
+import SectionHeader from "./SectionHeader";
 
 interface Skill {
   name: string;
@@ -36,10 +37,7 @@ const SkillsSection = () => {
   const shuffledSkills = skills.sort(() => 0.5 - Math.random());
   return (
     <div className="bg-gray-200 flex flex-col justify-center items-center w-full px-4 py-8 mb-8">
-      <div className="flex flex-col justify-center mb-8">
-        <h2 className="text-4xl font-bold">Skills</h2>
-        <Divider />
-      </div>
+      <SectionHeader title="Skills" />
       <div className="flex flex-wrap max-w-6xl justify-center">
         {shuffledSkills.map((skill, index) => (
           <div
@@ -55,6 +53,15 @@ const SkillsSection = () => {
             <p className="text-sm">{skill.name}</p>
           </div>
         ))}
+      </div>
+
+      <div className="mt-8 text-center">
+        <Link
+          href="/credentials"
+          className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md"
+        >
+          View My Credentials
+        </Link>
       </div>
     </div>
   );

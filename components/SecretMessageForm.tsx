@@ -2,7 +2,7 @@
 import { useForm } from "react-hook-form";
 import SubmitButton from "./SubmitButton";
 import { useState } from "react";
-import { Copy } from "lucide-react";
+import { Copy, Check, Loader2 } from "lucide-react";
 
 type Inputs = {
   title: string;
@@ -11,8 +11,12 @@ type Inputs = {
 
 const SecretMessageForm = () => {
   const [url, setUrl] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const onSubmit = async (formData: Inputs) => {
     try {
+      setIsLoading(true);
       const response = await fetch(
         "https://secret.williamarice.com/api/Secret",
         {
@@ -27,10 +31,11 @@ const SecretMessageForm = () => {
         throw new Error("Failed to add secret message");
       }
       const data = await response.json();
-      console.log(data);
       setUrl(data.url);
     } catch (error) {
       console.error("Error adding secret message:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -40,16 +45,32 @@ const SecretMessageForm = () => {
     formState: { errors, isSubmitting },
   } = useForm<Inputs>();
 
+  const handleCopy = async () => {
+    if (url) {
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="w-full">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="space-y-4 bg-gray-100 shadow-md p-4 md:p-6 lg:p-8"
+        className="bg-white rounded-lg shadow-md p-6 md:p-8 space-y-6 relative"
       >
-        <div className="group relative w-72 md:w-80 lg:w-96">
+        {isLoading && (
+          <div className="absolute inset-0 bg-gray-50/80 rounded-lg flex items-center justify-center">
+            <div className="flex flex-col items-center space-y-3">
+              <Loader2 className="w-8 h-8 text-blue-500 animate-spin" />
+              <p className="text-gray-600">Creating your secret message...</p>
+            </div>
+          </div>
+        )}
+        <div className="space-y-2">
           <label
             htmlFor="title"
-            className="block w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+            className="block text-sm font-medium text-gray-700"
           >
             Title
           </label>
@@ -57,49 +78,71 @@ const SecretMessageForm = () => {
             {...register("title", { required: true })}
             id="title"
             type="text"
-            className="peer h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:drop-shadow-lg"
+            placeholder="Enter a title for your message"
+            className="w-full px-4 py-2 rounded-md bg-gray-50 border border-gray-300 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={isLoading}
           />
+          {errors.title && (
+            <p className="text-red-600 text-sm">Title is required</p>
+          )}
         </div>
-        {errors.title && <span>This field is required</span>}
 
-        <div className="group relative w-72 md:w-80 lg:w-96">
+        <div className="space-y-2">
           <label
             htmlFor="message"
-            className="block w-full pb-1 text-sm font-medium text-gray-500 transition-all duration-200 ease-in-out group-focus-within:text-blue-400"
+            className="block text-sm font-medium text-gray-700"
           >
             Message
           </label>
           <textarea
             {...register("message", { required: true })}
             id="message"
-            rows={4}
-            className="peer h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:drop-shadow-lg"
+            rows={6}
+            placeholder="Enter your secret message"
+            className="w-full px-4 py-2 rounded-md bg-gray-50 border border-gray-300 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={isLoading}
           />
+          {errors.message && (
+            <p className="text-red-600 text-sm">Message is required</p>
+          )}
         </div>
-        {errors.message && <span>This field is required</span>}
 
-        <div className="mt-4">
-          <SubmitButton loading={isSubmitting} />
+        <div className="pt-4">
+          <SubmitButton loading={isLoading} />
         </div>
       </form>
-      <div>
-        {url && (
-          <div className="mt-4 flex flex-col justify-center">
-            <div className="flex items-center">
-              <p>Your secret message url was created. Click to copy... </p>
-              <Copy
-                onClick={() => navigator.clipboard.writeText(url)}
-                className="ml-2 cursor-pointer hover:text-blue-700 hover:scale-110 transition-all ease-in-out"
-              />
-            </div>
-            <p>
-              You can share this url with others to allow them to view your
-              secret message.
-            </p>
-            <p> It only works one time. Do not test it or it will go away.</p>
+
+      {url && (
+        <div className="mt-8 bg-white rounded-lg shadow-md p-6 md:p-8">
+          <h3 className="text-xl font-semibold text-gray-900 mb-4">
+            Your Secret Message Link
+          </h3>
+          <div className="flex items-center space-x-2 bg-gray-50 rounded-md p-3 border border-gray-200">
+            <p className="text-gray-700 flex-1 truncate">{url}</p>
+            <button
+              onClick={handleCopy}
+              className="p-2 rounded-md hover:bg-gray-100 transition-colors duration-200"
+              title="Copy to clipboard"
+            >
+              {copied ? (
+                <Check className="w-5 h-5 text-green-600" />
+              ) : (
+                <Copy className="w-5 h-5 text-gray-500" />
+              )}
+            </button>
           </div>
-        )}
-      </div>
+          <div className="mt-4 space-y-2 text-sm text-gray-600">
+            <p>
+              ⚠️ This link will only work once. Do not test it or the message
+              will be permanently deleted.
+            </p>
+            <p>
+              Share this link with others to allow them to view your secret
+              message.
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -240,7 +240,7 @@ const ResumePage: React.FC = () => {
               {data.certificates.map((cert, index) => (
                 <div
                   key={index}
-                  className="px-2 py-1 bg-gray-100 rounded-full text-xs sm:text-sm"
+                  className="px-3 py-2 bg-gray-100 rounded-full text-xs sm:text-sm flex items-center"
                 >
                   {cert.name} - {cert.issuer} (
                   {formatDate(cert.date.toString())})

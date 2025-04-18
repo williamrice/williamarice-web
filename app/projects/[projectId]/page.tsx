@@ -7,6 +7,7 @@ import { AiFillGithub, AiFillEye } from "react-icons/ai";
 import Divider from "@/components/Divider";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
+import SectionHeader from "@/components/SectionHeader";
 
 const IndividualProjectPage = async ({
   params,
@@ -61,36 +62,30 @@ const IndividualProjectPage = async ({
             />
           </Zoom>
           <div>
-            <h2 className="text-2xl font-bold mb-4 text-center">Description</h2>
-            <Divider />
+            <SectionHeader title="Description" />
             <p className="text-gray-700">{project.description}</p>
           </div>
         </div>
 
         <div className="mb-12 animate-slideUp bg-white p-8 rounded-lg shadow-md">
-          <h2 className="text-2xl font-bold mb-4 text-center">Problem</h2>
-          <Divider />
+          <SectionHeader title="Problem" />
           <p>{project.problem}</p>
         </div>
 
         <div className="mb-12 animate-slideUp bg-white p-8 rounded-lg shadow-md">
-          <h2 className="text-2xl font-bold mb-4 text-center">Solution</h2>
-          <Divider />
+          <SectionHeader title="Solution" />
           <p className="text-gray-700">{project.solution}</p>
         </div>
 
         <div className="mb-12 animate-slideUp bg-white p-8 rounded-lg shadow-md">
-          <h2 className="text-2xl font-bold mb-4 text-center">Story</h2>
-          <Divider />
-
+          <SectionHeader title="Story" />
           <p className="text-gray-700">{project.story}</p>
         </div>
 
         {project.galleryImages && project.galleryImages.length > 0 && (
           <>
             <div className="mb-12 animate-slideUp bg-white p-8 rounded-lg shadow-md">
-              <h2 className="text-2xl font-bold mb-4 text-center">Gallery</h2>
-              <Divider />
+              <SectionHeader title="Gallery" />
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {project.galleryImages.map((image, index) => (
                   <Zoom key={index}>
