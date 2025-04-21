@@ -5,4 +5,5 @@ export interface ContactFormState {
   formError: { isError: boolean; message: string };
   formSuccess: boolean;
   isLoading?: boolean;
+  recaptchaToken?: string | null;
 }

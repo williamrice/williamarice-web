@@ -7,6 +7,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import { Toaster } from "@/components/ui/toaster";
 import ConditionalNavBar from "@/components/ConditionalNavBar";
 import Google from "next-auth/providers/google";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "William Rice",
@@ -20,6 +21,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <Script
+          src="https://www.google.com/recaptcha/api.js"
+          async
+          defer
+          strategy="afterInteractive"
+        />
+      </head>
       <body className="h-screen w-full">
         <NextAuthProvider>
           <div className="flex flex-col min-h-screen items-center justify-center">
