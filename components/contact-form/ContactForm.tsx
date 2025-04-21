@@ -1,10 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SuccessfulEmailBanner from "./SuccessfulEmailBanner";
 import { ContactFormState } from "./contact_form_state";
 import { PulseLoader } from "react-spinners";
 import ErrorEmailBanner from "./ErrorEmailBanner";
+import RecaptchaCheckbox from "./RecaptchaCheckbox";
+import useDebounce from "@/app/lib/useDebounce";
 
 const ContactForm = () => {
   const [contactFormState, setContactFormState] = useState<ContactFormState>({
@@ -17,53 +19,187 @@ const ContactForm = () => {
     },
     formSuccess: false,
     isLoading: false,
+    recaptchaToken: null,
   });
 
-  async function handleContactForm(e: React.MouseEvent<HTMLButtonElement>) {
-    e.preventDefault();
+  // Track if form has been submitted once
+  const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState(false);
+
+  // Debounce the form fields for validation
+  const debouncedName = useDebounce(contactFormState.name);
+  const debouncedEmail = useDebounce(contactFormState.email);
+  const debouncedMessage = useDebounce(contactFormState.message);
+  const debouncedToken = useDebounce(contactFormState.recaptchaToken);
+
+  // Validate form fields when debounced values change, but only after first submission
+  useEffect(() => {
+    if (
+      hasAttemptedSubmit &&
+      (debouncedName || debouncedEmail || debouncedMessage)
+    ) {
+      validateForm(true);
+    }
+  }, [
+    debouncedName,
+    debouncedEmail,
+    debouncedMessage,
+    debouncedToken,
+    hasAttemptedSubmit,
+  ]);
+
+  // Function to validate the form
+  const validateForm = (isDebouncedValidation = false) => {
+    console.log("Validating form:", {
+      name: contactFormState.name,
+      email: contactFormState.email,
+      message: contactFormState.message,
+      recaptchaToken: contactFormState.recaptchaToken,
+      hasAttemptedSubmit,
+      isDebouncedValidation,
+    });
+
+    // Email validation - always check this regardless of submission attempt
+    // More strict email regex that requires proper format with @ and domain
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const isEmailValid = emailRegex.test(contactFormState.email);
+    console.log("Email validation:", {
+      email: contactFormState.email,
+      isEmailValid,
+    });
+
+    if (!isEmailValid) {
+      console.log("Email validation failed");
+      setContactFormState({
+        ...contactFormState,
+        formError: {
+          isError: true,
+          message: "Please enter a valid email address.",
+        },
+        formSuccess: false,
+      });
+      return false;
+    }
 
     if (
       !contactFormState.name ||
       !contactFormState.email ||
       !contactFormState.message
     ) {
+      console.log("Empty fields validation failed");
       setContactFormState({
         ...contactFormState,
-        formError: { isError: true, message: "Please fill out all fields." },
+        formError: {
+          isError: true,
+          message: "Please fill out all fields.",
+        },
+        formSuccess: false,
       });
+      return false;
+    }
+
+    if (!contactFormState.recaptchaToken) {
+      console.log("reCAPTCHA validation failed");
+      setContactFormState({
+        ...contactFormState,
+        formError: {
+          isError: true,
+          message: "Please complete the reCAPTCHA verification.",
+        },
+        formSuccess: false,
+      });
+      return false;
+    }
+
+    // Clear errors if all validations pass
+    console.log("All validations passed");
+    setContactFormState({
+      ...contactFormState,
+      formError: {
+        isError: false,
+        message: "",
+      },
+      formSuccess: false,
+    });
+
+    return true;
+  };
+
+  async function handleContactForm(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+
+    // Mark that user has attempted to submit
+    setHasAttemptedSubmit(true);
+
+    // Validate form before submission
+    const isValid = validateForm();
+
+    // If validation fails, don't proceed with submission
+    if (!isValid) {
       return;
     }
-    setContactFormState({ ...contactFormState, isLoading: true });
-    const res = await fetch("/api/contact-form-submit", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: contactFormState.name,
-        email: contactFormState.email,
-        message: contactFormState.message,
-      }),
-    });
-    setContactFormState({ ...contactFormState, isLoading: false });
-    if (res.status === 200) {
-      setContactFormState({
-        ...contactFormState,
-        name: "",
-        email: "",
-        message: "",
-        formSuccess: true,
+
+    // Set loading state only if validation passes
+    setContactFormState((prev) => ({ ...prev, isLoading: true }));
+
+    try {
+      const res = await fetch("/api/contact-form-submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: contactFormState.name,
+          email: contactFormState.email,
+          message: contactFormState.message,
+          recaptchaToken: contactFormState.recaptchaToken,
+        }),
       });
-    } else {
+
+      if (res.status === 200) {
+        setContactFormState({
+          ...contactFormState,
+          name: "",
+          email: "",
+          message: "",
+          recaptchaToken: null,
+          formSuccess: true,
+          formError: { isError: false, message: "" },
+        });
+        // Reset the submission attempt flag on success
+        setHasAttemptedSubmit(false);
+      } else {
+        const errorData = await res.json();
+        setContactFormState({
+          ...contactFormState,
+          formError: {
+            isError: true,
+            message:
+              errorData.error ||
+              "Something went wrong. Please try again later.",
+          },
+          formSuccess: false,
+        });
+      }
+    } catch (error) {
       setContactFormState({
         ...contactFormState,
         formError: {
           isError: true,
           message: "Something went wrong. Please try again later.",
         },
+        formSuccess: false,
       });
+    } finally {
+      setContactFormState((prev) => ({ ...prev, isLoading: false }));
     }
   }
+
+  const handleRecaptchaVerify = (token: string | null) => {
+    setContactFormState({
+      ...contactFormState,
+      recaptchaToken: token,
+    });
+  };
 
   return (
     <div className="block w-2/3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-900 dark:border-gray-700 ">
@@ -129,6 +265,8 @@ const ContactForm = () => {
             required
           />
         </div>
+
+        <RecaptchaCheckbox onVerify={handleRecaptchaVerify} />
 
         <button
           type="submit"
