@@ -20,29 +20,30 @@ export default async function ProjectsPage({
       {/* Header */}
       <Header>
         <h1 className="text-4xl md:text-6xl font-bold text-white text-center">
-          My Projects
+          Project Portfolio
         </h1>
       </Header>
 
       {/* Project Description */}
       <div className="mx-auto px-4 py-8">
-        <Card>
-          <CardContent className="pt-6">
-            <CardDescription className="text-lg text-center">
-              Here are some of the projects I&apos;ve completed or worked on
-              outside of work. Feel free to check out more of my work on my{" "}
-              <a
-                href="https://github.com/williamarice"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 hover:text-blue-800 underline"
-              >
-                GitHub
-              </a>
-              .
-            </CardDescription>
-          </CardContent>
-        </Card>
+        <div className="p-6 rounded-lg ">
+          <h2 className="text-2xl font-semibold mb-3 text-center">
+            My Projects
+          </h2>
+          <p className="text-lg text-gray-700 text-center">
+            Here are some of the projects I&apos;ve completed or worked on
+            outside of work. Feel free to check out more of my work on my{" "}
+            <a
+              href="https://github.com/williamarice"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:text-blue-800 underline"
+            >
+              GitHub
+            </a>
+            .
+          </p>
+        </div>
       </div>
 
       {/* Projects Grid */}

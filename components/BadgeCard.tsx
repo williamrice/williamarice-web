@@ -26,7 +26,7 @@ export default function BadgeCard({
   height = 191,
 }: BadgeCardProps) {
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md flex flex-col items-center h-full">
+    <div className="shadow-sm rounded-md border-2 border-gray-300 p-6 rounded-lg shadow-md flex flex-col items-center h-full">
       <h2 className="text-xl font-semibold mb-4 text-center">{title}</h2>
       <div className="flex-grow flex items-center justify-center w-full">
         {type === "badgr" && badgeUrl && (

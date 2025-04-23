@@ -46,9 +46,9 @@ export default function CredentialsPage() {
         </h1>
       </Header>
 
-      <div className="max-w-6xl mx-auto px-4 py-8">
+      <div className=" mx-auto px-4 py-8">
         <div className="mb-8">
-          <div className="bg-white p-6 rounded-lg shadow-md">
+          <div className="p-6 rounded-lg ">
             <h2 className="text-2xl font-semibold mb-3 text-center">
               Professional Certifications
             </h2>
