@@ -202,7 +202,7 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="block w-2/3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-900 dark:border-gray-700 ">
+    <div className="block md:w-2/3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-900 dark:border-gray-700 ">
       <form>
         <div className="mb-6">
           <label
