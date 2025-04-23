@@ -34,7 +34,7 @@ export default async function ProjectsPage({
             Here are some of the projects I&apos;ve completed or worked on
             outside of work. Feel free to check out more of my work on my{" "}
             <a
-              href="https://github.com/williamarice"
+              href="https://github.com/williamrice"
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-600 hover:text-blue-800 underline"
