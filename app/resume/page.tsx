@@ -165,6 +165,26 @@ const ResumePage: React.FC = () => {
               ))}
             </div>
           </section>
+          <section className="mb-4">
+            <h2 className="text-lg font-semibold border-b border-gray-300 mb-1">
+              Education
+            </h2>
+            {data.education
+              .sort((a, b) => (a.menuOrder < b.menuOrder ? -1 : 1))
+              .map((edu, index) => (
+                <div key={index} className="mb-2">
+                  <h3 className="text-sm sm:text-base font-semibold">
+                    {edu.institution}
+                  </h3>
+                  <p className="text-xs sm:text-sm">
+                    {edu.studyType} in {edu.area}
+                  </p>
+                  <p className="text-xs sm:text-sm text-gray-500">
+                    {formatDate(edu.endDate.toString())}
+                  </p>
+                </div>
+              ))}
+          </section>
 
           <section className="mb-4">
             <h2 className="text-lg font-semibold border-b border-gray-300 mb-1">
@@ -191,39 +211,6 @@ const ResumePage: React.FC = () => {
                         className="px-2 py-1 bg-gray-100 rounded-full text-xs sm:text-sm"
                       >
                         {highlight}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-          </section>
-
-          <section className="mb-4">
-            <h2 className="text-lg font-semibold border-b border-gray-300 mb-1">
-              Education
-            </h2>
-            {data.education.map((edu, index) => (
-              <div key={index} className="mb-2">
-                <h3 className="text-sm sm:text-base font-semibold">
-                  {edu.institution}
-                </h3>
-                <p className="text-xs sm:text-sm">
-                  {edu.studyType} in {edu.area}
-                </p>
-                <p className="text-xs sm:text-sm text-gray-500">
-                  {formatDate(edu.startDate.toString())} -{" "}
-                  {formatDate(edu.endDate.toString())}
-                </p>
-                <p className="text-xs sm:text-sm">GPA: {edu.score}</p>
-                {edu.courses.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mt-1">
-                    {edu.courses.map((course, cIndex) => (
-                      <span
-                        key={cIndex}
-                        className="px-2 py-1 bg-gray-100 rounded-full text-xs sm:text-sm"
-                      >
-                        {course}
                       </span>
                     ))}
                   </div>
