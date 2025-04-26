@@ -169,10 +169,8 @@ model Education {
     institution String
     area        String
     studyType   String
-    startDate   DateTime
     endDate     DateTime
-    score       String
-    courses     String[]
+    menuOrder   Int      @default(0)
     resumeId    String
     resume      Resume   @relation(fields: [resumeId], references: [id])
 }

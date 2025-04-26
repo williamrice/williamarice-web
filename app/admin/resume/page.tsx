@@ -19,14 +19,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/use-toast";
 import { PlusIcon, MinusIcon } from "@radix-ui/react-icons";
@@ -100,10 +92,8 @@ const resumeSchema = z.object({
       institution: z.string().min(1, "Institution is required"),
       area: z.string().min(1, "Area of study is required"),
       studyType: z.string().min(1, "Study type is required"),
-      startDate: z.string().min(1, "Start date is required"),
       endDate: z.string().min(1, "End date is required"),
-      score: z.string().min(1, "Score is required"),
-      courses: z.array(z.string()),
+      menuOrder: z.number().optional().default(0),
     })
   ),
   certificates: z.array(
@@ -241,9 +231,6 @@ export default function ResumeForm() {
         })),
         education: data.education?.map((edu) => ({
           ...edu,
-          startDate: edu.startDate
-            ? new Date(edu.startDate).toISOString().split("T")[0]
-            : "",
           endDate: edu.endDate
             ? new Date(edu.endDate).toISOString().split("T")[0]
             : "",
@@ -292,6 +279,7 @@ export default function ResumeForm() {
   }, []);
 
   const onSubmit: SubmitHandler<ResumeFormData> = async (data) => {
+    console.log("Form submitted:", data);
     setIsSaving(true);
     try {
       const convertedData = {
@@ -303,7 +291,6 @@ export default function ResumeForm() {
         })),
         education: data.education.map((edu) => ({
           ...edu,
-          startDate: edu.startDate ? new Date(edu.startDate) : null,
           endDate: edu.endDate ? new Date(edu.endDate) : null,
         })),
         certificates: data.certificates.map((cert) => ({
@@ -688,16 +675,6 @@ export default function ResumeForm() {
                   </p>
                 )}
                 <Input
-                  {...register(`education.${index}.startDate`)}
-                  placeholder="Start Date"
-                  type="date"
-                />
-                {errors.education?.[index]?.startDate && (
-                  <p className="text-red-500">
-                    {errors.education[index]?.startDate?.message}
-                  </p>
-                )}
-                <Input
                   {...register(`education.${index}.endDate`)}
                   placeholder="End Date"
                   type="date"
@@ -708,27 +685,14 @@ export default function ResumeForm() {
                   </p>
                 )}
                 <Input
-                  {...register(`education.${index}.score`)}
-                  placeholder="Score"
+                  {...register(`education.${index}.menuOrder`, {
+                    valueAsNumber: true,
+                  })}
+                  placeholder="Menu Order"
+                  type="number"
+                  defaultValue={0}
                 />
-                {errors.education?.[index]?.score && (
-                  <p className="text-red-500">
-                    {errors.education[index]?.score?.message}
-                  </p>
-                )}
-                <Controller
-                  name={`education.${index}.courses`}
-                  control={control}
-                  render={({ field }) => (
-                    <Input
-                      {...field}
-                      placeholder="Courses (comma-separated)"
-                      onChange={(e) =>
-                        field.onChange(e.target.value.split(","))
-                      }
-                    />
-                  )}
-                />
+
                 <Button
                   type="button"
                   onClick={() => removeEducation(index)}
@@ -745,10 +709,8 @@ export default function ResumeForm() {
                   institution: "",
                   area: "",
                   studyType: "",
-                  startDate: "",
                   endDate: "",
-                  score: "",
-                  courses: [],
+                  menuOrder: 0,
                 })
               }
             >

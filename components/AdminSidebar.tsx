@@ -3,12 +3,13 @@
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FiHome, FiFolder, FiSettings } from "react-icons/fi";
+import { FiHome, FiFolder, FiSettings, FiFileText } from "react-icons/fi";
 import Signout from "./auth-helpers/Signout";
 
 const navItems = [
   { name: "Dashboard", href: "/admin", icon: FiHome },
   { name: "Projects", href: "/admin/project-manager", icon: FiFolder },
+  { name: "Resume", href: "/admin/resume", icon: FiFileText },
   { name: "Settings", href: "/admin/settings", icon: FiSettings },
 ];
 
