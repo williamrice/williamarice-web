@@ -345,92 +345,135 @@ export default function ResumeForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 p-4">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-8 p-4 md:p-6 max-w-[95%] mx-auto"
+    >
       <Accordion type="multiple" className="w-full">
         <AccordionItem value="personal-info">
           <AccordionTrigger>Personal Information</AccordionTrigger>
-          <AccordionContent>
+          <AccordionContent className="px-1 pt-3">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="name">Name</Label>
-                <Input id="name" {...register("name")} />
+                <Label htmlFor="name" className="mb-2 block">
+                  Name
+                </Label>
+                <Input id="name" {...register("name")} className="w-full" />
                 {errors.name && (
                   <p className="text-red-500">{errors.name.message}</p>
                 )}
               </div>
               <div>
-                <Label htmlFor="label">Label</Label>
-                <Input id="label" {...register("label")} />
+                <Label htmlFor="label" className="mb-2 block">
+                  Label
+                </Label>
+                <Input id="label" {...register("label")} className="w-full" />
                 {errors.label && (
                   <p className="text-red-500">{errors.label.message}</p>
                 )}
               </div>
               <div>
-                <Label htmlFor="image">Image URL</Label>
-                <Input id="image" {...register("image")} />
+                <Label htmlFor="image" className="mb-2 block">
+                  Image URL
+                </Label>
+                <Input id="image" {...register("image")} className="w-full" />
                 {errors.image && (
                   <p className="text-red-500">{errors.image.message}</p>
                 )}
               </div>
               <div>
-                <Label htmlFor="email">Email</Label>
-                <Input id="email" {...register("email")} />
+                <Label htmlFor="email" className="mb-2 block">
+                  Email
+                </Label>
+                <Input id="email" {...register("email")} className="w-full" />
                 {errors.email && (
                   <p className="text-red-500">{errors.email.message}</p>
                 )}
               </div>
               <div>
-                <Label htmlFor="phone">Phone</Label>
-                <Input id="phone" {...register("phone")} />
+                <Label htmlFor="phone" className="mb-2 block">
+                  Phone
+                </Label>
+                <Input id="phone" {...register("phone")} className="w-full" />
                 {errors.phone && (
                   <p className="text-red-500">{errors.phone.message}</p>
                 )}
               </div>
               <div>
-                <Label htmlFor="url">URL</Label>
-                <Input id="url" {...register("url")} />
+                <Label htmlFor="url" className="mb-2 block">
+                  URL
+                </Label>
+                <Input id="url" {...register("url")} className="w-full" />
                 {errors.url && (
                   <p className="text-red-500">{errors.url.message}</p>
                 )}
               </div>
               <div className="md:col-span-2">
-                <Label htmlFor="summary">Summary</Label>
-                <Textarea id="summary" {...register("summary")} />
+                <Label htmlFor="summary" className="mb-2 block">
+                  Summary
+                </Label>
+                <Textarea
+                  id="summary"
+                  {...register("summary")}
+                  className="w-full"
+                />
                 {errors.summary && (
                   <p className="text-red-500">{errors.summary.message}</p>
                 )}
               </div>
               <div>
-                <Label htmlFor="address">Address</Label>
-                <Input id="address" {...register("address")} />
+                <Label htmlFor="address" className="mb-2 block">
+                  Address
+                </Label>
+                <Input
+                  id="address"
+                  {...register("address")}
+                  className="w-full"
+                />
                 {errors.address && (
                   <p className="text-red-500">{errors.address.message}</p>
                 )}
               </div>
               <div>
-                <Label htmlFor="postalCode">Postal Code</Label>
-                <Input id="postalCode" {...register("postalCode")} />
+                <Label htmlFor="postalCode" className="mb-2 block">
+                  Postal Code
+                </Label>
+                <Input
+                  id="postalCode"
+                  {...register("postalCode")}
+                  className="w-full"
+                />
                 {errors.postalCode && (
                   <p className="text-red-500">{errors.postalCode.message}</p>
                 )}
               </div>
               <div>
-                <Label htmlFor="city">City</Label>
-                <Input id="city" {...register("city")} />
+                <Label htmlFor="city" className="mb-2 block">
+                  City
+                </Label>
+                <Input id="city" {...register("city")} className="w-full" />
                 {errors.city && (
                   <p className="text-red-500">{errors.city.message}</p>
                 )}
               </div>
               <div>
-                <Label htmlFor="countryCode">Country Code</Label>
-                <Input id="countryCode" {...register("countryCode")} />
+                <Label htmlFor="countryCode" className="mb-2 block">
+                  Country Code
+                </Label>
+                <Input
+                  id="countryCode"
+                  {...register("countryCode")}
+                  className="w-full"
+                />
                 {errors.countryCode && (
                   <p className="text-red-500">{errors.countryCode.message}</p>
                 )}
               </div>
               <div>
-                <Label htmlFor="region">Region</Label>
-                <Input id="region" {...register("region")} />
+                <Label htmlFor="region" className="mb-2 block">
+                  Region
+                </Label>
+                <Input id="region" {...register("region")} className="w-full" />
                 {errors.region && (
                   <p className="text-red-500">{errors.region.message}</p>
                 )}
@@ -441,12 +484,13 @@ export default function ResumeForm() {
 
         <AccordionItem value="profiles">
           <AccordionTrigger>Profiles</AccordionTrigger>
-          <AccordionContent>
+          <AccordionContent className="px-1 pt-3">
             {profileFields.map((field, index) => (
               <div key={field.id} className="flex flex-col space-y-2 mb-4">
                 <Input
                   {...register(`profiles.${index}.network`)}
                   placeholder="Network"
+                  className="w-full"
                 />
                 {errors.profiles?.[index]?.network && (
                   <p className="text-red-500">
@@ -456,6 +500,7 @@ export default function ResumeForm() {
                 <Input
                   {...register(`profiles.${index}.username`)}
                   placeholder="Username"
+                  className="w-full"
                 />
                 {errors.profiles?.[index]?.username && (
                   <p className="text-red-500">
@@ -465,6 +510,7 @@ export default function ResumeForm() {
                 <Input
                   {...register(`profiles.${index}.url`)}
                   placeholder="URL"
+                  className="w-full"
                 />
                 {errors.profiles?.[index]?.url && (
                   <p className="text-red-500">
@@ -493,12 +539,13 @@ export default function ResumeForm() {
 
         <AccordionItem value="skills">
           <AccordionTrigger>Skills</AccordionTrigger>
-          <AccordionContent>
+          <AccordionContent className="px-1 pt-3">
             {skillFields.map((field, index) => (
               <div key={field.id} className="flex flex-col space-y-2 mb-4">
                 <Input
                   {...register(`skills.${index}.name`)}
                   placeholder="Skill Name"
+                  className="w-full"
                 />
                 {errors.skills?.[index]?.name && (
                   <p className="text-red-500">
@@ -508,6 +555,7 @@ export default function ResumeForm() {
                 <Input
                   {...register(`skills.${index}.level`)}
                   placeholder="Skill Level"
+                  className="w-full"
                 />
                 {errors.skills?.[index]?.level && (
                   <p className="text-red-500">
@@ -521,6 +569,7 @@ export default function ResumeForm() {
                     <Input
                       {...field}
                       placeholder="Keywords (comma-separated)"
+                      className="w-full"
                       onChange={(e) =>
                         field.onChange(e.target.value.split(","))
                       }
@@ -547,12 +596,13 @@ export default function ResumeForm() {
 
         <AccordionItem value="work">
           <AccordionTrigger>Work Experience</AccordionTrigger>
-          <AccordionContent>
+          <AccordionContent className="px-1 pt-3">
             {workFields.map((field, index) => (
               <div key={field.id} className="flex flex-col space-y-2 mb-4">
                 <Input
                   {...register(`work.${index}.name`)}
                   placeholder="Company Name"
+                  className="w-full"
                 />
                 {errors.work?.[index]?.name && (
                   <p className="text-red-500">
@@ -562,6 +612,7 @@ export default function ResumeForm() {
                 <Input
                   {...register(`work.${index}.location`)}
                   placeholder="Location"
+                  className="w-full"
                 />
                 {errors.work?.[index]?.location && (
                   <p className="text-red-500">
@@ -571,6 +622,7 @@ export default function ResumeForm() {
                 <Input
                   {...register(`work.${index}.position`)}
                   placeholder="Position"
+                  className="w-full"
                 />
                 {errors.work?.[index]?.position && (
                   <p className="text-red-500">
@@ -581,6 +633,7 @@ export default function ResumeForm() {
                   {...register(`work.${index}.startDate`)}
                   placeholder="Start Date"
                   type="date"
+                  className="w-full"
                 />
                 {errors.work?.[index]?.startDate && (
                   <p className="text-red-500">
@@ -591,10 +644,12 @@ export default function ResumeForm() {
                   {...register(`work.${index}.endDate`)}
                   placeholder="End Date"
                   type="date"
+                  className="w-full"
                 />
                 <Textarea
                   {...register(`work.${index}.summary`)}
                   placeholder="Summary"
+                  className="w-full"
                 />
                 {errors.work?.[index]?.summary && (
                   <p className="text-red-500">
@@ -608,6 +663,7 @@ export default function ResumeForm() {
                     <Input
                       {...field}
                       placeholder="Highlights (comma-separated)"
+                      className="w-full"
                       onChange={(e) =>
                         field.onChange(e.target.value.split(","))
                       }
@@ -644,12 +700,13 @@ export default function ResumeForm() {
 
         <AccordionItem value="education">
           <AccordionTrigger>Education</AccordionTrigger>
-          <AccordionContent>
+          <AccordionContent className="px-1 pt-3">
             {educationFields.map((field, index) => (
               <div key={field.id} className="flex flex-col space-y-2 mb-4">
                 <Input
                   {...register(`education.${index}.institution`)}
                   placeholder="Institution"
+                  className="w-full"
                 />
                 {errors.education?.[index]?.institution && (
                   <p className="text-red-500">
@@ -659,6 +716,7 @@ export default function ResumeForm() {
                 <Input
                   {...register(`education.${index}.area`)}
                   placeholder="Area of Study"
+                  className="w-full"
                 />
                 {errors.education?.[index]?.area && (
                   <p className="text-red-500">
@@ -668,6 +726,7 @@ export default function ResumeForm() {
                 <Input
                   {...register(`education.${index}.studyType`)}
                   placeholder="Study Type"
+                  className="w-full"
                 />
                 {errors.education?.[index]?.studyType && (
                   <p className="text-red-500">
@@ -678,6 +737,7 @@ export default function ResumeForm() {
                   {...register(`education.${index}.endDate`)}
                   placeholder="End Date"
                   type="date"
+                  className="w-full"
                 />
                 {errors.education?.[index]?.endDate && (
                   <p className="text-red-500">
@@ -691,6 +751,7 @@ export default function ResumeForm() {
                   placeholder="Menu Order"
                   type="number"
                   defaultValue={0}
+                  className="w-full"
                 />
 
                 <Button
@@ -721,12 +782,13 @@ export default function ResumeForm() {
 
         <AccordionItem value="certificates">
           <AccordionTrigger>Certificates</AccordionTrigger>
-          <AccordionContent>
+          <AccordionContent className="px-1 pt-3">
             {certificateFields.map((field, index) => (
               <div key={field.id} className="flex flex-col space-y-2 mb-4">
                 <Input
                   {...register(`certificates.${index}.name`)}
                   placeholder="Certificate Name"
+                  className="w-full"
                 />
                 {errors.certificates?.[index]?.name && (
                   <p className="text-red-500">
@@ -737,6 +799,7 @@ export default function ResumeForm() {
                   {...register(`certificates.${index}.date`)}
                   placeholder="Date"
                   type="date"
+                  className="w-full"
                 />
                 {errors.certificates?.[index]?.date && (
                   <p className="text-red-500">
@@ -746,6 +809,7 @@ export default function ResumeForm() {
                 <Input
                   {...register(`certificates.${index}.issuer`)}
                   placeholder="Issuer"
+                  className="w-full"
                 />
                 {errors.certificates?.[index]?.issuer && (
                   <p className="text-red-500">
@@ -774,12 +838,13 @@ export default function ResumeForm() {
 
         <AccordionItem value="projects">
           <AccordionTrigger>Projects</AccordionTrigger>
-          <AccordionContent>
+          <AccordionContent className="px-1 pt-3">
             {projectFields.map((field, index) => (
               <div key={field.id} className="flex flex-col space-y-2 mb-4">
                 <Input
                   {...register(`projects.${index}.name`)}
                   placeholder="Project Name"
+                  className="w-full"
                 />
                 {errors.projects?.[index]?.name && (
                   <p className="text-red-500">
@@ -789,6 +854,7 @@ export default function ResumeForm() {
                 <Input
                   {...register(`projects.${index}.url`)}
                   placeholder="Project URL"
+                  className="w-full"
                 />
                 {errors.projects?.[index]?.url && (
                   <p className="text-red-500">
@@ -799,6 +865,7 @@ export default function ResumeForm() {
                   {...register(`projects.${index}.startDate`)}
                   placeholder="Start Date"
                   type="date"
+                  className="w-full"
                 />
                 {errors.projects?.[index]?.startDate && (
                   <p className="text-red-500">
@@ -809,10 +876,12 @@ export default function ResumeForm() {
                   {...register(`projects.${index}.endDate`)}
                   placeholder="End Date"
                   type="date"
+                  className="w-full"
                 />
                 <Textarea
                   {...register(`projects.${index}.description`)}
                   placeholder="Description"
+                  className="w-full"
                 />
                 {errors.projects?.[index]?.description && (
                   <p className="text-red-500">
@@ -826,6 +895,7 @@ export default function ResumeForm() {
                     <Input
                       {...field}
                       placeholder="Highlights (comma-separated)"
+                      className="w-full"
                       onChange={(e) =>
                         field.onChange(e.target.value.split(","))
                       }
@@ -861,12 +931,13 @@ export default function ResumeForm() {
 
         <AccordionItem value="volunteer">
           <AccordionTrigger>Community Service</AccordionTrigger>
-          <AccordionContent>
+          <AccordionContent className="px-1 pt-3">
             {volunteerFields.map((field, index) => (
               <div key={field.id} className="flex flex-col space-y-2 mb-4">
                 <Input
                   {...register(`volunteer.${index}.organization`)}
                   placeholder="Organization"
+                  className="w-full"
                 />
                 {errors.volunteer?.[index]?.organization && (
                   <p className="text-red-500">
@@ -876,6 +947,7 @@ export default function ResumeForm() {
                 <Input
                   {...register(`volunteer.${index}.position`)}
                   placeholder="Position"
+                  className="w-full"
                 />
                 {errors.volunteer?.[index]?.position && (
                   <p className="text-red-500">
@@ -886,6 +958,7 @@ export default function ResumeForm() {
                   {...register(`volunteer.${index}.startDate`)}
                   placeholder="Start Date"
                   type="date"
+                  className="w-full"
                 />
                 {errors.volunteer?.[index]?.startDate && (
                   <p className="text-red-500">
@@ -896,10 +969,12 @@ export default function ResumeForm() {
                   {...register(`volunteer.${index}.endDate`)}
                   placeholder="End Date"
                   type="date"
+                  className="w-full"
                 />
                 <Textarea
                   {...register(`volunteer.${index}.summary`)}
                   placeholder="Summary"
+                  className="w-full"
                 />
                 {errors.volunteer?.[index]?.summary && (
                   <p className="text-red-500">
@@ -913,6 +988,7 @@ export default function ResumeForm() {
                     <Input
                       {...field}
                       placeholder="Highlights (comma-separated)"
+                      className="w-full"
                       onChange={(e) =>
                         field.onChange(e.target.value.split(","))
                       }
@@ -949,12 +1025,13 @@ export default function ResumeForm() {
 
         <AccordionItem value="interests">
           <AccordionTrigger>Interests</AccordionTrigger>
-          <AccordionContent>
+          <AccordionContent className="px-1 pt-3">
             {interestFields.map((field, index) => (
               <div key={field.id} className="flex flex-col space-y-2 mb-4">
                 <Input
                   {...register(`interests.${index}.name`)}
                   placeholder="Interest Name"
+                  className="w-full"
                 />
                 {errors.interests?.[index]?.name && (
                   <p className="text-red-500">
@@ -968,6 +1045,7 @@ export default function ResumeForm() {
                     <Input
                       {...field}
                       placeholder="Keywords (comma-separated)"
+                      className="w-full"
                       onChange={(e) =>
                         field.onChange(e.target.value.split(","))
                       }
@@ -993,8 +1071,19 @@ export default function ResumeForm() {
         </AccordionItem>
       </Accordion>
 
-      <Button type="submit" disabled={isSaving}>
-        {isSaving ? <ClipLoader size={20} color="#ffffff" /> : "Save Resume"}
+      <Button
+        type="submit"
+        disabled={isSaving}
+        className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-md flex items-center justify-center gap-2 transition-all"
+      >
+        {isSaving ? (
+          <>
+            <ClipLoader size={16} color="#ffffff" />
+            <span>Saving...</span>
+          </>
+        ) : (
+          "Save Resume"
+        )}
       </Button>
     </form>
   );
