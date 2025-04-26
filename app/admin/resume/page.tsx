@@ -346,7 +346,7 @@ export default function ResumeForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 p-4">
-      <Accordion type="single" collapsible className="w-full">
+      <Accordion type="multiple" className="w-full">
         <AccordionItem value="personal-info">
           <AccordionTrigger>Personal Information</AccordionTrigger>
           <AccordionContent>
