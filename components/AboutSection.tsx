@@ -4,7 +4,7 @@ import SectionHeader from "./SectionHeader";
 
 const AboutSection = () => {
   return (
-    <div className="w-full py-16 px-4 flex justify-center">
+    <div id="about-section" className="w-full py-16 px-4 flex justify-center">
       <div className="max-w-8xl">
         <div className="flex flex-col md:flex-row items-center gap-8">
           <div className="w-full md:w-1/2 flex justify-center">
