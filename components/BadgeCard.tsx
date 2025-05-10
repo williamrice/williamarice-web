@@ -3,17 +3,9 @@
 import React from "react";
 import Image from "next/image";
 import CredlyBadge from "./CredlyBadge";
+import { Badge } from "@/app/credentials/page";
 
-interface BadgeCardProps {
-  title: string;
-  type: "badgr" | "credly" | "image";
-  badgeId?: string;
-  badgeUrl?: string;
-  imageUrl?: string;
-  viewUrl?: string;
-  width?: number;
-  height?: number;
-}
+interface BadgeCardProps extends Badge {}
 
 export default function BadgeCard({
   title,
@@ -22,28 +14,13 @@ export default function BadgeCard({
   badgeUrl,
   imageUrl,
   viewUrl,
-  width = 330,
-  height = 191,
 }: BadgeCardProps) {
+  const width = 330;
+  const height = 191;
   return (
     <div className="shadow-sm rounded-md border-2 border-gray-300 p-6 rounded-lg shadow-md flex flex-col items-center h-full">
       <h2 className="text-xl font-semibold mb-4 text-center">{title}</h2>
       <div className="flex-grow flex items-center justify-center w-full">
-        {type === "badgr" && badgeUrl && (
-          <div
-            className="relative"
-            style={{ width: `${width}px`, height: `${height}px` }}
-          >
-            <iframe
-              src={badgeUrl}
-              title={`Badge: ${title}`}
-              style={{ width: "100%", height: "100%", border: "0px" }}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-          </div>
-        )}
-
         {type === "image" && imageUrl && (
           <div
             className="relative"
