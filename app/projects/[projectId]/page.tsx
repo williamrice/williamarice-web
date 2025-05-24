@@ -4,10 +4,8 @@ import TechnologyPill from "@/components/TechnologyPill";
 import Image from "next/image";
 import Link from "next/link";
 import { AiFillGithub, AiFillEye } from "react-icons/ai";
-import Divider from "@/components/Divider";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
-import SectionHeader from "@/components/SectionHeader";
 
 const IndividualProjectPage = async ({
   params,

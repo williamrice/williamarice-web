@@ -24,11 +24,9 @@ import { Calendar as CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
-import { isRegularExpressionLiteral } from "typescript";
-import { createFuelTransaction, deleteFuelTransactions } from "../actions";
+import { createFuelTransaction } from "../actions";
 import { Dispatch, SetStateAction, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { revalidatePath, revalidateTag } from "next/cache";
 import { BarLoader } from "react-spinners";
 
 const formSchema = z.object({

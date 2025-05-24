@@ -1,9 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { FaGithub, FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
-import HeaderTypeAnimation from "./header-type-animation";
 import MainButton from "./MainButton";
-import Header from "./Header";
 
 const JumboTron = () => {
   return (

@@ -2,9 +2,8 @@
 
 import { Project } from "@prisma/client";
 import Image from "next/image";
-import Link from "next/link";
 import React, { useState } from "react";
-import { AiFillEye, AiFillGithub } from "react-icons/ai";
+import { AiFillEye } from "react-icons/ai";
 import TechnologyPill from "./TechnologyPill";
 import { useRouter } from "next/navigation";
 

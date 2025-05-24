@@ -3,7 +3,7 @@ import { Project } from "@prisma/client";
 import Image from "next/image";
 import React from "react";
 import Link from "next/link";
-import { AiFillEye, AiFillGithub } from "react-icons/ai";
+import { AiFillEye } from "react-icons/ai";
 
 interface FeaturedProjectCardProps {
   project: Project;

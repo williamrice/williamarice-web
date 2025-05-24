@@ -1,11 +1,8 @@
 import React from "react";
-import { useSearchParams } from "next/navigation";
-import Image from "next/image";
 import ProjectCard from "../../components/ProjectCard";
 import { Project } from "@prisma/client";
 import { getAllProjects } from "@/actions/projects";
 import Header from "@/components/Header";
-import { Card, CardContent, CardDescription } from "@/components/ui/card";
 
 export default async function ProjectsPage({
   searchParams,

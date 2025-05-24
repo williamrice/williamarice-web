@@ -1,6 +1,5 @@
 import OutlinedContainer from "@/components/OutlinedContainer";
 import React from "react";
-import "tailwindcss/tailwind.css"; // Import Tailwind CSS styles
 
 const LicensingPage = () => {
   return (

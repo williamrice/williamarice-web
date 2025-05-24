@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { updateProject } from "@/actions/projects";
-import { uploadFile } from "@/actions/upload";
 import { useRouter } from "next/navigation";
 import { Project, GalleryImage } from "@prisma/client";
 import Image from "next/image";

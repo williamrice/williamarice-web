@@ -1,13 +1,11 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Code } from "lucide-react";
+import { Menu, Code } from "lucide-react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
-import Signin from "./auth-helpers/Signin";
 
 interface MenuItem {
   name: string;

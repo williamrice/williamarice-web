@@ -1,7 +1,6 @@
 import React from "react";
 import "devicon/devicon.min.css";
 import Link from "next/link";
-import SectionHeader from "./SectionHeader";
 
 interface Skill {
   name: string;

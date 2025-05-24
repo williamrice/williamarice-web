@@ -2,7 +2,6 @@ import { getServerSession } from "next-auth";
 import FuelTransactionListDisplay from "./components/FuelTransactionListDisplay";
 
 import { PrismaClient } from "@prisma/client";
-import { FuelTransactionAddForm } from "./components/FuelTransactionAddForm";
 import FuelAppNoAccountPage from "./components/FuelAppNoAccountPage";
 const prisma = new PrismaClient();
 

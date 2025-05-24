@@ -1,11 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { AiFillEye, AiFillGithub, AiOutlineArrowRight } from "react-icons/ai";
-import ProjectCard from "./ProjectCard";
+import { AiOutlineArrowRight } from "react-icons/ai";
 import { Project } from "@prisma/client";
 import { getAllProjects } from "@/actions/projects";
-import SectionHeader from "./SectionHeader";
 import FeaturedProjectCard from "./FeaturedProjectCard";
 
 const FeaturedProjects = async () => {

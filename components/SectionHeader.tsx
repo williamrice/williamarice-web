@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useRef, useEffect, useState } from "react";
-import Divider from "./Divider";
 
 interface SectionHeaderProps {
   title: string;

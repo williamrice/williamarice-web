@@ -20,12 +20,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { useTheme } from "next-themes";
 import { useEffect } from "react";
 import { useUser } from "@/hooks/useUser";
-import useSWR from "swr";
 
 const formSchema = z.object({
   theme: z.string({
