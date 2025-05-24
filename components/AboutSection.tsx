@@ -30,8 +30,9 @@ const AboutSection = () => {
           </div>
 
           <div className="lg:w-7/12 mt-12 lg:mt-0 text-left">
+            {" "}
             <h3 className="text-2xl font-bold text-white mb-6">
-              Hello, I&apos;m William
+              Hello, I&apos;m William (I go by Billy)
             </h3>
             <div className="space-y-6 text-gray-300">
               <p className="text-lg">
@@ -57,7 +58,6 @@ const AboutSection = () => {
                 Councilman.
               </p>
             </div>
-
             <div className="space-y-4 mt-8">
               <FeatureCard
                 icon={<AiFillCode className="w-7 h-7" />}
@@ -75,7 +75,6 @@ const AboutSection = () => {
                 description="Constantly exploring new technologies"
               />
             </div>
-
             <div className="mt-10">
               <Link
                 href="/contact"

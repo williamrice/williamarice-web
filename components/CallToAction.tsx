@@ -24,12 +24,14 @@ const CallToAction = () => {
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
+          {" "}
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 tracking-tight">
-            Ready to work together?
+            Let's connect and collaborate!
           </h2>
           <p className="max-w-2xl mx-auto text-xl text-blue-100 mb-8">
-            Whether you need a custom web application, have a project idea, or
-            just want to connect, I&apos;d love to hear from you.
+            I&apos;m always open to new opportunities, collaborations, and
+            connecting with fellow developers. Let&apos;s build something
+            amazing together!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link

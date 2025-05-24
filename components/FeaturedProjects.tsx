@@ -16,7 +16,7 @@ const FeaturedProjects = async () => {
       {" "}
       {/* Added -mt-1 to fix the gap */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
-        <div className="text-center mb-16">
+        <div className="text-center mb-4">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             Featured Projects
           </h2>
@@ -26,14 +26,7 @@ const FeaturedProjects = async () => {
             different technologies and solutions.
           </p>
         </div>
-
-        <div className="space-y-16">
-          {featuredProjects.map((project: Project) => (
-            <FeaturedProjectCard key={project.id} project={project} />
-          ))}
-        </div>
-
-        <div className="text-center mt-16">
+        <div className="text-center mb-8">
           <Link
             href="/projects"
             className="inline-flex items-center px-8 py-4 rounded-lg border-2 border-white text-white font-medium hover:bg-white hover:text-gray-900 transition-all duration-300 group"
@@ -41,6 +34,11 @@ const FeaturedProjects = async () => {
             <span>View All Projects</span>
             <AiOutlineArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
           </Link>
+        </div>
+        <div className="space-y-16">
+          {featuredProjects.map((project: Project) => (
+            <FeaturedProjectCard key={project.id} project={project} />
+          ))}
         </div>
       </div>
     </div>
