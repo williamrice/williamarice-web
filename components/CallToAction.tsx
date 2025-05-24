@@ -4,7 +4,7 @@ import { AiOutlineMail, AiOutlineFilePdf } from "react-icons/ai";
 
 const CallToAction = () => {
   return (
-    <div className="relative w-full py-24 overflow-hidden mb-0">
+    <div className="relative w-full py-16 md:py-24 overflow-hidden mb-0">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-r from-blue-900 via-blue-800 to-gray-900"></div>
       {/* Decorative elements */}
@@ -13,7 +13,8 @@ const CallToAction = () => {
         <div className="absolute bottom-10 right-10 w-72 h-72 bg-gray-600 rounded-full mix-blend-overlay filter blur-3xl"></div>
       </div>
       {/* Pattern overlay */}
-      <div        className="absolute inset-0 opacity-10"
+      <div
+        className="absolute inset-0 opacity-10"
         style={{
           backgroundImage:
             "url(\"data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='1' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E\")",
@@ -21,11 +22,12 @@ const CallToAction = () => {
         }}
       ></div>
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">        <div className="text-center">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 tracking-tight">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 md:mb-6 tracking-tight">
             Let&apos;s connect and collaborate!
           </h2>
-          <p className="max-w-2xl mx-auto text-xl text-blue-100 mb-8">
+          <p className="max-w-2xl mx-auto text-lg md:text-xl text-blue-100 mb-6 md:mb-8 relative px-4 py-2 rounded-lg bg-gray-900/50 sm:bg-gray-900/30 backdrop-blur-sm">
             I&apos;m always open to new opportunities, collaborations, and
             connecting with fellow developers. Let&apos;s build something
             amazing together!
@@ -33,14 +35,14 @@ const CallToAction = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/contact"
-              className="inline-flex items-center px-8 py-4 rounded-lg bg-white text-blue-900 font-semibold shadow-lg hover:bg-blue-50 transition-colors duration-300"
+              className="inline-flex items-center justify-center px-6 py-3 md:px-8 md:py-4 rounded-lg bg-white text-blue-900 font-semibold shadow-lg hover:bg-blue-50 hover:scale-105 transition-all duration-300 w-full sm:w-auto"
             >
               <AiOutlineMail className="mr-2 h-5 w-5" />
               Contact Me
             </Link>
             <Link
               href="/resume"
-              className="inline-flex items-center px-8 py-4 rounded-lg border-2 border-white text-white font-semibold hover:bg-white hover:text-gray-900 transition-colors duration-300"
+              className="inline-flex items-center justify-center px-6 py-3 md:px-8 md:py-4 rounded-lg border-2 border-white text-white font-semibold hover:bg-white hover:text-gray-900 hover:scale-105 transition-all duration-300 w-full sm:w-auto"
             >
               <AiOutlineFilePdf className="mr-2 h-5 w-5" />
               View Resume

@@ -75,14 +75,6 @@ const AboutSection = () => {
                 description="Constantly exploring new technologies"
               />
             </div>
-            <div className="mt-10">
-              <Link
-                href="/contact"
-                className="inline-flex items-center px-6 py-3 rounded-lg bg-blue-600 text-white font-medium shadow-md hover:bg-blue-700 transition-colors duration-300"
-              >
-                Get In Touch
-              </Link>
-            </div>
           </div>
         </div>
       </div>
