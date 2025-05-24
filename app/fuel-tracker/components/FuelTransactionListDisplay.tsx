@@ -1,10 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  CaretSortIcon,
-  ChevronDownIcon,
-} from "@radix-ui/react-icons";
+import { CaretSortIcon, ChevronDownIcon } from "@radix-ui/react-icons";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -33,10 +30,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import {
-  getFuelTransactions,
-  deleteFuelTransactionById,
-} from "../actions";
+import { getFuelTransactions, deleteFuelTransactionById } from "../actions";
 import { Decimal } from "@prisma/client/runtime/library";
 import {
   Popover,
