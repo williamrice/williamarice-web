@@ -3,6 +3,15 @@
 import React, { useEffect, useState } from "react";
 import Script from "next/script";
 
+// Extend the Window interface to include Credly
+declare global {
+  interface Window {
+    Credly?: {
+      initialize: () => void;
+    };
+  }
+}
+
 interface CredlyBadgeProps {
   badgeId: string;
   title: string;

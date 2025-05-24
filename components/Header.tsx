@@ -2,32 +2,30 @@ import React from "react";
 
 interface HeaderProps {
   children: React.ReactNode;
-  imagePath?: string;
   height?: string;
 }
 
-const Header = ({
-  children,
-  imagePath = "/images/header.jpg",
-  height = "400px",
-}: HeaderProps) => {
-  const backgroundImageStyle = `url(${imagePath})`;
+const Header = ({ children, height = "400px" }: HeaderProps) => {
   return (
     <section
       style={{
-        backgroundImage: backgroundImageStyle,
-        backgroundPosition: "right",
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
         minHeight: height,
       }}
-      className="rounded-md w-full lg:bg-center"
+      className="w-full lg:bg-center shadow-lg border border-gray-700 overflow-hidden bg-gradient-to-r from-blue-900 via-blue-800 to-gray-900"
     >
       <div
         style={{ minHeight: height }}
-        className="flex justify-center items-center bg-[rgba(0,0,0,0.5)] bg-blend-overlay"
+        className="flex justify-center items-center relative"
       >
-        {children}
+        {/* Background blur elements */}
+        <div className="absolute opacity-20">
+          <div className="absolute top-10 left-10 w-48 h-48 bg-blue-400 rounded-full filter blur-3xl"></div>
+          <div className="absolute bottom-10 right-10 w-64 h-64 bg-gray-600 rounded-full filter blur-3xl"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-blue-600 rounded-full filter blur-3xl"></div>
+        </div>
+
+        {/* Content container */}
+        <div className="z-10 px-6 py-8 text-center">{children}</div>
       </div>
     </section>
   );

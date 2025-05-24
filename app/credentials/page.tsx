@@ -57,37 +57,39 @@ const badges: Badge[] = [
 
 export default function CredentialsPage() {
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-900 text-white">
       <Header>
         <h1 className="text-4xl md:text-6xl font-bold text-white text-center">
           Credentials
         </h1>
       </Header>
 
-      <div className=" mx-auto px-4 py-8">
-        <div className="mb-8">
-          <div className="p-6 rounded-lg ">
-            <h2 className="text-2xl font-semibold mb-3 text-center">
+      {/* Content section with subtle gradient background */}
+      <div className="bg-gradient-to-b from-gray-900 to-gray-800">
+        <div className="max-w-6xl mx-auto px-4 py-16">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold mb-6 text-white">
               Professional Certifications
             </h2>
-            <p className="text-lg text-gray-700 text-center">
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               A collection of my professional certifications and achievements.
-              Click on any badge to view more details.
+              Click on any badge to view more details and verify authenticity.
             </p>
           </div>
-        </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {badges.map((badge, index) => (
-            <BadgeCard
-              key={index}
-              title={badge.title}
-              type={badge.type}
-              badgeId={badge.badgeId}
-              imageUrl={badge.imageUrl}
-              viewUrl={badge.viewUrl}
-            />
-          ))}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {badges.map((badge, index) => (
+              <div key={index} className="w-full">
+                <BadgeCard
+                  title={badge.title}
+                  type={badge.type}
+                  badgeId={badge.badgeId}
+                  imageUrl={badge.imageUrl}
+                  viewUrl={badge.viewUrl}
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

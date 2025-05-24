@@ -29,6 +29,12 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: "williamarice-web.s3.amazonaws.com",
+        port: "",
+        pathname: "/**/*",
+      },
+      {
+        protocol: "https",
         hostname: "api.badgr.io",
         port: "",
         pathname: "/**/*",
