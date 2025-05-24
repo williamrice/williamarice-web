@@ -7,18 +7,21 @@ const SocialLinks = () => {
   return (
     <>
       <a href="https://www.github.com/williamrice" target="blank">
-        <AiFillGithub size={size} className="hover:text-black cursor-pointer" />
+        <AiFillGithub
+          size={size}
+          className="text-white hover:text-gray-300 cursor-pointer transition-colors"
+        />
       </a>
       <a href="https://www.linkedin.com/in/realwilliamrice/" target="blank">
         <AiFillLinkedin
           size={size}
-          className="hover:text-blue-700 cursor-pointer"
+          className="text-white hover:text-blue-400 cursor-pointer transition-colors"
         />
       </a>
       <a href="https://www.x.com/warice_dev" target="blank">
         <FaSquareXTwitter
           size={size}
-          className="hover:text-black cursor-pointer"
+          className="text-white hover:text-gray-300 cursor-pointer transition-colors"
         />
       </a>
     </>

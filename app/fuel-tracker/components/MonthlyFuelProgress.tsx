@@ -1,9 +1,5 @@
 import { Progress } from "@/components/ui/progress";
 import { FuelTransaction } from "@prisma/client";
-import {
-  Decimal,
-  PrismaClientRustPanicError,
-} from "@prisma/client/runtime/library";
 import React from "react";
 import { Month } from "./FuelTransactionListDisplay";
 

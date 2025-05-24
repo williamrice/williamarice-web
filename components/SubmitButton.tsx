@@ -1,5 +1,5 @@
 import React from "react";
-import { CircleLoader, PulseLoader } from "react-spinners";
+import { PulseLoader } from "react-spinners";
 
 interface SubmitButtonProps {
   loading: boolean;

@@ -1,9 +1,8 @@
 "use server";
 
-import { Prisma, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
-import { Dispatch, SetStateAction } from "react";
 
 const prisma = new PrismaClient();
 

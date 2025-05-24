@@ -1,41 +1,87 @@
-import OutlinedContainer from "@/components/OutlinedContainer";
 import React from "react";
-import "tailwindcss/tailwind.css"; // Import Tailwind CSS styles
+import Header from "@/components/Header";
 
 const LicensingPage = () => {
   return (
-    <div className="container mx-auto p-4">
-      <OutlinedContainer>
-        <h1 className="text-2xl text-center font-bold mb-4">
-          Licensing Information
-        </h1>
+    <div className="min-h-screen bg-gray-900 text-white">
+      <Header>
+        <div className="h-full flex flex-col items-center justify-center">
+          <h1 className="lg:text-6xl text-4xl font-bold text-center text-white">
+            Licensing
+          </h1>
+        </div>
+      </Header>
 
-        <p className="mb-4">
-          All content and materials on this website (www.williamarice.com) are
-          the property of William Rice and are protected by intellectual
-          property laws. Unauthorized use or reproduction of any content,
-          including but not limited to text, images, and code, is strictly
-          prohibited.
-        </p>
-
-        <p className="mb-4">
-          This website is not open source, and the source code is not available
-          for public use or distribution. Any attempt to reverse engineer,
-          decompile, or otherwise extract the source code is strictly
-          prohibited.
-        </p>
-
-        <p className="mb-4">
-          All rights reserved. William Rice reserves the right to take legal
-          action against any individual or entity found to be in violation of
-          these terms.
-        </p>
-
-        <p>
-          If you have any questions or need further clarification regarding the
-          licensing of this website, please contact me at billyrice12@live.com.
-        </p>
-      </OutlinedContainer>
+      {/* Content section with subtle gradient background */}
+      <div className="bg-gradient-to-b from-gray-900 to-gray-800">
+        <div className="max-w-4xl mx-auto px-4 py-16">
+          <div className="text-center mb-8">
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+              This website is built with modern web technologies and its source
+              code is available for others to learn from and build upon.
+            </p>
+          </div>
+          <div className="bg-gray-800/50 border border-gray-700 rounded-lg shadow-lg p-8">
+            <h2 className="text-2xl font-bold mb-6 text-white text-center">
+              Open Source Licensing Information
+            </h2>
+            <p className="mb-4 text-gray-300">
+              The source code for this website (www.williamarice.com) is open
+              source and is made available under the following license:
+            </p>
+            <div className="bg-gray-700/50 p-4 rounded-md mb-6 text-blue-100">
+              <h3 className="font-bold mb-2">MIT License with Attribution</h3>
+              <p className="mb-2">
+                Copyright © {new Date().getFullYear()} William Rice
+              </p>
+              <p className="mb-2">
+                Permission is hereby granted, free of charge, to any person
+                obtaining a copy of this software and associated documentation
+                files (the &quot;Software&quot;), to deal in the Software
+                without restriction, including without limitation the rights to
+                use, copy, modify, merge, publish, distribute, sublicense,
+                and/or sell copies of the Software, and to permit persons to
+                whom the Software is furnished to do so, subject to the
+                following conditions:
+              </p>
+              <p className="mb-2">
+                <strong>
+                  The above copyright notice, this permission notice, and
+                  attribution to William Rice shall be included in all copies or
+                  substantial portions of the Software.
+                </strong>
+              </p>
+              <p>
+                {" "}
+                THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF
+                ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+                WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+                AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+                HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+                WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+                FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+                OTHER DEALINGS IN THE SOFTWARE.
+              </p>
+            </div>
+            <p className="mb-4">
+              In simple terms, you are free to use, modify, and distribute this
+              code, but you must:
+            </p>
+            <ul className="list-disc pl-6 mb-4 space-y-1">
+              <li>Include the original copyright notice</li>
+              <li>
+                Include attribution to William Rice as the original author
+              </li>
+              <li>Include the license text in your derivative work</li>
+            </ul>
+            <p>
+              If you have any questions or need further clarification regarding
+              the licensing of this website, please contact me at
+              william@williamarice.com.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

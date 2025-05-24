@@ -18,9 +18,16 @@ export default function BadgeCard({
   const width = 330;
   const height = 191;
   return (
-    <div className="shadow-sm rounded-md border-2 border-gray-300 p-6 rounded-lg shadow-md flex flex-col items-center h-full">
-      <h2 className="text-xl font-semibold mb-4 text-center">{title}</h2>
-      <div className="flex-grow flex items-center justify-center w-full">
+    <div className="bg-gray-800 border border-gray-600 rounded-lg shadow-lg overflow-hidden h-full w-full hover:shadow-xl transition-all duration-200 hover:border-blue-500 flex flex-col">
+      {/* Header section with dark background */}
+      <div className="bg-gray-800 p-4 border-b border-gray-600">
+        <h2 className="text-xl font-semibold text-center text-white">
+          {title}
+        </h2>
+      </div>
+
+      {/* Content section with light background for embeds */}
+      <div className="bg-gray-100 p-6 flex-grow flex items-center justify-center min-h-[280px]">
         {type === "image" && imageUrl && (
           <div
             className="relative"
@@ -52,7 +59,9 @@ export default function BadgeCard({
         )}
 
         {type === "credly" && badgeId && (
-          <CredlyBadge badgeId={badgeId} title={title} />
+          <div className="w-full flex justify-center">
+            <CredlyBadge badgeId={badgeId} title={title} />
+          </div>
         )}
       </div>
     </div>

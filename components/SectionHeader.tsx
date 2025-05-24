@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useRef, useEffect, useState } from "react";
-import Divider from "./Divider";
 
 interface SectionHeaderProps {
   title: string;
@@ -24,10 +23,10 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
 
   return (
     <div className={`flex flex-col items-center mb-4 ${className}`}>
-      <h2 ref={headingRef} className="text-4xl font-bold mb-1">
+      <h2 ref={headingRef} className="text-4xl font-bold mb-1 text-white">
         {title}
       </h2>
-      <Divider width={dividerWidth} />
+      <div className="w-20 h-1 bg-blue-600"></div>
     </div>
   );
 };

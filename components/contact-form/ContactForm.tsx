@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import SuccessfulEmailBanner from "./SuccessfulEmailBanner";
 import { ContactFormState } from "./contact_form_state";
 import { PulseLoader } from "react-spinners";
@@ -31,6 +31,86 @@ const ContactForm = () => {
   const debouncedMessage = useDebounce(contactFormState.message);
   const debouncedToken = useDebounce(contactFormState.recaptchaToken);
 
+  // Function to validate the form
+  const validateForm = useCallback(
+    (isDebouncedValidation = false) => {
+      console.log("Validating form:", {
+        name: contactFormState.name,
+        email: contactFormState.email,
+        message: contactFormState.message,
+        recaptchaToken: contactFormState.recaptchaToken,
+        hasAttemptedSubmit,
+        isDebouncedValidation,
+      });
+
+      // Email validation - always check this regardless of submission attempt
+      // More strict email regex that requires proper format with @ and domain
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      const isEmailValid = emailRegex.test(contactFormState.email);
+      console.log("Email validation:", {
+        email: contactFormState.email,
+        isEmailValid,
+      });
+
+      if (!isEmailValid) {
+        console.log("Email validation failed");
+        setContactFormState({
+          ...contactFormState,
+          formError: {
+            isError: true,
+            message: "Please enter a valid email address.",
+          },
+          formSuccess: false,
+        });
+        return false;
+      }
+
+      if (
+        !contactFormState.name ||
+        !contactFormState.email ||
+        !contactFormState.message
+      ) {
+        console.log("Empty fields validation failed");
+        setContactFormState({
+          ...contactFormState,
+          formError: {
+            isError: true,
+            message: "Please fill out all fields.",
+          },
+          formSuccess: false,
+        });
+        return false;
+      }
+
+      if (!contactFormState.recaptchaToken) {
+        console.log("reCAPTCHA validation failed");
+        setContactFormState({
+          ...contactFormState,
+          formError: {
+            isError: true,
+            message: "Please complete the reCAPTCHA verification.",
+          },
+          formSuccess: false,
+        });
+        return false;
+      }
+
+      // Clear errors if all validations pass
+      console.log("All validations passed");
+      setContactFormState({
+        ...contactFormState,
+        formError: {
+          isError: false,
+          message: "",
+        },
+        formSuccess: false,
+      });
+
+      return true;
+    },
+    [contactFormState, hasAttemptedSubmit]
+  );
+
   // Validate form fields when debounced values change, but only after first submission
   useEffect(() => {
     if (
@@ -45,84 +125,8 @@ const ContactForm = () => {
     debouncedMessage,
     debouncedToken,
     hasAttemptedSubmit,
+    validateForm,
   ]);
-
-  // Function to validate the form
-  const validateForm = (isDebouncedValidation = false) => {
-    console.log("Validating form:", {
-      name: contactFormState.name,
-      email: contactFormState.email,
-      message: contactFormState.message,
-      recaptchaToken: contactFormState.recaptchaToken,
-      hasAttemptedSubmit,
-      isDebouncedValidation,
-    });
-
-    // Email validation - always check this regardless of submission attempt
-    // More strict email regex that requires proper format with @ and domain
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    const isEmailValid = emailRegex.test(contactFormState.email);
-    console.log("Email validation:", {
-      email: contactFormState.email,
-      isEmailValid,
-    });
-
-    if (!isEmailValid) {
-      console.log("Email validation failed");
-      setContactFormState({
-        ...contactFormState,
-        formError: {
-          isError: true,
-          message: "Please enter a valid email address.",
-        },
-        formSuccess: false,
-      });
-      return false;
-    }
-
-    if (
-      !contactFormState.name ||
-      !contactFormState.email ||
-      !contactFormState.message
-    ) {
-      console.log("Empty fields validation failed");
-      setContactFormState({
-        ...contactFormState,
-        formError: {
-          isError: true,
-          message: "Please fill out all fields.",
-        },
-        formSuccess: false,
-      });
-      return false;
-    }
-
-    if (!contactFormState.recaptchaToken) {
-      console.log("reCAPTCHA validation failed");
-      setContactFormState({
-        ...contactFormState,
-        formError: {
-          isError: true,
-          message: "Please complete the reCAPTCHA verification.",
-        },
-        formSuccess: false,
-      });
-      return false;
-    }
-
-    // Clear errors if all validations pass
-    console.log("All validations passed");
-    setContactFormState({
-      ...contactFormState,
-      formError: {
-        isError: false,
-        message: "",
-      },
-      formSuccess: false,
-    });
-
-    return true;
-  };
 
   async function handleContactForm(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
@@ -202,19 +206,19 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="block md:w-2/3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-900 dark:border-gray-700 ">
+    <div className="block md:w-2/3 p-8 bg-gray-800 border border-gray-600 rounded-lg shadow-lg">
       <form>
         <div className="mb-6">
           <label
             htmlFor="name"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            className="block mb-2 text-sm font-medium text-white"
           >
             Your Name
           </label>
           <input
             type="text"
             name="name"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 placeholder-gray-400"
             onChange={(e) =>
               setContactFormState({ ...contactFormState, name: e.target.value })
             }
@@ -225,14 +229,14 @@ const ContactForm = () => {
         <div className="mb-6">
           <label
             htmlFor="email"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            className="block mb-2 text-sm font-medium text-white"
           >
             Your Email
           </label>
           <input
             type="email"
             name="email"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 placeholder-gray-400"
             value={contactFormState.email}
             onChange={(e) =>
               setContactFormState({
@@ -246,15 +250,15 @@ const ContactForm = () => {
         <div className="mb-6">
           <label
             htmlFor="message"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            className="block mb-2 text-sm font-medium text-white"
           >
             Message
           </label>
           <textarea
             name="message"
-            rows={3}
+            rows={4}
             cols={40}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 placeholder-gray-400"
             onChange={(e) =>
               setContactFormState({
                 ...contactFormState,
@@ -270,7 +274,7 @@ const ContactForm = () => {
 
         <button
           type="submit"
-          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-90 px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-3 text-center transition-colors duration-200"
           onClick={handleContactForm}
         >
           {contactFormState.isLoading ? (

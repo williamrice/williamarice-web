@@ -1,6 +1,5 @@
 import JumboTron from "@/components/JumboTron";
 import FeaturedProjects from "@/components/FeaturedProjects";
-import Image from "next/image";
 import SkillsSection from "@/components/SkillsSection";
 import AboutSection from "@/components/AboutSection";
 import CallToAction from "@/components/CallToAction";

@@ -57,20 +57,20 @@ const SecretMessageForm = () => {
     <div className="w-full">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="bg-white rounded-lg shadow-md p-6 md:p-8 space-y-6 relative"
+        className="bg-gray-800 rounded-lg shadow-md p-6 md:p-8 space-y-6 relative border border-gray-700"
       >
         {isLoading && (
-          <div className="absolute inset-0 bg-gray-50/80 rounded-lg flex items-center justify-center">
+          <div className="absolute inset-0 bg-gray-800/80 rounded-lg flex items-center justify-center">
             <div className="flex flex-col items-center space-y-3">
-              <Loader2 className="w-8 h-8 text-blue-500 animate-spin" />
-              <p className="text-gray-600">Creating your secret message...</p>
+              <Loader2 className="w-8 h-8 text-blue-400 animate-spin" />
+              <p className="text-gray-300">Creating your secret message...</p>
             </div>
           </div>
         )}
         <div className="space-y-2">
           <label
             htmlFor="title"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-300"
           >
             Title
           </label>
@@ -79,7 +79,7 @@ const SecretMessageForm = () => {
             id="title"
             type="text"
             placeholder="Enter a title for your message"
-            className="w-full px-4 py-2 rounded-md bg-gray-50 border border-gray-300 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full px-4 py-2 rounded-md bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={isLoading}
           />
           {errors.title && (
@@ -90,7 +90,7 @@ const SecretMessageForm = () => {
         <div className="space-y-2">
           <label
             htmlFor="message"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-300"
           >
             Message
           </label>
@@ -99,7 +99,7 @@ const SecretMessageForm = () => {
             id="message"
             rows={6}
             placeholder="Enter your secret message"
-            className="w-full px-4 py-2 rounded-md bg-gray-50 border border-gray-300 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full px-4 py-2 rounded-md bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-200 resize-none disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={isLoading}
           />
           {errors.message && (
@@ -113,25 +113,25 @@ const SecretMessageForm = () => {
       </form>
 
       {url && (
-        <div className="mt-8 bg-white rounded-lg shadow-md p-6 md:p-8">
-          <h3 className="text-xl font-semibold text-gray-900 mb-4">
+        <div className="mt-8 bg-gray-800 rounded-lg shadow-md p-6 md:p-8 border border-gray-700">
+          <h3 className="text-xl font-semibold text-white mb-4">
             Your Secret Message Link
           </h3>
-          <div className="flex items-center space-x-2 bg-gray-50 rounded-md p-3 border border-gray-200">
-            <p className="text-gray-700 flex-1 truncate">{url}</p>
+          <div className="flex items-center space-x-2 bg-gray-700 rounded-md p-3 border border-gray-600">
+            <p className="text-gray-300 flex-1 truncate">{url}</p>
             <button
               onClick={handleCopy}
-              className="p-2 rounded-md hover:bg-gray-100 transition-colors duration-200"
+              className="p-2 rounded-md hover:bg-gray-600 transition-colors duration-200"
               title="Copy to clipboard"
             >
               {copied ? (
-                <Check className="w-5 h-5 text-green-600" />
+                <Check className="w-5 h-5 text-green-400" />
               ) : (
-                <Copy className="w-5 h-5 text-gray-500" />
+                <Copy className="w-5 h-5 text-gray-400" />
               )}
             </button>
           </div>
-          <div className="mt-4 space-y-2 text-sm text-gray-600">
+          <div className="mt-4 space-y-2 text-sm text-gray-300">
             <p>
               ⚠️ This link will only work once. Do not test it or the message
               will be permanently deleted.

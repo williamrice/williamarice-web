@@ -1,13 +1,11 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, Code } from "lucide-react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
-import Signin from "./auth-helpers/Signin";
 
 interface MenuItem {
   name: string;
@@ -66,22 +64,18 @@ const NavBar: React.FC = () => {
         </SheetTrigger>
         <SheetContent
           side="right"
-          className="w-full sm:w-[400px] bg-slate-600 bg-opacity-50 flex items-center justify-center"
+          className="w-full sm:w-[400px] bg-gray-900/95 backdrop-blur-sm border-gray-700 flex items-center justify-center"
         >
           <div className="flex flex-col items-center justify-center">
-            <Image
-              src="/images/billy_joker.png"
-              alt="Profile"
-              width={300}
-              height={300}
-              className="rounded-full w-40 h-40 object-cover"
-            />
+            <div className="mb-8 p-6 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full">
+              <Code className="w-16 h-16 text-white" />
+            </div>
             <nav className="flex flex-col space-y-4">
               {menuItems.map((item) => (
                 <motion.a
                   key={item.name}
                   href={`${item.href.toLowerCase()}`}
-                  className="text-white text-2xl font-semibold text-center"
+                  className="text-white text-2xl font-semibold text-center hover:text-blue-400 transition-colors"
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setIsMenuOpen(false)}

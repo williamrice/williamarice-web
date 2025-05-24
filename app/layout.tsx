@@ -1,4 +1,3 @@
-import Navbar from "@/components//NavBar";
 import Footer from "@/components//Footer";
 import "./globals.css";
 import type { Metadata } from "next";
@@ -6,7 +5,6 @@ import { NextAuthProvider } from "@/components/auth-helpers/NextAuthProvider";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Toaster } from "@/components/ui/toaster";
 import ConditionalNavBar from "@/components/ConditionalNavBar";
-import Google from "next-auth/providers/google";
 import Script from "next/script";
 
 export const metadata: Metadata = {
