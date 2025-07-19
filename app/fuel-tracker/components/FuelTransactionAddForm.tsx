@@ -34,7 +34,7 @@ const formSchema = z.object({
     message: "Amount must be a positive number.",
   }),
   date: z.date({
-    required_error: "A date is required.",
+    error: "A date is required.",
   }),
 });
 
