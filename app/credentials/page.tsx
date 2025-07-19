@@ -65,7 +65,7 @@ export default function CredentialsPage() {
       </Header>
 
       {/* Content section with subtle gradient background */}
-      <div className="bg-gradient-to-b from-gray-900 to-gray-800">
+      <div className="bg-linear-to-b from-gray-900 to-gray-800">
         <div className="max-w-6xl mx-auto px-4 py-16">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold mb-6 text-white">

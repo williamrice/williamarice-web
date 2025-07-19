@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest) {
   const prisma = new PrismaClient();
   const data = await req.json();
 
@@ -42,7 +42,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   return NextResponse.json({ message: "success" });
 }
 
-export async function GET(req: NextRequest, res: NextResponse) {
+export async function GET(req: NextRequest) {
   const prisma = new PrismaClient();
   const data = await req.json();
   const user = await prisma.user.findUnique({

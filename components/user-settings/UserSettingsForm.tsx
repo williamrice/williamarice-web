@@ -27,7 +27,7 @@ import { useUser } from "@/hooks/useUser";
 
 const formSchema = z.object({
   theme: z.string({
-    required_error: "Please select a preferred theme.",
+    error: "Please select a preferred theme.",
   }),
 });
 

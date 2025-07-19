@@ -67,7 +67,7 @@ const NavBar: React.FC = () => {
           className="w-full sm:w-[400px] bg-gray-900/95 backdrop-blur-sm border-gray-700 flex items-center justify-center"
         >
           <div className="flex flex-col items-center justify-center">
-            <div className="mb-8 p-6 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full">
+            <div className="mb-8 p-6 bg-linear-to-br from-blue-500 to-blue-700 rounded-full">
               <Code className="w-16 h-16 text-white" />
             </div>
             <nav className="flex flex-col space-y-4">

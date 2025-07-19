@@ -40,7 +40,7 @@ const FeaturedProjectCard: React.FC<FeaturedProjectCardProps> = ({
           ))}
         </div>
 
-        <div className="mb-8 text-center h-[12rem] relative overflow-hidden">
+        <div className="mb-8 text-center h-48 relative overflow-hidden">
           <div className="text-gray-300 text-lg leading-relaxed line-clamp-5">
             {project.description}
           </div>

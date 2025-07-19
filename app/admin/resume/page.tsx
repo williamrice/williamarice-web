@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   useForm,
   useFieldArray,
@@ -28,29 +28,21 @@ import { ClipLoader } from "react-spinners";
 const resumeSchema = z.object({
   name: z.string().min(1, "Name is required"),
   label: z.string().min(1, "Label is required"),
-  image: z
-    .string()
-    .url()
-    .optional()
-    .or(z.literal(""))
-    .transform((e) => (e === "" ? null : e)),
+  image: z.string().min(1, "Image URL is required"), // Required in Prisma
   email: z.string().email("Invalid email"),
   phone: z.string().min(1, "Phone is required"),
-  url: z
-    .string()
-    .url()
-    .optional()
-    .or(z.literal(""))
-    .transform((e) => (e === "" ? null : e)),
+  url: z.string().min(1, "URL is required"), // Required in Prisma
   summary: z.string().min(1, "Summary is required"),
   address: z
     .string()
+    .nullable()
     .optional()
-    .transform((e) => (e === "" ? null : e)),
+    .transform((val) => (val === "" || val === null ? null : val)),
   postalCode: z
     .string()
+    .nullable()
     .optional()
-    .transform((e) => (e === "" ? null : e)),
+    .transform((val) => (val === "" || val === null ? null : val)),
   city: z.string().min(1, "City is required"),
   countryCode: z.string().min(2, "Country code is required"),
   region: z.string().min(1, "Region is required"),
@@ -58,12 +50,7 @@ const resumeSchema = z.object({
     z.object({
       network: z.string().min(1, "Network is required"),
       username: z.string().min(1, "Username is required"),
-      url: z
-        .string()
-        .url()
-        .optional()
-        .or(z.literal(""))
-        .transform((e) => (e === "" ? null : e)),
+      url: z.string().min(1, "URL is required"), // Required in Prisma
     })
   ),
   skills: z.array(
@@ -81,8 +68,9 @@ const resumeSchema = z.object({
       startDate: z.string().min(1, "Start date is required"),
       endDate: z
         .string()
+        .nullable()
         .optional()
-        .transform((e) => (e === "" ? undefined : e)),
+        .transform((val) => (val === "" || val === null ? null : val)),
       summary: z.string().min(1, "Summary is required"),
       highlights: z.array(z.string()),
     })
@@ -108,16 +96,15 @@ const resumeSchema = z.object({
       name: z.string().min(1, "Project name is required"),
       url: z
         .string()
-        .url()
-        .optional()
         .nullable()
-        .or(z.literal(""))
-        .transform((e) => (e === "" ? undefined : e)),
+        .optional()
+        .transform((val) => (val === "" || val === null ? null : val)), // Optional in Prisma
       startDate: z.string().min(1, "Start date is required"),
       endDate: z
         .string()
+        .nullable()
         .optional()
-        .transform((e) => (e === "" ? undefined : e)),
+        .transform((val) => (val === "" || val === null ? null : val)),
       description: z.string().min(1, "Description is required"),
       highlights: z.array(z.string()),
     })
@@ -129,8 +116,9 @@ const resumeSchema = z.object({
       startDate: z.string().min(1, "Start date is required"),
       endDate: z
         .string()
+        .nullable()
         .optional()
-        .transform((e) => (e === "" ? undefined : e)),
+        .transform((val) => (val === "" || val === null ? null : val)),
       summary: z.string().min(1, "Summary is required"),
       highlights: z.array(z.string()),
     })
@@ -156,8 +144,29 @@ export default function ResumeForm() {
     reset,
     formState: { errors },
   } = useForm<ResumeFormData>({
-    resolver: zodResolver(resumeSchema),
-    defaultValues: {} as ResumeFormData,
+    resolver: zodResolver(resumeSchema) as any,
+    defaultValues: {
+      name: "",
+      label: "",
+      image: "",
+      email: "",
+      phone: "",
+      url: "",
+      summary: "",
+      address: null,
+      postalCode: null,
+      city: "",
+      countryCode: "",
+      region: "",
+      profiles: [],
+      skills: [],
+      work: [],
+      education: [],
+      certificates: [],
+      projects: [],
+      volunteer: [],
+      interests: [],
+    },
   });
 
   const {
@@ -209,7 +218,8 @@ export default function ResumeForm() {
   } = useFieldArray({ control, name: "interests" });
 
   // Extract fetchResume function to be reusable
-  const fetchResume = async () => {
+
+  const fetchResume = useCallback(async () => {
     try {
       const response = await fetch("/api/admin/resume", {
         cache: "no-store",
@@ -217,48 +227,55 @@ export default function ResumeForm() {
       if (!response.ok) throw new Error("Failed to fetch resume");
       const data: ResumeType = await response.json();
 
-      // Convert dates to strings
-      const formattedData = {
+      const formattedData: ResumeFormData = {
         ...data,
-        work: data.work?.map((job) => ({
-          ...job,
-          startDate: job.startDate
-            ? new Date(job.startDate).toISOString().split("T")[0]
-            : "",
-          endDate: job.endDate
-            ? new Date(job.endDate).toISOString().split("T")[0]
-            : "",
-        })),
-        education: data.education?.map((edu) => ({
-          ...edu,
-          endDate: edu.endDate
-            ? new Date(edu.endDate).toISOString().split("T")[0]
-            : "",
-        })),
-        certificates: data.certificates?.map((cert) => ({
-          ...cert,
-          date: cert.date
-            ? new Date(cert.date).toISOString().split("T")[0]
-            : "",
-        })),
-        projects: data.projects?.map((proj) => ({
-          ...proj,
-          startDate: proj.startDate
-            ? new Date(proj.startDate).toISOString().split("T")[0]
-            : "",
-          endDate: proj.endDate
-            ? new Date(proj.endDate).toISOString().split("T")[0]
-            : "",
-        })),
-        volunteer: data.volunteer?.map((vol) => ({
-          ...vol,
-          startDate: vol.startDate
-            ? new Date(vol.startDate).toISOString().split("T")[0]
-            : "",
-          endDate: vol.endDate
-            ? new Date(vol.endDate).toISOString().split("T")[0]
-            : "",
-        })),
+        address: data.address ?? null,
+        postalCode: data.postalCode ?? null,
+        work:
+          data.work?.map((job) => ({
+            ...job,
+            startDate: job.startDate
+              ? new Date(job.startDate).toISOString().split("T")[0]
+              : "",
+            endDate: job.endDate
+              ? new Date(job.endDate).toISOString().split("T")[0]
+              : null,
+          })) || [],
+        education:
+          data.education?.map((edu) => ({
+            ...edu,
+            endDate: edu.endDate
+              ? new Date(edu.endDate).toISOString().split("T")[0]
+              : "",
+          })) || [],
+        certificates:
+          data.certificates?.map((cert) => ({
+            ...cert,
+            date: cert.date
+              ? new Date(cert.date).toISOString().split("T")[0]
+              : "",
+          })) || [],
+        projects:
+          data.projects?.map((proj) => ({
+            ...proj,
+            url: proj.url ?? null,
+            startDate: proj.startDate
+              ? new Date(proj.startDate).toISOString().split("T")[0]
+              : "",
+            endDate: proj.endDate
+              ? new Date(proj.endDate).toISOString().split("T")[0]
+              : null,
+          })) || [],
+        volunteer:
+          data.volunteer?.map((vol) => ({
+            ...vol,
+            startDate: vol.startDate
+              ? new Date(vol.startDate).toISOString().split("T")[0]
+              : "",
+            endDate: vol.endDate
+              ? new Date(vol.endDate).toISOString().split("T")[0]
+              : null,
+          })) || [],
       };
 
       reset(formattedData);
@@ -272,11 +289,11 @@ export default function ResumeForm() {
       });
       setIsLoading(false);
     }
-  };
+  }, [reset, setIsLoading]);
 
   useEffect(() => {
     fetchResume();
-  }, []);
+  }, [fetchResume]);
 
   const onSubmit: SubmitHandler<ResumeFormData> = async (data) => {
     console.log("Form submitted:", data);
@@ -346,7 +363,7 @@ export default function ResumeForm() {
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(onSubmit as any)}
       className="space-y-8 p-4 md:p-6 max-w-[95%] mx-auto"
     >
       <Accordion type="multiple" className="w-full">
@@ -567,11 +584,15 @@ export default function ResumeForm() {
                   control={control}
                   render={({ field }) => (
                     <Input
-                      {...field}
+                      value={field.value?.join(",") || ""}
                       placeholder="Keywords (comma-separated)"
                       className="w-full"
                       onChange={(e) =>
-                        field.onChange(e.target.value.split(","))
+                        field.onChange(
+                          e.target.value
+                            ? e.target.value.split(",").map((k) => k.trim())
+                            : []
+                        )
                       }
                     />
                   )}
@@ -661,11 +682,15 @@ export default function ResumeForm() {
                   control={control}
                   render={({ field }) => (
                     <Input
-                      {...field}
+                      value={field.value?.join(",") || ""}
                       placeholder="Highlights (comma-separated)"
                       className="w-full"
                       onChange={(e) =>
-                        field.onChange(e.target.value.split(","))
+                        field.onChange(
+                          e.target.value
+                            ? e.target.value.split(",").map((h) => h.trim())
+                            : []
+                        )
                       }
                     />
                   )}
@@ -893,11 +918,15 @@ export default function ResumeForm() {
                   control={control}
                   render={({ field }) => (
                     <Input
-                      {...field}
+                      value={field.value?.join(",") || ""}
                       placeholder="Highlights (comma-separated)"
                       className="w-full"
                       onChange={(e) =>
-                        field.onChange(e.target.value.split(","))
+                        field.onChange(
+                          e.target.value
+                            ? e.target.value.split(",").map((h) => h.trim())
+                            : []
+                        )
                       }
                     />
                   )}
@@ -986,11 +1015,15 @@ export default function ResumeForm() {
                   control={control}
                   render={({ field }) => (
                     <Input
-                      {...field}
+                      value={field.value?.join(",") || ""}
                       placeholder="Highlights (comma-separated)"
                       className="w-full"
                       onChange={(e) =>
-                        field.onChange(e.target.value.split(","))
+                        field.onChange(
+                          e.target.value
+                            ? e.target.value.split(",").map((h) => h.trim())
+                            : []
+                        )
                       }
                     />
                   )}
@@ -1043,11 +1076,15 @@ export default function ResumeForm() {
                   control={control}
                   render={({ field }) => (
                     <Input
-                      {...field}
+                      value={field.value?.join(",") || ""}
                       placeholder="Keywords (comma-separated)"
                       className="w-full"
                       onChange={(e) =>
-                        field.onChange(e.target.value.split(","))
+                        field.onChange(
+                          e.target.value
+                            ? e.target.value.split(",").map((k) => k.trim())
+                            : []
+                        )
                       }
                     />
                   )}

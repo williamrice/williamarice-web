@@ -27,7 +27,7 @@ export default function BadgeCard({
       </div>
 
       {/* Content section with light background for embeds */}
-      <div className="bg-gray-100 p-6 flex-grow flex items-center justify-center min-h-[280px]">
+      <div className="bg-gray-100 p-6 grow flex items-center justify-center min-h-[280px]">
         {type === "image" && imageUrl && (
           <div
             className="relative"

@@ -6,7 +6,7 @@ const CallToAction = () => {
   return (
     <div className="relative w-full py-16 md:py-24 overflow-hidden mb-0">
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-900 via-blue-800 to-gray-900"></div>
+      <div className="absolute inset-0 bg-linear-to-r from-blue-900 via-blue-800 to-gray-900"></div>
       {/* Decorative elements */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute top-10 left-20 w-72 h-72 bg-white rounded-full mix-blend-overlay filter blur-3xl"></div>
