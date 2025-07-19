@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   useForm,
   useFieldArray,
@@ -209,7 +209,8 @@ export default function ResumeForm() {
   } = useFieldArray({ control, name: "interests" });
 
   // Extract fetchResume function to be reusable
-  const fetchResume = async () => {
+
+  const fetchResume = useCallback(async () => {
     try {
       const response = await fetch("/api/admin/resume", {
         cache: "no-store",
@@ -217,7 +218,6 @@ export default function ResumeForm() {
       if (!response.ok) throw new Error("Failed to fetch resume");
       const data: ResumeType = await response.json();
 
-      // Convert dates to strings
       const formattedData = {
         ...data,
         work: data.work?.map((job) => ({
@@ -272,11 +272,11 @@ export default function ResumeForm() {
       });
       setIsLoading(false);
     }
-  };
+  }, [reset, setIsLoading]);
 
   useEffect(() => {
     fetchResume();
-  }, []);
+  }, [fetchResume]);
 
   const onSubmit: SubmitHandler<ResumeFormData> = async (data) => {
     console.log("Form submitted:", data);
