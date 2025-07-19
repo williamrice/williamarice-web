@@ -1,6 +1,7 @@
 import React from "react";
 
 import SocialLinks from "./SocialLinks";
+import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -10,55 +11,55 @@ const Footer = () => {
       </div>
       <ul className="flex flex-wrap justify-center mt-3 text-sm font-medium text-gray-300 sm:mt-0 mb-2">
         <li>
-          <a
+          <Link
             href="/#about-section"
             className="mr-4 hover:underline hover:text-blue-400 md:mr-6 transition-colors"
           >
             About
-          </a>
+          </Link>
         </li>
         <li>
-          <a
+          <Link
             href="/privacy-policy"
             className="mr-4 hover:underline hover:text-blue-400 md:mr-6 transition-colors"
           >
             Privacy Policy
-          </a>
+          </Link>
         </li>
         <li>
-          <a
+          <Link
             href="/licensing"
             className="mr-4 hover:underline hover:text-blue-400 md:mr-6 transition-colors"
           >
             Licensing
-          </a>
+          </Link>
         </li>
         <li>
-          <a
+          <Link
             href="/secret-message"
             className="mr-4 hover:underline hover:text-blue-400 md:mr-6 transition-colors"
           >
             Secret
-          </a>
+          </Link>
         </li>
         <li>
-          <a
+          <Link
             href="/contact"
             className="hover:underline hover:text-blue-400 transition-colors"
           >
             Contact
-          </a>
+          </Link>
         </li>
       </ul>
       <div className="flex justify-center">
         <span className="text-sm text-gray-300 sm:text-center">
           © {new Date().getFullYear()}{" "}
-          <a
+          <Link
             href="https://www.williamarice.com"
             className="hover:underline hover:text-blue-400 transition-colors"
           >
             William Rice
-          </a>
+          </Link>
           . All Rights Reserved.
         </span>
       </div>
