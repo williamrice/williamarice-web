@@ -11,7 +11,7 @@ const Header = ({ children, height = "400px" }: HeaderProps) => {
       style={{
         minHeight: height,
       }}
-      className="w-full lg:bg-center shadow-lg border border-gray-700 overflow-hidden bg-gradient-to-r from-blue-900 via-blue-800 to-gray-900"
+      className="w-full lg:bg-center shadow-lg border border-gray-700 overflow-hidden bg-linear-to-r from-blue-900 via-blue-800 to-gray-900"
     >
       <div
         style={{ minHeight: height }}

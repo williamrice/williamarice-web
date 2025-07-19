@@ -13,7 +13,7 @@ const PrivacyPolicy = () => {
       </Header>
 
       {/* Content section with subtle gradient background */}
-      <div className="bg-gradient-to-b from-gray-900 to-gray-800">
+      <div className="bg-linear-to-b from-gray-900 to-gray-800">
         <div className="max-w-4xl mx-auto px-4 py-16">
           <div className="text-center mb-8">
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">

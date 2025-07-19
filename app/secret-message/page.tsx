@@ -3,7 +3,7 @@ import SecretMessageForm from "@/components/SecretMessageForm";
 
 const SecretMessagePage = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800">
+    <div className="min-h-screen bg-linear-to-b from-gray-900 to-gray-800">
       <Header>
         <div className="h-full flex flex-col items-center justify-center">
           <h1 className="lg:text-6xl text-4xl font-bold text-center text-white">

@@ -36,7 +36,7 @@ function MonthlyFuelProgress({ month, year, data }: Props) {
       </div>
       <div>
         <Progress
-          className="w-[100%] h-10"
+          className="w-full h-10"
           value={progressValue * 100}
           max={ALLOCATED_FUEL}
           getValueLabel={(value, max) => `${value}/${ALLOCATED_FUEL}`}

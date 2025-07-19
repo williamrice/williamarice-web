@@ -5,7 +5,7 @@ import MainButton from "./MainButton";
 
 const JumboTron = () => {
   return (
-    <div className="flex justify-center items-center w-full min-h-[85vh] bg-gradient-to-r from-blue-900 via-blue-800 to-gray-900 overflow-hidden">
+    <div className="flex justify-center items-center w-full min-h-[85vh] bg-linear-to-r from-blue-900 via-blue-800 to-gray-900 overflow-hidden">
       {/* Background elements */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute top-20 left-10 w-64 h-64 bg-blue-400 rounded-full filter blur-3xl"></div>
@@ -19,7 +19,7 @@ const JumboTron = () => {
           {/* Image shown first on mobile, second on desktop */}
           <div className="md:w-1/2 md:order-2 flex justify-center md:justify-end mb-4 md:mb-0">
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-gray-700 rounded-full blur-md transform scale-105 animate-pulse"></div>
+              <div className="absolute inset-0 bg-linear-to-br from-blue-500 to-gray-700 rounded-full blur-md transform scale-105 animate-pulse"></div>
               <Image
                 src="/images/william_rice-headshot.png"
                 width={280}

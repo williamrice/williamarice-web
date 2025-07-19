@@ -1,15 +1,48 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
- 
-@layer base {
-  
+@import "tailwindcss";
+
+@theme {
+  /* Container configuration */
+  --container-center: true;
+  --container-padding: 2rem;
+  --container-screens-2xl: 1400px;
+
+  /* Border radius with CSS custom properties */
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  /* Animation definitions */
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-slide-down: slideDown 0.2s ease-in-out;
+  --animate-slide-up: slideUp 0.4s ease-out;
+  --animate-fade-in: fadeIn 1s ease-in;
+
+  /* Keyframes for animations */
+  @keyframes accordion-down {
+    from { height: 0; }
+    to { height: var(--radix-accordion-content-height); }
+  }
+
+  @keyframes accordion-up {
+    from { height: var(--radix-accordion-content-height); }
+    to { height: 0; }
+  }
+
+  @keyframes slideDown {
+    0% { transform: translateY(-50%); }
+    100% { transform: translateY(0); }
+  }
+
+  @keyframes slideUp {
+    0% { transform: translateY(50%); }
+    100% { transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
 }
 
-
-html,
-body {
-  margin: 0;
-  height: 100%;
-}
-
+@plugin "tailwindcss-animate";
