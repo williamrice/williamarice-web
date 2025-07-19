@@ -4,12 +4,7 @@ import { Project } from "@prisma/client";
 import { getAllProjects } from "@/actions/projects";
 import Header from "@/components/Header";
 
-export default async function ProjectsPage({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | string[] | undefined };
-}) {
-  const success = searchParams.success;
+export default async function ProjectsPage() {
   const projects = await getAllProjects();
 
   return (

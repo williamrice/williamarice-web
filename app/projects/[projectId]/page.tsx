@@ -7,12 +7,16 @@ import { AiFillGithub, AiFillEye } from "react-icons/ai";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 
+interface IndividualProjectPageProps {
+  params: Promise<{ projectId: string }>;
+}
+
 const IndividualProjectPage = async ({
   params,
-}: {
-  params: { projectId: string };
-}) => {
-  const project = await getProjectById(parseInt(params.projectId));
+}: IndividualProjectPageProps) => {
+  const { projectId } = await params;
+
+  const project = await getProjectById(parseInt(projectId));
 
   if (!project) {
     return (

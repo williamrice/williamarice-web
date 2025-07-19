@@ -1,12 +1,17 @@
 import { getProjectById } from "@/actions/projects";
 import EditProjectForm from "./EditProjectForm";
 
+interface EditProjectPageProps {
+  params: Promise<{ id: string }>;
+}
+
 export default async function EditProjectPage({
   params,
-}: {
-  params: { id: string };
-}) {
-  const projectId = parseInt(params.id);
+}: EditProjectPageProps) {
+  console.log(typeof params);
+  const { id } = await params;
+
+  const projectId = parseInt(id);
 
   const project = await getProjectById(projectId);
 

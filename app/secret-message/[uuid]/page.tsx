@@ -1,13 +1,16 @@
 import SecretMessageView from "@/components/SecretMessageView";
 
+interface SecretMessageSingleViewPageProps {
+  params: Promise<{ uuid: string }>;
+}
+
 const SecretMessageSingleViewPage = async ({
   params,
-}: {
-  params: { uuid: string };
-}) => {
+}: SecretMessageSingleViewPageProps) => {
+  const { uuid } = await params;
   var secretMessage;
   const response = await fetch(
-    `https://secret.williamarice.com/api/Secret/${params.uuid}`,
+    `https://secret.williamarice.com/api/Secret/${uuid}`,
     {
       cache: "no-store",
     }
