@@ -2,7 +2,6 @@ import React from "react";
 import Image from "next/image";
 import { AiFillCode, AiFillTrophy } from "react-icons/ai";
 import { FaBook } from "react-icons/fa6";
-import Link from "next/link";
 
 const AboutSection = () => {
   return (
