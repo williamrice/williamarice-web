@@ -29,7 +29,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
         router.push(`/projects/${project.id}`);
       }}
     >
-      <div className="relative h-[300px] w-full overflow-hidden">
+      <div className="relative h-[300px] w-full overflow-hidden border-b-2 border-white">
         <Image
           src={project.featuredImageSrc}
           alt={project.featuredImageAlt}
@@ -39,15 +39,18 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
         />
       </div>
       <div className="p-8 text-center">
-        <h2 className="text-2xl font-bold text-white mb-6">{project.title}</h2>
+        <h2 className="text-2xl font-bold text-white mb-6 min-h-16">
+          {project.title}
+        </h2>
         <div className="flex flex-wrap gap-2 mb-6 justify-center">
-          {project.technologies.slice(0, 4).map((technology) => {
+          {project.technologies.slice(0, 3).map((technology) => {
             return <TechnologyPill key={technology} technology={technology} />;
           })}
-          {project.technologies.length > 4 && (
-            <span className="px-3 py-1 text-sm font-medium bg-blue-800 text-white rounded-full border border-blue-600">
-              +{project.technologies.length - 4} more
-            </span>
+          {project.technologies.length > 3 && (
+            <TechnologyPill
+              key={`more-${project.id}`}
+              technology={`+${project.technologies.length - 3} more`}
+            />
           )}
         </div>
         <div className="mb-8 text-center h-48 relative overflow-hidden">
