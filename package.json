@@ -44,7 +44,7 @@
     "date-fns": "^4.1.0",
     "devicon": "^2.16.0",
     "embla-carousel-react": "^8.6.0",
-    "eslint": "^9.31.0",
+    "eslint": "^9.32.0",
     "eslint-config-next": "15.4.2",
     "framer-motion": "^12.23.6",
     "lucide-react": "^0.525.0",
