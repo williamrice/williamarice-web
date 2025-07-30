@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { FaGithub, FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
+import { FaGithub, FaLinkedinIn, FaXTwitter, FaDiscord } from "react-icons/fa6";
 import MainButton from "./MainButton";
 
 const JumboTron = () => {
@@ -72,12 +72,12 @@ const JumboTron = () => {
                 <FaLinkedinIn className="w-6 h-6" />
               </a>
               <a
-                href="https://x.com/williamarice"
+                href="https://discord.com/users/201860276197392385"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-white hover:text-blue-300 transition-colors p-2 rounded-full hover:bg-gray-800"
               >
-                <FaXTwitter className="w-6 h-6" />
+                <FaDiscord className="w-6 h-6" />
               </a>
             </div>
           </div>
