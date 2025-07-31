@@ -72,12 +72,12 @@ const JumboTron = () => {
                 <FaLinkedinIn className="w-6 h-6" />
               </a>
               <a
-                href="https://discord.com/users/201860276197392385"
+                href="https://x.com/warice_dev"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-white hover:text-blue-300 transition-colors p-2 rounded-full hover:bg-gray-800"
               >
-                <FaDiscord className="w-6 h-6" />
+                <FaXTwitter className="w-6 h-6" />
               </a>
             </div>
           </div>
