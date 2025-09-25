@@ -190,33 +190,44 @@ const ResumePage: React.FC = () => {
             <h2 className="text-lg font-semibold border-b border-gray-300 mb-1">
               Work Experience
             </h2>
-            {data.work.slice(0, 3).map((job, index) => (
-              <div key={index} className="mb-2">
-                <h3 className="text-sm sm:text-base font-semibold">
-                  {job.position} - {job.name}
-                </h3>
-                <p className="text-xs sm:text-sm text-gray-600">
-                  {job.location}
-                </p>
-                <p className="text-xs sm:text-sm text-gray-500">
-                  {formatDate(job.startDate.toString())} -{" "}
-                  {job.endDate ? formatDate(job.endDate.toString()) : "Present"}
-                </p>
-                <p className="text-xs sm:text-sm mt-1">{job.summary}</p>
-                {job.highlights.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mt-1">
-                    {job.highlights.map((highlight, hIndex) => (
-                      <span
-                        key={hIndex}
-                        className="px-2 py-1 bg-gray-100 rounded-full text-xs sm:text-sm"
-                      >
-                        {highlight}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
+            {data.work
+              .sort((a, b) => {
+                if (!a.endDate) return -1;
+                if (!b.endDate) return 1;
+                return (
+                  new Date(b.endDate).getTime() - new Date(a.endDate).getTime()
+                );
+              })
+              .slice(0, 3)
+              .map((job, index) => (
+                <div key={index} className="mb-2">
+                  <h3 className="text-sm sm:text-base font-semibold">
+                    {job.position} - {job.name}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-gray-600">
+                    {job.location}
+                  </p>
+                  <p className="text-xs sm:text-sm text-gray-500">
+                    {formatDate(job.startDate.toString())} -{" "}
+                    {job.endDate
+                      ? formatDate(job.endDate.toString())
+                      : "Present"}
+                  </p>
+                  <p className="text-xs sm:text-sm mt-1">{job.summary}</p>
+                  {job.highlights.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mt-1">
+                      {job.highlights.map((highlight, hIndex) => (
+                        <span
+                          key={hIndex}
+                          className="px-2 py-1 bg-gray-100 rounded-full text-xs sm:text-sm"
+                        >
+                          {highlight}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
           </section>
 
           <section className="mb-4">
