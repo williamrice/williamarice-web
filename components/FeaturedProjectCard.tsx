@@ -27,17 +27,23 @@ const FeaturedProjectCard: React.FC<FeaturedProjectCardProps> = ({
       </div>
 
       <div className="p-8 text-center">
-        <h3 className="text-2xl font-bold text-white mb-6">{project.title}</h3>
+        <div className="mb-4 flex justify-center items-center min-h-[90px]">
+          <h3 className="text-2xl font-bold text-white mb-6">
+            {project.title}
+          </h3>
+        </div>
 
-        <div className="flex flex-wrap gap-2 mb-6 justify-center">
-          {project.technologies.map((tech) => (
-            <span
-              key={tech}
-              className="px-3 py-1 text-sm font-medium bg-blue-800 text-white rounded-full border border-blue-600"
-            >
-              {tech}
-            </span>
-          ))}
+        <div className="flex justify-center items-center mb-4 min-h-[90px]">
+          <div className="flex flex-wrap gap-2 mb-6 justify-center">
+            {project.technologies.map((tech) => (
+              <span
+                key={tech}
+                className="px-3 py-1 text-sm font-medium bg-blue-800 text-white rounded-full border border-blue-600"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
         </div>
 
         <div className="mb-8 text-center h-48 relative overflow-hidden">
