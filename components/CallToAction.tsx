@@ -28,9 +28,8 @@ const CallToAction = () => {
             Let&apos;s connect and collaborate!
           </h2>
           <p className="max-w-2xl mx-auto text-lg md:text-xl text-blue-100 mb-6 md:mb-8 relative px-4 py-2 rounded-lg bg-gray-900/50 sm:bg-gray-900/30 backdrop-blur-sm">
-            I&apos;m always open to new opportunities, collaborations, and
-            connecting with fellow developers. Let&apos;s build something
-            amazing together!
+            I&apos;m always open to new opportunities to collaborate and connect
+            with fellow developers. Let&apos;s build something amazing together!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link

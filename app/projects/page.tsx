@@ -19,10 +19,10 @@ export default async function ProjectsPage() {
       </Header>
 
       {/* Project Description */}
-      <div className="max-w-6xl mx-auto px-4 py-16">
+      <div className="w-full flex flex-col justify-center px-4 py-16">
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold mb-6">My Projects</h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-300 max-w-4xl mx-auto">
             Browse through my project portfolio below. Each project includes a
             detailed case study covering the problem, solution, and development
             process. Click on any project to explore the full story behind it.
