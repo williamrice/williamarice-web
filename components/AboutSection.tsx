@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { AiFillCode, AiFillTrophy } from "react-icons/ai";
 import { FaBook } from "react-icons/fa6";
+import { FeatureCard } from "./FeaturedCard";
 
 const AboutSection = () => {
   return (
@@ -31,30 +32,28 @@ const AboutSection = () => {
           <div className="lg:w-7/12 mt-12 lg:mt-0 text-left">
             {" "}
             <h3 className="text-2xl font-bold text-white mb-6">
-              Hello, I&apos;m William (I go by Billy)
+              Hello, I&apos;m William (You can call me Billy!)
             </h3>
             <div className="space-y-6 text-gray-300">
               <p className="text-lg">
-                I&apos;m a Software Developer based in Eastern Kentucky with a
-                distinctive professional background. Growing up in poverty while
-                moving between homes due to my parents&apos; addiction
-                struggles, I transformed these challenges into motivation and
-                dedicated over 12 years to public service as a law enforcement
-                officer before transitioning to full-time software development.
+                I&apos;m a Software Developer in Eastern Kentucky with an
+                unconventional path to tech. After growing up in challenging
+                circumstances and serving 12+ years in law enforcement, I
+                transitioned a lifelong programming hobby into a full-time
+                career by consistently challenging myself and building skills
+                across a variety of technologies.
               </p>
               <p className="text-lg">
-                My commitment to technology and programming spans decades. I
-                bring expertise across multiple programming languages and
-                frameworks, including PHP for WordPress plugin development, C++
-                for application modding, and modern JavaScript frameworks for
-                comprehensive full-stack web development solutions.
+                I recently earned my Master of Science in Software Engineering,
+                complementing years of self taught learning. I specialize in PHP
+                (WordPress ecosystem), modern JavaScript frameworks, C#/.NET,
+                and C++, with a focus on clean architecture, accessibility, and
+                performance-driven solutions.
               </p>
               <p className="text-lg">
-                Beyond software development, I maintain an active lifestyle
-                through outdoor recreation in the Red River Gorge, fitness
-                training, and continuous learning through technical literature.
-                I also continue my public service commitment as an elected City
-                Councilman.
+                When I&apos;m not coding, you&apos;ll find me hiking the Red
+                River Gorge, spending quality time with my family, or serving my
+                community as an elected City Councilman.
               </p>
             </div>
             <div className="space-y-4 mt-8">
@@ -77,28 +76,6 @@ const AboutSection = () => {
           </div>
         </div>
       </div>
-    </div>
-  );
-};
-
-const FeatureCard = ({
-  icon,
-  title,
-  description,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-}) => {
-  return (
-    <div className="flex flex-col p-4 bg-gray-700 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
-      <div className="flex items-center gap-4 mb-3">
-        <div className="bg-blue-900 p-3 rounded-full text-blue-400 shrink-0">
-          {icon}
-        </div>
-        <h4 className="text-lg font-semibold text-white">{title}</h4>
-      </div>
-      <p className="text-gray-300 text-left">{description}</p>
     </div>
   );
 };

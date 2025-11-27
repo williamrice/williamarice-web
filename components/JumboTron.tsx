@@ -21,7 +21,7 @@ const JumboTron = () => {
             <div className="relative">
               <div className="absolute inset-0 bg-linear-to-br from-blue-500 to-gray-700 rounded-full blur-md transform scale-105 animate-pulse"></div>
               <Image
-                src="/images/william_rice-headshot.png"
+                src="/images/headshot.webp"
                 width={280}
                 height={280}
                 alt="William Rice"
@@ -49,7 +49,7 @@ const JumboTron = () => {
               <MainButton text="View Projects" link="/projects" />
               <a
                 href="/resume"
-                className="px-6 py-3 border-2 border-white text-white hover:bg-white hover:text-blue-900 rounded-lg transition-all duration-300 font-medium"
+                className="px-6 py-3 border-2 border-white text-white hover:bg-white hover:text-blue-900 hover:cursor-pointer rounded-lg transition-all duration-300 font-medium"
               >
                 View Resume
               </a>

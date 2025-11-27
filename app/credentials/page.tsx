@@ -69,9 +69,9 @@ export default function CredentialsPage() {
             <h2 className="text-3xl font-bold mb-6 text-white">
               Professional Certifications
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              In addition to my Bachelor of Science in Software Engineering,
-              here is a collection of my professional certifications and
+            <p className="text-xl text-gray-300 max-w-4xl mx-auto">
+              In addition to my Master of Science in Software Engineering, here
+              is a collection of my professional certifications and
               achievements. Click on any badge to view more details and verify
               authenticity.
             </p>
