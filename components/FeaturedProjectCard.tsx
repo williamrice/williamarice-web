@@ -17,23 +17,24 @@ const FeaturedProjectCard: React.FC<FeaturedProjectCardProps> = ({
       href={`/projects/${project.id}`}
       className="block bg-gray-800 rounded-xl overflow-hidden shadow-lg border border-gray-700 hover:border-blue-600 transition-all duration-300 cursor-pointer"
     >
-      <div className="relative h-[300px] w-full overflow-hidden">
+      <div className="relative h-75 w-full overflow-hidden">
         <Image
           src={project.featuredImageSrc}
           alt={project.featuredImageAlt}
           fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="object-cover transform hover:scale-105 transition-transform duration-500"
         />
       </div>
 
       <div className="p-8 text-center">
-        <div className="mb-4 flex justify-center items-center min-h-[90px]">
+        <div className="mb-4 flex justify-center items-center min-h-22.5">
           <h3 className="text-2xl font-bold text-white mb-6">
             {project.title}
           </h3>
         </div>
 
-        <div className="flex justify-center items-center mb-4 min-h-[90px]">
+        <div className="flex justify-center items-center mb-4 min-h-22.5">
           <div className="flex flex-wrap gap-2 mb-6 justify-center">
             {project.technologies.map((tech) => (
               <span
