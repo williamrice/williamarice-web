@@ -1,9 +1,8 @@
 "use server";
 
 import ContactForm from "../../components/contact-form/ContactForm";
-import React from "react";
 import Header from "@/components/Header";
-const ContactPage = () => {
+const ContactPage = async () => {
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       <Header>
@@ -20,8 +19,9 @@ const ContactPage = () => {
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold mb-6 text-white">Get In Touch</h2>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Have a question or want to work together? I&apos;d love to hear from
-              you. Send me a message and I&apos;ll respond as soon as possible.
+              Have a question or want to work together? I&apos;d love to hear
+              from you. Send me a message and I&apos;ll respond as soon as
+              possible.
             </p>
           </div>
 
