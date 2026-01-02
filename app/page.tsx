@@ -21,7 +21,7 @@ const personSchema = {
   },
   sameAs: [
     'https://github.com/williamrice',
-    'https://linkedin.com/in/williamarice'
+    'https://www.linkedin.com/in/realwilliamrice/'
   ],
   knowsAbout: [
     'React', 'Next.js', 'Node.js', 'TypeScript', 'JavaScript',
