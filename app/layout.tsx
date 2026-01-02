@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     default: 'William Rice - Software Developer | Lexington, KY',
     template: '%s | William Rice'
   },
-  description: 'Full-stack software developer in Lexington, KY specializing in React, Next.js, Node.js, and modern web technologies. Building professional web applications with cutting-edge frameworks.',
+  description: 'Full-stack software developer in Lexington, KY building web applications and software solutions across various technology stacks.',
   keywords: [
     'software developer lexington ky',
     'full-stack developer kentucky',
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: 'William Rice - Software Developer',
-    description: 'Full-stack software developer portfolio specializing in React, Next.js, and modern web technologies.',
+    description: 'Full-stack software developer portfolio featuring web applications and software solutions.',
     url: 'https://williamarice.com',
     siteName: 'William Rice Portfolio',
     images: [
@@ -40,10 +40,9 @@ export const metadata: Metadata = {
     locale: 'en_US',
     type: 'website'
   },
-  twitter: {
-    card: 'summary_large_image',
+twitter: {
     title: 'William Rice - Software Developer',
-    description: 'Full-stack software developer portfolio specializing in React, Next.js, and modern web technologies.',
+    description: 'Full-stack software developer portfolio featuring web applications and software solutions.',
     images: ['/images/william_headshot_500x500.jpg']
   },
   robots: {

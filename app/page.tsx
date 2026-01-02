@@ -10,7 +10,7 @@ const personSchema = {
   '@type': 'Person',
   name: 'William Rice',
   jobTitle: 'Software Developer',
-  description: 'Full-stack software developer specializing in React, Next.js, Node.js, and modern web technologies.',
+  description: 'Full-stack software developer building web applications and software solutions.',
   url: 'https://williamarice.com',
   address: {
     '@type': 'PostalAddress',
@@ -23,7 +23,7 @@ const personSchema = {
     'https://linkedin.com/in/williamarice'
   ],
   knowsAbout: [
-    'React', 'Next.js', 'Node.js', 'TypeScript', 'PostgreSQL', 'Tailwind CSS', 'Prisma'
+    'Web Development', 'JavaScript', 'Databases', 'APIs', 'Cloud Services', 'DevOps', 'Software Architecture', 'Frontend', 'Backend', 'Mobile Development', 'System Design'
   ],
   worksFor: {
     '@type': 'Organization',
@@ -36,7 +36,7 @@ const websiteSchema = {
   '@type': 'WebSite',
   name: 'William Rice Portfolio',
   url: 'https://williamarice.com',
-  description: 'Full-stack software developer portfolio showcasing projects and skills',
+  description: 'Full-stack software developer portfolio featuring web applications and software solutions',
   author: {
     '@type': 'Person',
     name: 'William Rice'

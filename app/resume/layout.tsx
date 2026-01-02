@@ -4,7 +4,7 @@ import { generateMetadataWithCanonical } from "@/lib/metadata";
 export const metadata: Metadata = generateMetadataWithCanonical(
   '/resume',
   'Resume | William Rice',
-  'View my professional resume with work experience, skills, education, and certifications as a full-stack software developer.'
+  'View my professional resume with work experience, technical skills, and software development expertise.'
 );
 
 export default function ResumeLayout({
