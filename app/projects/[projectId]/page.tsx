@@ -82,13 +82,14 @@ const IndividualProjectPage = async ({
         <div className="mb-16 animate-slideUp bg-gray-800 rounded-xl overflow-hidden shadow-lg border border-gray-700 hover:border-blue-600 transition-all duration-300">
           <Zoom>
             <div className="relative h-[500px] w-full overflow-hidden">
-              <Image
-                src={project.featuredImageSrc}
-                alt={project.featuredImageAlt}
-                fill
-                className="object-cover transform hover:scale-105 transition-transform duration-500"
-                unoptimized={true}
-              />
+<Image
+                 src={project.featuredImageSrc}
+                 alt={project.featuredImageAlt}
+                 fill
+                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                 className="object-cover transform hover:scale-105 transition-transform duration-500"
+                 priority={true}
+               />
             </div>
           </Zoom>
         </div>
@@ -130,13 +131,14 @@ const IndividualProjectPage = async ({
                 {project.galleryImages.map((image, index) => (
                   <Zoom key={index}>
                     <div className="relative h-48 overflow-hidden rounded-xl">
-                      <Image
-                        src={image.imagePath}
-                        alt={`Gallery image ${index + 1}`}
-                        fill
-                        className="object-cover transform hover:scale-105 transition-transform duration-500"
-                        unoptimized={true}
-                      />
+<Image
+                         src={image.imagePath}
+                         alt={`Gallery image ${index + 1}`}
+                         fill
+                         sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+                         className="object-cover transform hover:scale-105 transition-transform duration-500"
+                         priority={false}
+                       />
                     </div>
                   </Zoom>
                 ))}

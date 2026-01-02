@@ -36,7 +36,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="object-cover transform hover:scale-105 transition-transform duration-500"
-          unoptimized={true}
+          priority={false}
         />
       </div>
       <div className="p-8 text-center">

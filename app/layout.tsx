@@ -8,10 +8,55 @@ import ConditionalNavBar from "@/components/ConditionalNavBar";
 import Script from "next/script";
 
 export const metadata: Metadata = {
-  title: "William Rice",
-  description: "William Rice - Software Developer - Lexington, KY",
-  keywords:
-    "software developer lexington ky, web developer lexington ky, web design lexington ky, website design lexington ky",
+  metadataBase: new URL('https://williamarice.com'),
+  title: {
+    default: 'William Rice - Software Developer | Lexington, KY',
+    template: '%s | William Rice'
+  },
+  description: 'Full-stack software developer in Lexington, KY specializing in React, Next.js, Node.js, and modern web technologies. Building professional web applications with cutting-edge frameworks.',
+  keywords: [
+    'software developer lexington ky',
+    'full-stack developer kentucky',
+    'react developer',
+    'next.js developer',
+    'web development lexington ky',
+    'node.js developer',
+    'typescript developer',
+    'postgresql developer'
+  ],
+  openGraph: {
+    title: 'William Rice - Software Developer',
+    description: 'Full-stack software developer portfolio specializing in React, Next.js, and modern web technologies.',
+    url: 'https://williamarice.com',
+    siteName: 'William Rice Portfolio',
+    images: [
+      {
+        url: '/images/william_headshot_500x500.jpg',
+        width: 500,
+        height: 500,
+        alt: 'William Rice - Software Developer'
+      }
+    ],
+    locale: 'en_US',
+    type: 'website'
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'William Rice - Software Developer',
+    description: 'Full-stack software developer portfolio specializing in React, Next.js, and modern web technologies.',
+    images: ['/images/william_headshot_500x500.jpg']
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1
+    }
+  }
 };
 
 export default function RootLayout({
@@ -30,12 +75,24 @@ export default function RootLayout({
         />
       </head>
       <body className="h-screen w-full">
+        <a 
+          href="#main-content" 
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded z-50 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        >
+          Skip to main content
+        </a>
         <NextAuthProvider>
           <div className="flex flex-col min-h-screen items-center justify-center">
-            <ConditionalNavBar />
-            <main className="mb-auto h-full w-full">{children}</main>
-            <Toaster />
-            <Footer />
+            <header>
+              <ConditionalNavBar />
+            </header>
+            <main id="main-content" className="mb-auto h-full w-full" tabIndex={-1}>
+              {children}
+            </main>
+            <footer>
+              <Toaster />
+              <Footer />
+            </footer>
           </div>
         </NextAuthProvider>
       </body>

@@ -128,8 +128,10 @@ const ContactForm = () => {
     validateForm,
   ]);
 
-  async function handleContactForm(e: React.MouseEvent<HTMLButtonElement>) {
-    e.preventDefault();
+  async function handleContactForm(e?: React.MouseEvent<HTMLButtonElement> | React.FormEvent<HTMLFormElement>) {
+    if (e) {
+      e.preventDefault();
+    }
 
     // Mark that user has attempted to submit
     setHasAttemptedSubmit(true);
@@ -207,15 +209,25 @@ const ContactForm = () => {
 
   return (
     <div className="block md:w-2/3 p-8 bg-gray-800 border border-gray-600 rounded-lg shadow-lg">
-      <form>
+      <form
+        role="form"
+        aria-labelledby="contact-form-heading"
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleContactForm(e);
+        }}
+        noValidate
+      >
+        <h2 id="contact-form-heading" className="sr-only">Contact Form</h2>
         <div className="mb-6">
           <label
             htmlFor="name"
             className="block mb-2 text-sm font-medium text-white"
           >
-            Your Name
+            Your Name <span className="text-red-400" aria-label="required">*</span>
           </label>
           <input
+            id="name"
             type="text"
             name="name"
             className="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 placeholder-gray-400"
@@ -224,16 +236,25 @@ const ContactForm = () => {
             }
             value={contactFormState.name}
             required
+            aria-required="true"
+            aria-invalid={contactFormState.formError.isError && contactFormState.name.trim() === ''}
+            aria-describedby={contactFormState.formError.isError && contactFormState.name.trim() === '' ? "name-error" : undefined}
           />
+          {contactFormState.formError.isError && contactFormState.name.trim() === '' && (
+            <div id="name-error" className="text-red-400 text-sm mt-1" role="alert">
+              Name is required
+            </div>
+          )}
         </div>
         <div className="mb-6">
           <label
             htmlFor="email"
             className="block mb-2 text-sm font-medium text-white"
           >
-            Your Email
+            Your Email <span className="text-red-400" aria-label="required">*</span>
           </label>
           <input
+            id="email"
             type="email"
             name="email"
             className="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 placeholder-gray-400"
@@ -245,16 +266,25 @@ const ContactForm = () => {
               })
             }
             required
+            aria-required="true"
+            aria-invalid={contactFormState.formError.isError && contactFormState.formError.message.includes('email')}
+            aria-describedby={contactFormState.formError.isError && contactFormState.formError.message.includes('email') ? "email-error" : undefined}
           />
+          {contactFormState.formError.isError && contactFormState.formError.message.includes('email') && (
+            <div id="email-error" className="text-red-400 text-sm mt-1" role="alert">
+              {contactFormState.formError.message}
+            </div>
+          )}
         </div>
         <div className="mb-6">
           <label
             htmlFor="message"
             className="block mb-2 text-sm font-medium text-white"
           >
-            Message
+            Message <span className="text-red-400" aria-label="required">*</span>
           </label>
           <textarea
+            id="message"
             name="message"
             rows={4}
             cols={40}
@@ -267,7 +297,15 @@ const ContactForm = () => {
             }
             value={contactFormState.message}
             required
+            aria-required="true"
+            aria-invalid={contactFormState.formError.isError && contactFormState.message.trim() === ''}
+            aria-describedby={contactFormState.formError.isError && contactFormState.message.trim() === '' ? "message-error" : undefined}
           />
+          {contactFormState.formError.isError && contactFormState.message.trim() === '' && (
+            <div id="message-error" className="text-red-400 text-sm mt-1" role="alert">
+              Message is required
+            </div>
+          )}
         </div>
 
         <RecaptchaCheckbox onVerify={handleRecaptchaVerify} />
@@ -284,10 +322,16 @@ const ContactForm = () => {
           )}
         </button>
       </form>
-      {contactFormState.formError.isError && (
-        <ErrorEmailBanner message={contactFormState.formError.message} />
+      {contactFormState.formError.isError && !contactFormState.formError.message.includes('Name') && !contactFormState.formError.message.includes('email') && !contactFormState.formError.message.includes('Message') && (
+        <div className="mt-4" role="alert" aria-live="polite">
+          <ErrorEmailBanner message={contactFormState.formError.message} />
+        </div>
       )}
-      {contactFormState.formSuccess && <SuccessfulEmailBanner />}
+      {contactFormState.formSuccess && (
+        <div className="mt-4" role="status" aria-live="polite">
+          <SuccessfulEmailBanner />
+        </div>
+      )}
     </div>
   );
 };

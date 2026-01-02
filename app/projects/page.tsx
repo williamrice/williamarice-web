@@ -3,6 +3,14 @@ import ProjectCard from "../../components/ProjectCard";
 import { Project } from "@prisma/client";
 import { getAllProjects } from "@/actions/projects";
 import Header from "@/components/Header";
+import { Metadata } from "next";
+import { generateMetadataWithCanonical } from "@/lib/metadata";
+
+export const metadata: Metadata = generateMetadataWithCanonical(
+  '/projects',
+  'Projects | William Rice',
+  'Browse through my project portfolio showcasing full-stack web development projects with detailed case studies and technical implementations.'
+);
 
 export default async function ProjectsPage() {
   const projects = await getAllProjects();
