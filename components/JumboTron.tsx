@@ -64,7 +64,7 @@ const JumboTron = () => {
                 <FaGithub className="w-6 h-6" />
               </a>
               <a
-                href="https://linkedin.com/in/williamarice"
+                href="https://www.linkedin.com/in/realwilliamrice/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-white hover:text-blue-300 transition-colors p-2 rounded-full hover:bg-gray-800"

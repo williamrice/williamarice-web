@@ -38,12 +38,14 @@ export default function BadgeCard({
                 href={viewUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block w-full h-full"
+                className="block w-full h-full relative"
               >
                 <Image
                   src={imageUrl}
                   alt={`Badge: ${title}`}
                   fill
+                  sizes="330px"
+                  priority
                   style={{ objectFit: "contain" }}
                 />
               </a>
@@ -52,6 +54,8 @@ export default function BadgeCard({
                 src={imageUrl}
                 alt={`Badge: ${title}`}
                 fill
+                sizes="330px"
+                priority
                 style={{ objectFit: "contain" }}
               />
             )}

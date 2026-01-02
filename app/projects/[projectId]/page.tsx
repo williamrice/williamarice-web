@@ -1,11 +1,9 @@
 import { getProjectById } from "@/actions/projects";
 import Header from "@/components/Header";
 import TechnologyPill from "@/components/TechnologyPill";
-import Image from "next/image";
+import ImageLightbox from "@/components/ImageLightbox";
 import Link from "next/link";
 import { AiFillGithub, AiFillEye } from "react-icons/ai";
-import Zoom from "react-medium-image-zoom";
-import "react-medium-image-zoom/dist/styles.css";
 
 interface IndividualProjectPageProps {
   params: Promise<{ projectId: string }>;
@@ -80,17 +78,16 @@ const IndividualProjectPage = async ({
 
         {/* Featured Image Section */}
         <div className="mb-16 animate-slideUp bg-gray-800 rounded-xl overflow-hidden shadow-lg border border-gray-700 hover:border-blue-600 transition-all duration-300">
-          <Zoom>
-            <div className="relative h-[500px] w-full overflow-hidden">
-              <Image
-                src={project.featuredImageSrc}
-                alt={project.featuredImageAlt}
-                fill
-                className="object-cover transform hover:scale-105 transition-transform duration-500"
-                unoptimized={true}
-              />
-            </div>
-          </Zoom>
+          <div className="relative h-[500px] w-full overflow-hidden">
+            <ImageLightbox
+              src={project.featuredImageSrc}
+              alt={project.featuredImageAlt}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover"
+              priority={true}
+            />
+          </div>
         </div>
 
         {/* Description Section */}
@@ -128,17 +125,19 @@ const IndividualProjectPage = async ({
               <h3 className="text-2xl font-bold text-white mb-6">Gallery</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 {project.galleryImages.map((image, index) => (
-                  <Zoom key={index}>
-                    <div className="relative h-48 overflow-hidden rounded-xl">
-                      <Image
-                        src={image.imagePath}
-                        alt={`Gallery image ${index + 1}`}
-                        fill
-                        className="object-cover transform hover:scale-105 transition-transform duration-500"
-                        unoptimized={true}
-                      />
-                    </div>
-                  </Zoom>
+                  <div
+                    key={index}
+                    className="relative h-48 overflow-hidden rounded-xl"
+                  >
+                    <ImageLightbox
+                      src={image.imagePath}
+                      alt={`Gallery image ${index + 1}`}
+                      fill
+                      sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+                      className="object-cover"
+                      priority={false}
+                    />
+                  </div>
                 ))}
               </div>
             </div>
