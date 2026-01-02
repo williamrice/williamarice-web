@@ -85,7 +85,9 @@ export default function RootLayout({
         </a>
         <NextAuthProvider>
           <div className="flex flex-col min-h-screen items-center justify-center">
-            <ConditionalNavBar />
+            <header>
+              <ConditionalNavBar />
+            </header>
             <main
               id="main-content"
               className="mb-auto h-full w-full"
@@ -97,8 +99,8 @@ export default function RootLayout({
             <Footer />
           </div>
         </NextAuthProvider>
+        <GoogleAnalytics gaId="G-Y46TG9779R" />
       </body>
-      <GoogleAnalytics gaId="G-Y46TG9779R" />
     </html>
   );
 }

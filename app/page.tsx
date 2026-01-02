@@ -10,8 +10,9 @@ const personSchema = {
   '@type': 'Person',
   name: 'William Rice',
   jobTitle: 'Software Developer',
-  description: 'Full-stack software developer building web applications and software solutions.',
+  description: 'Full-stack software developer specializing in React, Next.js, Node.js, .NET, WordPress, and modern web technologies.',
   url: 'https://williamarice.com',
+  image: 'https://williamarice.com/images/william_headshot_500x500.jpg',
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Lexington',
@@ -23,11 +24,16 @@ const personSchema = {
     'https://linkedin.com/in/williamarice'
   ],
   knowsAbout: [
-    'Web Development', 'JavaScript', 'Databases', 'APIs', 'Cloud Services', 'DevOps', 'Software Architecture', 'Frontend', 'Backend', 'Mobile Development', 'System Design'
+    'React', 'Next.js', 'Node.js', 'TypeScript', 'JavaScript',
+    'C#', '.NET', '.NET Core', 'ASP.NET', 'Web API',
+    'WordPress', 'PHP', 'MySQL', 'PostgreSQL', 'Prisma', 'Database Design',
+    'Tailwind CSS', 'CSS', 'HTML', 'Responsive Design',
+    'Full-Stack Development', 'Web Development', 'Software Architecture'
   ],
   worksFor: {
-    '@type': 'Organization',
-    name: 'Self-Employed'
+    '@type': 'EducationalOrganization',
+    name: 'Eastern Kentucky University',
+    url: 'https://www.eku.edu'
   }
 };
 
