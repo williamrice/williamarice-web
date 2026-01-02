@@ -32,7 +32,7 @@ export default function ImageLightbox({
       {/* Thumbnail - clickable */}
       <div
         onClick={() => setIsOpen(true)}
-        className="cursor-zoom-in overflow-hidden"
+        className="relative cursor-zoom-in overflow-hidden w-full h-full"
         role="button"
         tabIndex={0}
         onKeyDown={(e) => {
