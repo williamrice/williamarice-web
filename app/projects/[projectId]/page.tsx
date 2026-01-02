@@ -78,7 +78,7 @@ const IndividualProjectPage = async ({
 
         {/* Featured Image Section */}
         <div className="mb-16 animate-slideUp bg-gray-800 rounded-xl overflow-hidden shadow-lg border border-gray-700 hover:border-blue-600 transition-all duration-300">
-          <div className="relative h-125 w-full overflow-hidden">
+          <div className="relative h-[500px] w-full overflow-hidden">
             <ImageLightbox
               src={project.featuredImageSrc}
               alt={project.featuredImageAlt}

@@ -51,7 +51,7 @@ const NavBar: React.FC = () => {
           router.push("/");
         }}
         onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
+          if (e.key === " ") {
             e.preventDefault();
             router.push("/");
           }
@@ -73,16 +73,19 @@ const NavBar: React.FC = () => {
             <Menu className="h-6 w-6" />
           </Button>
         </SheetTrigger>
-<SheetContent
-           side="right"
-           aria-label="Mobile navigation menu"
-           className="w-full sm:w-[400px] bg-gray-900/95 backdrop-blur-sm border-gray-700 flex items-center justify-center"
-         >
+        <SheetContent
+          side="right"
+          aria-label="Mobile navigation menu"
+          className="w-full sm:w-[400px] bg-gray-900/95 backdrop-blur-sm border-gray-700 flex items-center justify-center"
+        >
           <div className="flex flex-col items-center justify-center">
             <div className="mb-8 p-6 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full">
               <Code className="w-16 h-16 text-white" />
             </div>
-            <nav aria-label="Mobile navigation links" className="flex flex-col space-y-4">
+            <nav
+              aria-label="Mobile navigation links"
+              className="flex flex-col space-y-4"
+            >
               {menuItems.map((item) => (
                 <motion.a
                   key={item.name}
