@@ -1,11 +1,17 @@
 import Footer from "@/components//Footer";
 import "./globals.css";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { NextAuthProvider } from "@/components/auth-helpers/NextAuthProvider";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Toaster } from "@/components/ui/toaster";
 import ConditionalNavBar from "@/components/ConditionalNavBar";
 import Script from "next/script";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://williamarice.com"),
@@ -69,6 +75,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link rel="preconnect" href="https://www.google.com" />
+        <link rel="preconnect" href="https://www.gstatic.com" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://williamarice-web.s3.amazonaws.com" />
+        <link rel="dns-prefetch" href="https://cdn.credly.com" />
         <Script
           src="https://www.google.com/recaptcha/api.js"
           async
