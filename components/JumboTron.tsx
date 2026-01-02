@@ -21,7 +21,7 @@ const JumboTron = () => {
             <div className="relative">
               <div className="absolute inset-0 bg-linear-to-br from-blue-500 to-gray-700 rounded-full blur-md transform scale-105 animate-pulse"></div>
               <Image
-                src="/images/headshot.webp"
+                src="/images/william_headshot_500x500.jpg"
                 width={280}
                 height={280}
                 alt="William Rice"
