@@ -1,12 +1,12 @@
 import { authOptions } from "@/app/lib/authOptions";
-import prisma from "@/app/lib/prisma";
 import { ResumeType } from "@/app/types/resume";
+import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
 export async function PUT(
-  request: Request
+  request: Request,
 ): Promise<NextResponse<ResumeType | { error: string }>> {
   const session = await getServerSession(authOptions);
 
@@ -77,7 +77,7 @@ export async function PUT(
     console.error("Error updating resume:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

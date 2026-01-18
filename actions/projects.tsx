@@ -1,8 +1,8 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import prisma from "@/app/lib/prisma";
 import { DeleteObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import prisma from "@/lib/prisma";
 
 interface GalleryImage {
   imagePath: string;

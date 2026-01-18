@@ -1,9 +1,6 @@
 import { getServerSession } from "next-auth";
 import FuelTransactionListDisplay from "./components/FuelTransactionListDisplay";
-
-import { PrismaClient } from "@prisma/client";
 import FuelAppNoAccountPage from "./components/FuelAppNoAccountPage";
-const prisma = new PrismaClient();
 
 const FuelTrackerPage = async () => {
   const session = await getServerSession();

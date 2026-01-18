@@ -1,5 +1,5 @@
+import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
-import prisma from "@/app/lib/prisma";
 
 export async function POST(request: Request) {
   const data = await request.json();
@@ -23,7 +23,7 @@ export async function POST(request: Request) {
     console.error("Error creating project:", error);
     return NextResponse.json(
       { error: "Failed to create project" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

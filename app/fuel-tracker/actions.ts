@@ -1,10 +1,6 @@
-"use server";
-
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
-
-const prisma = new PrismaClient();
 
 type FuelTransaction = {
   amount: number;

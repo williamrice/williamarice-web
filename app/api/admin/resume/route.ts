@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import prisma from "@/app/lib/prisma";
 import { ResumeType } from "@/app/types/resume";
+import prisma from "@/lib/prisma";
 
 // Opt out of caching for all data requests in the route segment
 export const dynamic = "force-dynamic";
@@ -36,7 +36,7 @@ export async function GET(): Promise<
     console.error("Error fetching resume:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
