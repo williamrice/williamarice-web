@@ -29,7 +29,7 @@ import {
   ResumeProject,
   VolunteerExperience,
   WorkExperience,
-} from "@prisma/client";
+} from "@/prisma/generated/prisma/client";
 
 // Define the schema for form validation
 const resumeSchema = z.object({

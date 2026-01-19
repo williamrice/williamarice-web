@@ -1,10 +1,10 @@
 "use client";
 
-import { Project } from "@prisma/client";
 import Link from "next/link";
 import { useState } from "react";
 import { deleteProject } from "@/actions/projects";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Project } from "@/prisma/generated/prisma/client";
 
 interface ProjectListProps {
   projects: Project[];

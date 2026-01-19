@@ -1,5 +1,5 @@
 "use client";
-import { Project } from "@prisma/client";
+import { Project } from "@/prisma/generated/prisma/client";
 import Image from "next/image";
 import React from "react";
 import Link from "next/link";

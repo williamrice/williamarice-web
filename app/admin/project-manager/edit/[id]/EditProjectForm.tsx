@@ -6,8 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { updateProject } from "@/actions/projects";
 import { useRouter } from "next/navigation";
-import { Project, GalleryImage } from "@prisma/client";
 import Image from "next/image";
+import { GalleryImage, Project } from "@/prisma/generated/prisma/client";
 
 const projectSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -52,7 +52,7 @@ export type ProjectFormData = z.infer<typeof projectSchema>;
 
 interface GalleryUrl {
   imagePath: string;
-  s3Key: string;
+  s3Key: string | null;
 }
 
 interface EditProjectFormProps {

@@ -15,7 +15,7 @@ import {
   Skill,
   VolunteerExperience,
   WorkExperience,
-} from "@prisma/client";
+} from "@/prisma/generated/prisma/client";
 
 function formatDate(dateString: string): string {
   const date = new Date(dateString);

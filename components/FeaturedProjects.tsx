@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { AiOutlineArrowRight } from "react-icons/ai";
-import { Project } from "@prisma/client";
+import { Project } from "@/prisma/generated/prisma/client";
 import { getAllProjects } from "@/actions/projects";
 import FeaturedProjectCard from "./FeaturedProjectCard";
 
