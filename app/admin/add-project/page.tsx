@@ -1,10 +1,12 @@
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/lib/authOptions";
 import { redirect } from "next/navigation";
 import AddProjectForm from "../../../components/AddProjectForm";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 export default async function AddProjectPage() {
-  const session = await getServerSession(authOptions);
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
   if (
     !session ||

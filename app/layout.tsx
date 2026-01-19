@@ -1,11 +1,11 @@
 import Footer from "@/components//Footer";
-import "./globals.css";
 import type { Metadata, Viewport } from "next";
-import { NextAuthProvider } from "@/components/auth-helpers/NextAuthProvider";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Toaster } from "@/components/ui/toaster";
 import ConditionalNavBar from "@/components/ConditionalNavBar";
 import Script from "next/script";
+
+import "@/app/globals.css";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -78,7 +78,10 @@ export default function RootLayout({
         <link rel="preconnect" href="https://www.google.com" />
         <link rel="preconnect" href="https://www.gstatic.com" />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
-        <link rel="dns-prefetch" href="https://williamarice-web.s3.amazonaws.com" />
+        <link
+          rel="dns-prefetch"
+          href="https://williamarice-web.s3.amazonaws.com"
+        />
         <link rel="dns-prefetch" href="https://cdn.credly.com" />
         <Script
           src="https://www.google.com/recaptcha/api.js"
@@ -94,22 +97,20 @@ export default function RootLayout({
         >
           Skip to main content
         </a>
-        <NextAuthProvider>
-          <div className="flex flex-col min-h-screen items-center justify-center">
-            <header>
-              <ConditionalNavBar />
-            </header>
-            <main
-              id="main-content"
-              className="mb-auto h-full w-full"
-              tabIndex={-1}
-            >
-              {children}
-            </main>
-            <Toaster />
-            <Footer />
-          </div>
-        </NextAuthProvider>
+        <div className="flex flex-col min-h-screen items-center justify-center">
+          <header>
+            <ConditionalNavBar />
+          </header>
+          <main
+            id="main-content"
+            className="mb-auto h-full w-full"
+            tabIndex={-1}
+          >
+            {children}
+          </main>
+          <Toaster />
+          <Footer />
+        </div>
         <GoogleAnalytics gaId="G-Y46TG9779R" />
       </body>
     </html>

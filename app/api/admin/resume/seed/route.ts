@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
 import resumeData from "@/public/resume.json";
-import { authOptions } from "@/app/lib/authOptions";
-import { getServerSession } from "next-auth";
-
-const prisma = new PrismaClient();
+import prisma from "@/lib/prisma";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 export async function POST() {
-  const session = await getServerSession(authOptions);
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
   if (!session) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
@@ -20,7 +20,7 @@ export async function POST() {
     if (existingResume) {
       return NextResponse.json(
         { message: "Resume already seeded" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -92,13 +92,13 @@ export async function POST() {
 
     return NextResponse.json(
       { message: "Resume seeded successfully", resume },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     console.error("Error seeding resume:", error);
     return NextResponse.json(
       { message: "Error seeding resume" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

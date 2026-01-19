@@ -1,14 +1,14 @@
-import { authOptions } from "@/app/lib/authOptions";
-import { PrismaClient } from "@prisma/client";
-import { getServerSession } from "next-auth";
+import { auth } from "@/lib/auth";
+import prisma from "@/lib/prisma";
+import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  const prisma = new PrismaClient();
   const data = await req.json();
 
-  //get the user from next auth
-  const session = await getServerSession(authOptions);
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
   const user = await prisma.user.findUnique({
     where: {
       email: session?.user?.email ?? undefined,
@@ -43,7 +43,6 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
-  const prisma = new PrismaClient();
   const data = await req.json();
   const user = await prisma.user.findUnique({
     where: {

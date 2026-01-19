@@ -25,7 +25,7 @@ const projectSchema = z.object({
     .refine((file) => file.size <= 5000000, "Max file size is 5MB")
     .refine(
       (file) => ["image/jpeg", "image/png", "image/webp"].includes(file.type),
-      "Only .jpg, .png, and .webp formats are supported"
+      "Only .jpg, .png, and .webp formats are supported",
     )
     .optional(),
   featuredImageAlt: z
@@ -39,8 +39,8 @@ const projectSchema = z.object({
         .refine(
           (file) =>
             ["image/jpeg", "image/png", "image/webp"].includes(file.type),
-          "Only .jpg, .png, and .webp formats are supported"
-        )
+          "Only .jpg, .png, and .webp formats are supported",
+        ),
     )
     .max(6, "Maximum 6 gallery images allowed")
     .optional(),
@@ -50,6 +50,11 @@ const projectSchema = z.object({
 
 export type ProjectFormData = z.infer<typeof projectSchema>;
 
+interface GalleryUrl {
+  imagePath: string;
+  s3Key: string;
+}
+
 interface EditProjectFormProps {
   project: Project & { galleryImages: GalleryImage[] };
 }
@@ -58,8 +63,8 @@ export default function EditProjectForm({ project }: EditProjectFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const [previewImage, setPreviewImage] = useState(project.featuredImageSrc);
-  const [galleryPreviews, setGalleryPreviews] = useState(
-    project.galleryImages.map((img) => img.imagePath)
+  const [galleryPreviews, setGalleryPreviews] = useState<string[]>(
+    project.galleryImages.map((img: GalleryImage) => img.imagePath),
   );
 
   const form = useForm<ProjectFormData>({
@@ -76,7 +81,7 @@ export default function EditProjectForm({ project }: EditProjectFormProps) {
   });
 
   const handleFeaturedImageChange = (
-    e: React.ChangeEvent<HTMLInputElement>
+    e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -86,7 +91,7 @@ export default function EditProjectForm({ project }: EditProjectFormProps) {
   };
 
   const handleGalleryImagesChange = (
-    e: React.ChangeEvent<HTMLInputElement>
+    e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const files = Array.from(e.target.files || []);
     const newPreviews = files.map((file) => URL.createObjectURL(file));
@@ -106,7 +111,7 @@ export default function EditProjectForm({ project }: EditProjectFormProps) {
         formData.append("file", data.featuredImageSrc);
         formData.append(
           "directory",
-          `projects/${data.title.toLowerCase().replace(/\s+/g, "-")}`
+          `projects/${data.title.toLowerCase().replace(/\s+/g, "-")}`,
         );
 
         const featuredImageResponse = await fetch("/api/upload", {
@@ -120,9 +125,8 @@ export default function EditProjectForm({ project }: EditProjectFormProps) {
           s3Key = featuredImageUpload.s3Key;
         }
       }
-
       // Handle gallery image uploads
-      let galleryUrls = project.galleryImages.map((img) => ({
+      let galleryUrls = project.galleryImages.map((img: GalleryImage) => ({
         imagePath: img.imagePath,
         s3Key: img.s3Key,
       }));
@@ -135,7 +139,7 @@ export default function EditProjectForm({ project }: EditProjectFormProps) {
               "directory",
               `projects/${data.title
                 .toLowerCase()
-                .replace(/\s+/g, "-")}/gallery`
+                .replace(/\s+/g, "-")}/gallery`,
             );
 
             const galleryImageResponse = await fetch("/api/upload", {
@@ -144,7 +148,7 @@ export default function EditProjectForm({ project }: EditProjectFormProps) {
             });
             const upload = await galleryImageResponse.json();
             return upload.success ? upload : null;
-          })
+          }),
         );
 
         galleryUrls = newGalleryUploads.map((upload) => ({
@@ -159,7 +163,7 @@ export default function EditProjectForm({ project }: EditProjectFormProps) {
         id: project.id,
         featuredImageSrc: featuredImageUrl,
         technologies: data.technologies,
-        galleryImages: galleryUrls.map((url) => ({
+        galleryImages: galleryUrls.map((url: GalleryUrl) => ({
           imagePath: url.imagePath,
           s3Key: url.s3Key || "",
         })),

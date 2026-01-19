@@ -1,7 +1,7 @@
-import { getServerSession } from "next-auth/next";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 import AdminSidebar from "@/components/AdminSidebar";
 import Signin from "@/components/auth-helpers/Signin";
-import { authOptions } from "../lib/authOptions";
 import Signout from "@/components/auth-helpers/Signout";
 
 export default async function AdminLayout({
@@ -9,7 +9,9 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession(authOptions);
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
   if (!session) {
     return (

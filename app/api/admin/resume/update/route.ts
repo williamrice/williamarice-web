@@ -1,14 +1,16 @@
-import { authOptions } from "@/app/lib/authOptions";
-import prisma from "@/app/lib/prisma";
 import { ResumeType } from "@/app/types/resume";
-import { getServerSession } from "next-auth";
+import { auth } from "@/lib/auth";
+import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
 export async function PUT(
-  request: Request
+  request: Request,
 ): Promise<NextResponse<ResumeType | { error: string }>> {
-  const session = await getServerSession(authOptions);
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
   if (!session?.user?.isAdmin) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -77,7 +79,7 @@ export async function PUT(
     console.error("Error updating resume:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

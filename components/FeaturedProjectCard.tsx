@@ -36,7 +36,7 @@ const FeaturedProjectCard: React.FC<FeaturedProjectCardProps> = ({
 
         <div className="flex justify-center items-center mb-4 min-h-22.5">
           <div className="flex flex-wrap gap-2 mb-6 justify-center">
-            {project.technologies.map((tech) => (
+            {project.technologies.map((tech: string) => (
               <span
                 key={tech}
                 className="px-3 py-1 text-sm font-medium bg-blue-800 text-white rounded-full border border-blue-600"
