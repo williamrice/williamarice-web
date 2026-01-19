@@ -1,13 +1,14 @@
-import { authOptions } from "@/app/lib/authOptions";
+import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
-import { getServerSession } from "next-auth";
+import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   const data = await req.json();
 
-  //get the user from next auth
-  const session = await getServerSession(authOptions);
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
   const user = await prisma.user.findUnique({
     where: {
       email: session?.user?.email ?? undefined,

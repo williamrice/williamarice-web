@@ -1,11 +1,13 @@
 import { NextResponse } from "next/server";
 import resumeData from "@/public/resume.json";
-import { authOptions } from "@/app/lib/authOptions";
-import { getServerSession } from "next-auth";
 import prisma from "@/lib/prisma";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 export async function POST() {
-  const session = await getServerSession(authOptions);
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
   if (!session) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }

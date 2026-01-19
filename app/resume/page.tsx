@@ -6,6 +6,16 @@ import { SkewLoader } from "react-spinners";
 import { useReactToPrint } from "react-to-print";
 import { FaLinkedin, FaGithub, FaGlobe } from "react-icons/fa";
 import { ResumeType } from "@/app/types/resume";
+import {
+  Certificate,
+  Education,
+  Interest,
+  Profile,
+  ResumeProject,
+  Skill,
+  VolunteerExperience,
+  WorkExperience,
+} from "@prisma/client";
 
 function formatDate(dateString: string): string {
   const date = new Date(dateString);
@@ -116,7 +126,7 @@ const ResumePage: React.FC = () => {
                   <FaGlobe className="inline mr-1" />
                   <span className="hidden sm:inline">{data.url}</span>
                 </a>
-                {data.profiles.map((profile, index) => (
+                {data.profiles.map((profile: Profile, index: number) => (
                   <React.Fragment key={index}>
                     <span className="text-gray-500 mx-2 hidden sm:inline">
                       |
@@ -155,7 +165,7 @@ const ResumePage: React.FC = () => {
               Skills
             </h2>
             <div className="flex flex-wrap text-xs sm:text-sm">
-              {data.skills.map((skill, index) => (
+              {data.skills.map((skill: Skill, index: number) => (
                 <div key={index} className="mr-4 mb-1">
                   <strong>
                     {skill.name} ({skill.level}):
@@ -170,8 +180,10 @@ const ResumePage: React.FC = () => {
               Education
             </h2>
             {data.education
-              .sort((a, b) => (a.menuOrder < b.menuOrder ? -1 : 1))
-              .map((edu, index) => (
+              .sort((a: Education, b: Education) =>
+                a.menuOrder < b.menuOrder ? -1 : 1,
+              )
+              .map((edu: Education, index: number) => (
                 <div key={index} className="mb-2">
                   <h3 className="text-sm sm:text-base font-semibold">
                     {edu.institution}
@@ -191,7 +203,7 @@ const ResumePage: React.FC = () => {
               Work Experience
             </h2>
             {data.work
-              .sort((a, b) => {
+              .sort((a: WorkExperience, b: WorkExperience) => {
                 if (!a.endDate) return -1;
                 if (!b.endDate) return 1;
                 return (
@@ -199,7 +211,7 @@ const ResumePage: React.FC = () => {
                 );
               })
               .slice(0, 3)
-              .map((job, index) => (
+              .map((job: WorkExperience, index: number) => (
                 <div key={index} className="mb-2">
                   <h3 className="text-sm sm:text-base font-semibold">
                     {job.position} - {job.name}
@@ -216,14 +228,16 @@ const ResumePage: React.FC = () => {
                   <p className="text-xs sm:text-sm mt-1">{job.summary}</p>
                   {job.highlights.length > 0 && (
                     <div className="flex flex-wrap gap-2 mt-1">
-                      {job.highlights.map((highlight, hIndex) => (
-                        <span
-                          key={hIndex}
-                          className="px-2 py-1 bg-gray-100 rounded-full text-xs sm:text-sm"
-                        >
-                          {highlight}
-                        </span>
-                      ))}
+                      {job.highlights.map(
+                        (highlight: string, hIndex: number) => (
+                          <span
+                            key={hIndex}
+                            className="px-2 py-1 bg-gray-100 rounded-full text-xs sm:text-sm"
+                          >
+                            {highlight}
+                          </span>
+                        ),
+                      )}
                     </div>
                   )}
                 </div>
@@ -235,7 +249,7 @@ const ResumePage: React.FC = () => {
               Certifications
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              {data.certificates.map((cert, index) => (
+              {data.certificates.map((cert: Certificate, index: number) => (
                 <div
                   key={index}
                   className="px-3 py-2 bg-gray-100 rounded-full text-xs sm:text-sm flex items-center"
@@ -251,7 +265,7 @@ const ResumePage: React.FC = () => {
             <h2 className="text-lg font-semibold border-b border-gray-300 mb-1">
               Projects
             </h2>
-            {data.projects.map((project, index) => (
+            {data.projects.map((project: ResumeProject, index: number) => (
               <div key={index} className="mb-2">
                 <h3 className="text-sm sm:text-base font-semibold">
                   {project.name}
@@ -279,14 +293,16 @@ const ResumePage: React.FC = () => {
                 </p>
                 <p className="text-xs sm:text-sm">{project.description}</p>
                 <div className="flex flex-wrap gap-2 mt-1">
-                  {project.highlights.map((highlight, hIndex) => (
-                    <span
-                      key={hIndex}
-                      className="px-2 py-1 bg-gray-100 rounded-full text-xs sm:text-sm"
-                    >
-                      {highlight}
-                    </span>
-                  ))}
+                  {project.highlights.map(
+                    (highlight: string, hIndex: number) => (
+                      <span
+                        key={hIndex}
+                        className="px-2 py-1 bg-gray-100 rounded-full text-xs sm:text-sm"
+                      >
+                        {highlight}
+                      </span>
+                    ),
+                  )}
                 </div>
               </div>
             ))}
@@ -296,7 +312,7 @@ const ResumePage: React.FC = () => {
             <h2 className="text-lg font-semibold border-b border-gray-300 mb-1">
               Community Service
             </h2>
-            {data.volunteer.map((vol, index) => (
+            {data.volunteer.map((vol: VolunteerExperience, index: number) => (
               <div key={index} className="mb-2">
                 <h3 className="text-sm sm:text-base font-semibold">
                   {vol.position} - {vol.organization}
@@ -308,7 +324,7 @@ const ResumePage: React.FC = () => {
                 <p className="text-xs sm:text-sm">{vol.summary}</p>
                 {vol.highlights.length > 0 && (
                   <div className="flex flex-wrap gap-2 mt-1">
-                    {vol.highlights.map((highlight, hIndex) => (
+                    {vol.highlights.map((highlight: string, hIndex: number) => (
                       <span
                         key={hIndex}
                         className="px-2 py-1 bg-gray-100 rounded-full text-xs sm:text-sm"
@@ -327,7 +343,7 @@ const ResumePage: React.FC = () => {
               Interests
             </h2>
             <div className="flex flex-wrap gap-2">
-              {data.interests.map((interest, index) => (
+              {data.interests.map((interest: Interest, index: number) => (
                 <div
                   key={index}
                   className="px-2 py-1 bg-gray-100 rounded-full text-xs sm:text-sm"

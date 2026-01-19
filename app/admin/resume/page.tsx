@@ -23,6 +23,13 @@ import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/use-toast";
 import { PlusIcon, MinusIcon } from "@radix-ui/react-icons";
 import { ClipLoader } from "react-spinners";
+import {
+  Certificate,
+  Education,
+  ResumeProject,
+  VolunteerExperience,
+  WorkExperience,
+} from "@prisma/client";
 
 // Define the schema for form validation
 const resumeSchema = z.object({
@@ -51,14 +58,14 @@ const resumeSchema = z.object({
       network: z.string().min(1, "Network is required"),
       username: z.string().min(1, "Username is required"),
       url: z.string().min(1, "URL is required"), // Required in Prisma
-    })
+    }),
   ),
   skills: z.array(
     z.object({
       name: z.string().min(1, "Skill name is required"),
       level: z.string().min(1, "Skill level is required"),
       keywords: z.array(z.string()),
-    })
+    }),
   ),
   work: z.array(
     z.object({
@@ -73,7 +80,7 @@ const resumeSchema = z.object({
         .transform((val) => (val === "" || val === null ? null : val)),
       summary: z.string().min(1, "Summary is required"),
       highlights: z.array(z.string()),
-    })
+    }),
   ),
   education: z.array(
     z.object({
@@ -82,14 +89,14 @@ const resumeSchema = z.object({
       studyType: z.string().min(1, "Study type is required"),
       endDate: z.string().min(1, "End date is required"),
       menuOrder: z.number().optional().default(0),
-    })
+    }),
   ),
   certificates: z.array(
     z.object({
       name: z.string().min(1, "Certificate name is required"),
       date: z.string().min(1, "Date is required"),
       issuer: z.string().min(1, "Issuer is required"),
-    })
+    }),
   ),
   projects: z.array(
     z.object({
@@ -107,7 +114,7 @@ const resumeSchema = z.object({
         .transform((val) => (val === "" || val === null ? null : val)),
       description: z.string().min(1, "Description is required"),
       highlights: z.array(z.string()),
-    })
+    }),
   ),
   volunteer: z.array(
     z.object({
@@ -121,13 +128,13 @@ const resumeSchema = z.object({
         .transform((val) => (val === "" || val === null ? null : val)),
       summary: z.string().min(1, "Summary is required"),
       highlights: z.array(z.string()),
-    })
+    }),
   ),
   interests: z.array(
     z.object({
       name: z.string().min(1, "Interest name is required"),
       keywords: z.array(z.string()),
-    })
+    }),
   ),
 });
 
@@ -232,7 +239,7 @@ export default function ResumeForm() {
         address: data.address ?? null,
         postalCode: data.postalCode ?? null,
         work:
-          data.work?.map((job) => ({
+          data.work?.map((job: WorkExperience) => ({
             ...job,
             startDate: job.startDate
               ? new Date(job.startDate).toISOString().split("T")[0]
@@ -242,21 +249,21 @@ export default function ResumeForm() {
               : null,
           })) || [],
         education:
-          data.education?.map((edu) => ({
+          data.education?.map((edu: Education) => ({
             ...edu,
             endDate: edu.endDate
               ? new Date(edu.endDate).toISOString().split("T")[0]
               : "",
           })) || [],
         certificates:
-          data.certificates?.map((cert) => ({
+          data.certificates?.map((cert: Certificate) => ({
             ...cert,
             date: cert.date
               ? new Date(cert.date).toISOString().split("T")[0]
               : "",
           })) || [],
         projects:
-          data.projects?.map((proj) => ({
+          data.projects?.map((proj: ResumeProject) => ({
             ...proj,
             url: proj.url ?? null,
             startDate: proj.startDate
@@ -267,7 +274,7 @@ export default function ResumeForm() {
               : null,
           })) || [],
         volunteer:
-          data.volunteer?.map((vol) => ({
+          data.volunteer?.map((vol: VolunteerExperience) => ({
             ...vol,
             startDate: vol.startDate
               ? new Date(vol.startDate).toISOString().split("T")[0]
@@ -591,7 +598,7 @@ export default function ResumeForm() {
                         field.onChange(
                           e.target.value
                             ? e.target.value.split(",").map((k) => k.trim())
-                            : []
+                            : [],
                         )
                       }
                     />
@@ -689,7 +696,7 @@ export default function ResumeForm() {
                         field.onChange(
                           e.target.value
                             ? e.target.value.split(",").map((h) => h.trim())
-                            : []
+                            : [],
                         )
                       }
                     />
@@ -925,7 +932,7 @@ export default function ResumeForm() {
                         field.onChange(
                           e.target.value
                             ? e.target.value.split(",").map((h) => h.trim())
-                            : []
+                            : [],
                         )
                       }
                     />
@@ -1022,7 +1029,7 @@ export default function ResumeForm() {
                         field.onChange(
                           e.target.value
                             ? e.target.value.split(",").map((h) => h.trim())
-                            : []
+                            : [],
                         )
                       }
                     />
@@ -1083,7 +1090,7 @@ export default function ResumeForm() {
                         field.onChange(
                           e.target.value
                             ? e.target.value.split(",").map((k) => k.trim())
-                            : []
+                            : [],
                         )
                       }
                     />

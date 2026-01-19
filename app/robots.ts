@@ -1,12 +1,12 @@
-import { MetadataRoute } from 'next';
+import { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
-      userAgent: '*',
-      allow: '/',
-      disallow: ['/admin/', '/api/', '/account-settings/', '/fuel-tracker/'],
+      userAgent: "*",
+      allow: "/",
+      disallow: ["/admin/", "/api/", "/account-settings/"],
     },
-    sitemap: 'https://williamarice.com/sitemap.xml',
+    sitemap: "https://williamarice.com/sitemap.xml",
   };
 }

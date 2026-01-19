@@ -1,12 +1,12 @@
 // lib/prisma.ts
 import { PrismaClient } from "@/prisma/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
-import { Pool } from "pg";
 
 const connectionString = process.env.POSTGRES_URL;
 
-const pool = new Pool({ connectionString });
-const adapter = new PrismaPg(pool);
+const adapter = new PrismaPg({
+  connectionString: connectionString!,
+});
 
 const prismaClientSingleton = () => {
   return new PrismaClient({ adapter });

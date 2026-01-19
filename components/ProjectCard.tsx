@@ -44,7 +44,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           {project.title}
         </h2>
         <div className="flex flex-wrap gap-2 mb-6 justify-center">
-          {project.technologies.slice(0, 3).map((technology) => {
+          {project.technologies.slice(0, 3).map((technology: string) => {
             return <TechnologyPill key={technology} technology={technology} />;
           })}
           {project.technologies.length > 3 && (

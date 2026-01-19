@@ -1,6 +1,6 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FiHome, FiFolder, FiSettings, FiFileText } from "react-icons/fi";
@@ -15,7 +15,8 @@ const navItems = [
 
 const AdminSidebar = () => {
   const pathname = usePathname();
-  const session = useSession();
+  const { data, error, refetch, isPending, isRefetching } =
+    authClient.useSession();
 
   return (
     <aside className="bg-gray-800 text-white w-64 min-h-screen p-4">
@@ -35,12 +36,10 @@ const AdminSidebar = () => {
             </li>
           ))}
         </ul>
-        {session.data && (
+        {data && (
           <div className="mt-8">
             <p className="text-gray-400">Signed in as:</p>
-            <p className="text-white font-semibold">
-              {session.data.user?.name}
-            </p>
+            <p className="text-white font-semibold">{data.user?.name}</p>
             <Signout />
           </div>
         )}
