@@ -6,6 +6,19 @@ export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),
+  databaseHooks: {
+    user: {
+      create: {
+        before: async (data) => {
+          const email = data.email as string;
+          const allowedEmail = process.env.ALLOWED_AUTH_EMAIL as string;
+          if (email !== allowedEmail) {
+            throw new Error("Email not allowed");
+          }
+        },
+      },
+    },
+  },
   user: {
     additionalFields: {
       isAdmin: { type: "boolean", default: false },
