@@ -1,4 +1,4 @@
-import { fetcher } from "@/app/lib/utils/fetcher";
+import { fetcher } from "@/lib/utils/fetcher";
 import useSWR from "swr";
 
 export function useUser() {

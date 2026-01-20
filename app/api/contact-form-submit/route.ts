@@ -1,5 +1,5 @@
-import { sendEmail } from "@/app/lib/resend";
-import { verifyRecaptcha } from "@/app/lib/googleCaptcha";
+import { sendEmail } from "@/lib/resend";
+import { verifyRecaptcha } from "@/lib/googleCaptcha";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {

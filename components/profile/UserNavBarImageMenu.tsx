@@ -4,7 +4,7 @@ import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
-import { classNames } from "@/app/lib/utils/tailwind-helpers";
+import { classNames } from "@/lib/utils/tailwind-helpers";
 
 const handleSignOut = async () => {
   await authClient.signOut();
