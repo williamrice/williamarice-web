@@ -6,7 +6,7 @@ import { ContactFormState } from "./contact_form_state";
 import { PulseLoader } from "react-spinners";
 import ErrorEmailBanner from "./ErrorEmailBanner";
 import RecaptchaCheckbox from "./RecaptchaCheckbox";
-import useDebounce from "@/app/lib/useDebounce";
+import useDebounce from "@/lib/useDebounce";
 
 const ContactForm = () => {
   const [contactFormState, setContactFormState] = useState<ContactFormState>({
