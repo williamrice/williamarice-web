@@ -4,7 +4,7 @@ import {authClient} from "@/lib/auth-client";
 import {FaGoogle} from "react-icons/fa";
 
 const handleSignIn = async () => {
-    const {data, error} = await authClient.signIn.social({
+    await authClient.signIn.social({
         provider: "google",
         callbackURL: "/admin",
     });
