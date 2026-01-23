@@ -6,7 +6,13 @@ import { usePathname } from "next/navigation";
 import { FiHome, FiFolder, FiSettings, FiFileText } from "react-icons/fi";
 import Signout from "./auth-helpers/Signout";
 
-const navItems = [
+interface NavItem {
+  name: string;
+  href: string;
+  icon: React.ComponentType<{ className?: string }>;
+}
+
+const navItems: NavItem[] = [
   { name: "Dashboard", href: "/admin", icon: FiHome },
   { name: "Projects", href: "/admin/project-manager", icon: FiFolder },
   { name: "Resume", href: "/admin/resume", icon: FiFileText },
@@ -22,7 +28,7 @@ const AdminSidebar = () => {
     <aside className="bg-gray-800 text-white w-64 min-h-screen p-4">
       <nav>
         <ul>
-          {navItems.map((item) => (
+          {navItems.map((item: NavItem) => (
             <li key={item.name} className="mb-2">
               <Link
                 href={item.href}
