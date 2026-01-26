@@ -1,6 +1,6 @@
 import React from "react";
 import { FaSquareXTwitter } from "react-icons/fa6";
-import { AiFillGithub, AiFillLinkedin } from "react-icons/ai";
+import { AiFillGithub, AiFillGitlab, AiFillLinkedin } from "react-icons/ai";
 
 const SocialLinks = () => {
   const size: number = 40;
@@ -8,6 +8,12 @@ const SocialLinks = () => {
     <>
       <a href="https://www.github.com/williamrice" target="blank">
         <AiFillGithub
+          size={size}
+          className="text-white hover:text-gray-300 cursor-pointer transition-colors"
+        />
+      </a>
+      <a href="https://www.gitlab.com/williamrice" target="blank">
+        <AiFillGitlab
           size={size}
           className="text-white hover:text-gray-300 cursor-pointer transition-colors"
         />

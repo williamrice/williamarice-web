@@ -1,6 +1,12 @@
 import React from "react";
 import Image from "next/image";
-import { FaGithub, FaLinkedinIn, FaXTwitter, FaDiscord } from "react-icons/fa6";
+import {
+  FaGithub,
+  FaLinkedinIn,
+  FaXTwitter,
+  FaDiscord,
+  FaGitlab,
+} from "react-icons/fa6";
 import MainButton from "./MainButton";
 
 const JumboTron = () => {
@@ -62,6 +68,14 @@ const JumboTron = () => {
                 className="text-white hover:text-blue-300 transition-colors p-2 rounded-full hover:bg-gray-800"
               >
                 <FaGithub className="w-6 h-6" />
+              </a>
+              <a
+                href="https://gitlab.com/williamrice"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white hover:text-blue-300 transition-colors p-2 rounded-full hover:bg-gray-800"
+              >
+                <FaGitlab className="w-6 h-6" />
               </a>
               <a
                 href="https://www.linkedin.com/in/realwilliamrice/"
