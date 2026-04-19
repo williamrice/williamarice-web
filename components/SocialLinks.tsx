@@ -1,6 +1,6 @@
-import React from "react";
-import { FaSquareXTwitter } from "react-icons/fa6";
-import { AiFillGithub, AiFillGitlab, AiFillLinkedin } from "react-icons/ai";
+import React from 'react';
+import { FaSquareXTwitter } from 'react-icons/fa6';
+import { AiFillGithub, AiFillGitlab, AiFillLinkedin } from 'react-icons/ai';
 
 const SocialLinks = () => {
   const size: number = 40;
@@ -18,7 +18,7 @@ const SocialLinks = () => {
           className="text-white hover:text-gray-300 cursor-pointer transition-colors"
         />
       </a>
-      <a href="https://www.linkedin.com/in/realwilliamrice/" target="blank">
+      <a href="https://www.linkedin.com/in/billy-rice/" target="blank">
         <AiFillLinkedin
           size={size}
           className="text-white hover:text-blue-400 cursor-pointer transition-colors"
