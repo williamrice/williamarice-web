@@ -1,5 +1,5 @@
-import React from "react";
-import Header from "@/components/Header";
+import React from 'react';
+import Header from '@/components/Header';
 
 const LicensingPage = () => {
   return (
@@ -26,7 +26,7 @@ const LicensingPage = () => {
               Open Source Licensing Information
             </h2>
             <p className="mb-4 text-gray-300">
-              The source code for this website (www.williamarice.com) is open
+              The source code for this website (www.billyrice.com) is open
               source and is made available under the following license:
             </p>
             <div className="bg-gray-700/50 p-4 rounded-md mb-6 text-blue-100">
@@ -52,7 +52,7 @@ const LicensingPage = () => {
                 </strong>
               </p>
               <p>
-                {" "}
+                {' '}
                 THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF
                 ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
                 WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
@@ -77,7 +77,7 @@ const LicensingPage = () => {
             <p>
               If you have any questions or need further clarification regarding
               the licensing of this website, please contact me at
-              william@williamarice.com.
+              contact@billyrice.com.
             </p>
           </div>
         </div>
