@@ -1,58 +1,58 @@
-import Footer from "@/components//Footer";
-import type { Metadata, Viewport } from "next";
-import { GoogleAnalytics } from "@next/third-parties/google";
-import { Toaster } from "@/components/ui/toaster";
-import ConditionalNavBar from "@/components/ConditionalNavBar";
-import Script from "next/script";
+import Footer from '@/components//Footer';
+import type { Metadata, Viewport } from 'next';
+import { GoogleAnalytics } from '@next/third-parties/google';
+import { Toaster } from '@/components/ui/toaster';
+import ConditionalNavBar from '@/components/ConditionalNavBar';
+import Script from 'next/script';
 
-import "@/app/globals.css";
+import '@/app/globals.css';
 
 export const viewport: Viewport = {
-  width: "device-width",
+  width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://williamarice.com"),
+  metadataBase: new URL('https://billyrice.com'),
   title: {
-    default: "William Rice - Software Developer | Lexington, KY",
-    template: "%s | William Rice",
+    default: 'Billy Rice - Software Developer | Lexington, KY',
+    template: '%s | Billy Rice',
   },
   description:
-    "Full-stack software developer in Lexington, KY building web applications and software solutions across various technology stacks.",
+    'Full-stack software developer in Lexington, KY building web applications and software solutions across various technology stacks.',
   keywords: [
-    "software developer lexington ky",
-    "full-stack developer kentucky",
-    "react developer",
-    "next.js developer",
-    "web development lexington ky",
-    "node.js developer",
-    "typescript developer",
-    "postgresql developer",
+    'software developer lexington ky',
+    'full-stack developer kentucky',
+    'react developer',
+    'next.js developer',
+    'web development lexington ky',
+    'node.js developer',
+    'typescript developer',
+    'postgresql developer',
   ],
   openGraph: {
-    title: "William Rice - Software Developer",
+    title: 'Billy Rice - Software Developer',
     description:
-      "Full-stack software developer portfolio featuring web applications and software solutions.",
-    url: "https://williamarice.com",
-    siteName: "William Rice Portfolio",
+      'Full-stack software developer portfolio featuring web applications and software solutions.',
+    url: 'https://billyrice.com',
+    siteName: 'Billy Rice Portfolio',
     images: [
       {
-        url: "/images/william_headshot_500x500.jpg",
+        url: '/images/william_headshot_500x500.jpg',
         width: 500,
         height: 500,
-        alt: "William Rice - Software Developer",
+        alt: 'Billy Rice - Software Developer',
       },
     ],
-    locale: "en_US",
-    type: "website",
+    locale: 'en_US',
+    type: 'website',
   },
   twitter: {
-    title: "William Rice - Software Developer",
+    title: 'Billy Rice - Software Developer',
     description:
-      "Full-stack software developer portfolio featuring web applications and software solutions.",
-    images: ["/images/william_headshot_500x500.jpg"],
+      'Full-stack software developer portfolio featuring web applications and software solutions.',
+    images: ['/images/william_headshot_500x500.jpg'],
   },
   robots: {
     index: true,
@@ -60,9 +60,9 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
     },
   },
 };

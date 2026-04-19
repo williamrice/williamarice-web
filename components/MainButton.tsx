@@ -1,18 +1,20 @@
-"use client";
+'use client';
 
-import { Button } from "./ui/button";
-import { useRouter } from "next/navigation";
+import { Button } from './ui/button';
+import { useRouter } from 'next/navigation';
 
-interface MainButtonProps {
+interface LinkButtonProps {
   text: string;
   link: string;
+  type: 'primary' | 'secondary';
 }
 
-const MainButton = ({ text, link }: MainButtonProps) => {
+const LinkButton = ({ text, link, type }: LinkButtonProps) => {
   const router = useRouter();
+
   return (
     <Button
-      className="mt-4 bg-white text-black hover:bg-white hover:scale-110 hover:cursor-pointer transition-all ease-in-out hover:text-black"
+      className={type === 'primary' ? 'primary-btn' : 'secondary-btn'}
       onClick={() => {
         router.push(link);
       }}
@@ -22,4 +24,4 @@ const MainButton = ({ text, link }: MainButtonProps) => {
   );
 };
 
-export default MainButton;
+export default LinkButton;

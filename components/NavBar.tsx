@@ -1,11 +1,16 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Menu, Code } from "lucide-react";
-import { useRouter } from "next/navigation";
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import {
+  Sheet,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { Menu, Code } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 interface MenuItem {
   name: string;
@@ -13,11 +18,11 @@ interface MenuItem {
 }
 
 const menuItems: MenuItem[] = [
-  { name: "Home", href: "/" },
-  { name: "Projects", href: "/projects" },
-  { name: "Resume", href: "/resume" },
-  { name: "Credentials", href: "/credentials" },
-  { name: "Contact", href: "/contact" },
+  { name: 'Home', href: '/' },
+  { name: 'Projects', href: '/projects' },
+  { name: 'Resume', href: '/resume' },
+  { name: 'Credentials', href: '/credentials' },
+  { name: 'Contact', href: '/contact' },
 ];
 
 const NavBar: React.FC = () => {
@@ -28,8 +33,8 @@ const NavBar: React.FC = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
   const router = useRouter();
   return (
@@ -37,28 +42,28 @@ const NavBar: React.FC = () => {
       role="navigation"
       aria-label="Main navigation"
       className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 transition-all duration-300 ${
-        isScrolled ? "h-16 bg-blue-600" : "h-20 bg-transparent"
+        isScrolled ? 'h-16 bg-blue-600' : 'h-20 bg-transparent'
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      transition={{ type: "spring", stiffness: 120, damping: 20 }}
+      transition={{ type: 'spring', stiffness: 120, damping: 20 }}
     >
       <motion.button
         className="text-white font-bold text-xl cursor-pointer bg-transparent border-none focus:outline-none focus:ring-2 focus:ring-white rounded p-2"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         onClick={() => {
-          router.push("/");
+          router.push('/');
         }}
         onKeyDown={(e) => {
-          if (e.key === " ") {
+          if (e.key === ' ') {
             e.preventDefault();
-            router.push("/");
+            router.push('/');
           }
         }}
         aria-label="Go to home page"
       >
-        William Rice
+        Billy Rice
       </motion.button>
 
       <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
@@ -73,6 +78,7 @@ const NavBar: React.FC = () => {
             <Menu className="h-6 w-6" />
           </Button>
         </SheetTrigger>
+        <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
         <SheetContent
           side="right"
           aria-label="Mobile navigation menu"
