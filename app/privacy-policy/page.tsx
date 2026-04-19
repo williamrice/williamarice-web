@@ -1,5 +1,4 @@
-import React from "react";
-import Header from "@/components/Header";
+import Header from '@/components/Header';
 
 const PrivacyPolicy = () => {
   return (
@@ -25,13 +24,13 @@ const PrivacyPolicy = () => {
           {/* Policy Overview */}
           <div className="bg-gray-800/50 border border-gray-700 rounded-lg shadow-lg p-8 mb-8">
             <h2 className="text-2xl font-bold mb-6 text-white text-center">
-              Privacy Policy for www.williamarice.com
+              Privacy Policy for www.billyrice.com
             </h2>
 
-            <p className="mb-4 text-gray-300">Last Updated: May 24, 2025</p>
+            <p className="mb-4 text-gray-300">Last Updated: April 19, 2026</p>
 
             <p className="mb-4 text-gray-300">
-              Thank you for visiting www.williamarice.com. Your privacy is
+              Thank you for visiting www.billyrice.com. Your privacy is
               important to us. This Privacy Policy outlines how we collect, use,
               disclose, and safeguard your personal information. By using our
               website, you agree to the terms of this Privacy Policy.
@@ -47,7 +46,7 @@ const PrivacyPolicy = () => {
             <p className="mb-4 text-gray-300">
               <strong>Personal Information</strong>
               <br />
-              When you voluntarily create an account on www.williamarice.com, we
+              When you voluntarily create an account on www.billyrice.com, we
               may collect the following personal information:
             </p>
 
@@ -65,7 +64,7 @@ const PrivacyPolicy = () => {
               <br />
               We use cookies to enhance your experience on our website. Cookies
               are small text files stored on your device. By using
-              www.williamarice.com, you consent to the use of cookies.
+              www.billyrice.com, you consent to the use of cookies.
             </p>
           </div>
 
@@ -86,7 +85,7 @@ const PrivacyPolicy = () => {
                 To communicate with you regarding your account and updates
               </li>
               <li>
-                To analyze and improve the functionality of www.williamarice.com
+                To analyze and improve the functionality of www.billyrice.com
               </li>
               <li>To comply with legal obligations</li>
             </ul>
@@ -160,7 +159,7 @@ const PrivacyPolicy = () => {
 
             <p className="text-gray-300">
               If you have any questions or concerns about this Privacy Policy,
-              please contact us at william@williamarice.com.
+              please contact us at contact@billyrice.com.
             </p>
           </div>
         </div>
