@@ -3,7 +3,6 @@ import type { Metadata, Viewport } from 'next';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { Toaster } from '@/components/ui/toaster';
 import ConditionalNavBar from '@/components/ConditionalNavBar';
-import Script from 'next/script';
 
 import '@/app/globals.css';
 
@@ -83,12 +82,6 @@ export default function RootLayout({
           href="https://williamarice-web.s3.amazonaws.com"
         />
         <link rel="dns-prefetch" href="https://cdn.credly.com" />
-        <Script
-          src="https://www.google.com/recaptcha/api.js"
-          async
-          defer
-          strategy="afterInteractive"
-        />
       </head>
       <body className="h-screen w-full">
         <a

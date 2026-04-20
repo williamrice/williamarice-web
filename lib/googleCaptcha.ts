@@ -1,20 +1,66 @@
 /**
  * Verifies a reCAPTCHA token with Google's verification API
  * @param token The reCAPTCHA token to verify
- * @returns A promise that resolves to a boolean indicating if the verification was successful
+ * @returns An object containing the verification result, including success status, score, and action
  */
-export async function verifyRecaptcha(token: string): Promise<boolean> {
+
+import { RecaptchaVerificationResponse } from './types';
+
+export async function verifyRecaptcha(
+  token: string,
+): Promise<RecaptchaVerificationResponse> {
+  // const response = await fetch(
+  //   "https://www.google.com/recaptcha/api/siteverify",
+  //   {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/x-www-form-urlencoded",
+  //     },
+  //     body: `secret=${process.env.GOOGLE_CAPTCHA_SECRET_KEY}&response=${token}`,
+  //   }
+  // );
+  const API_KEY = process.env.GCLOUD_API_KEY;
   const response = await fetch(
-    "https://www.google.com/recaptcha/api/siteverify",
+    `https://recaptchaenterprise.googleapis.com/v1/projects/williamarice-web/assessments`,
     {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+        'Content-Type': 'application/json',
+        'X-goog-api-key': API_KEY ?? '',
       },
-      body: `secret=${process.env.GOOGLE_CAPTCHA_SECRET_KEY}&response=${token}`,
-    }
+      body: JSON.stringify({
+        event: {
+          token: token,
+          expectedAction: 'contact_form_submit',
+          siteKey: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
+        },
+      }),
+    },
   );
 
+  if (response.status !== 200) {
+    console.error(
+      'reCAPTCHA verification failed with status:',
+      response.status,
+    );
+    return {
+      success: false,
+      message: 'reCAPTCHA verification failed - Invalid Request',
+    };
+  }
   const data = await response.json();
-  return data.success;
+  console.log('reCAPTCHA verification response:', data);
+  if (data.riskAnalysis.score < 0.3) {
+    return {
+      success: false,
+      message: 'reCAPTCHA verification failed',
+      score: data.riskAnalysis.score,
+      action: data.tokenProperties.action,
+    };
+  }
+  return {
+    success: true,
+    score: data.riskAnalysis.score,
+    action: data.tokenProperties.action,
+  };
 }

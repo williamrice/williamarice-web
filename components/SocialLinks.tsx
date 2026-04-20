@@ -6,25 +6,41 @@ const SocialLinks = () => {
   const size: number = 40;
   return (
     <>
-      <a href="https://www.github.com/williamrice" target="blank">
+      <a
+        aria-label="Github Link"
+        href="https://www.github.com/williamrice"
+        target="blank"
+      >
         <AiFillGithub
           size={size}
           className="text-white hover:text-gray-300 cursor-pointer transition-colors"
         />
       </a>
-      <a href="https://www.gitlab.com/williamrice" target="blank">
+      <a
+        aria-label="Gitlab Link"
+        href="https://www.gitlab.com/williamrice"
+        target="blank"
+      >
         <AiFillGitlab
           size={size}
           className="text-white hover:text-gray-300 cursor-pointer transition-colors"
         />
       </a>
-      <a href="https://www.linkedin.com/in/billy-rice/" target="blank">
+      <a
+        aria-label="LinkedIn Link"
+        href="https://www.linkedin.com/in/billy-rice/"
+        target="blank"
+      >
         <AiFillLinkedin
           size={size}
           className="text-white hover:text-blue-400 cursor-pointer transition-colors"
         />
       </a>
-      <a href="https://www.x.com/warice_dev" target="blank">
+      <a
+        aria-label="X (Twitter) Link"
+        href="https://www.x.com/warice_dev"
+        target="blank"
+      >
         <FaSquareXTwitter
           size={size}
           className="text-white hover:text-gray-300 cursor-pointer transition-colors"
