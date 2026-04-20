@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
-import SocialLinks from "./SocialLinks";
-import Link from "next/link";
+import SocialLinks from './SocialLinks';
+import Link from 'next/link';
 
 const Footer = () => {
   return (
-    <footer className="inset-x-0 bottom-0 z-20 h-[150px] w-full p-4 bg-gray-900 border-t border-gray-700 shadow-xl md:flex-col md:items-center md:justify-center md:p-6">
+    <footer className="inset-x-0 bottom-0 h-37.5 w-full p-4 bg-gray-900 border-t border-gray-700 shadow-xl md:flex-col md:items-center md:justify-center md:p-6">
       <div className="flex justify-center gap-4 mb-2">
         <SocialLinks />
       </div>
@@ -53,7 +53,7 @@ const Footer = () => {
       </ul>
       <div className="flex justify-center">
         <span className="text-sm text-gray-300 sm:text-center">
-          © {new Date().getFullYear()}{" "}
+          © {new Date().getFullYear()}{' '}
           <Link
             href="https://www.williamarice.com"
             className="hover:underline hover:text-blue-400 transition-colors"
