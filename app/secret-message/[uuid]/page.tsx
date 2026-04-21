@@ -1,4 +1,4 @@
-import SecretMessageView from "@/components/SecretMessageView";
+import SecretMessageView from '@/components/SecretMessageView';
 
 interface SecretMessageSingleViewPageProps {
   params: Promise<{ uuid: string }>;
@@ -7,14 +7,12 @@ interface SecretMessageSingleViewPageProps {
 const SecretMessageSingleViewPage = async ({
   params,
 }: SecretMessageSingleViewPageProps) => {
+  const secretHostName = process.env.NEXT_PUBLIC_SECRETMESSAGE_HOSTNAME;
   const { uuid } = await params;
   var secretMessage;
-  const response = await fetch(
-    `https://secret.williamarice.com/api/Secret/${uuid}`,
-    {
-      cache: "no-store",
-    }
-  );
+  const response = await fetch(`https://${secretHostName}/api/Secret/${uuid}`, {
+    cache: 'no-store',
+  });
   const data = await response.json();
 
   console.log(data);

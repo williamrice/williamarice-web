@@ -1,8 +1,8 @@
-"use client";
-import { useForm } from "react-hook-form";
-import SubmitButton from "./SubmitButton";
-import { useState } from "react";
-import { Copy, Check, Loader2 } from "lucide-react";
+'use client';
+import { useForm } from 'react-hook-form';
+import SubmitButton from './SubmitButton';
+import { useState } from 'react';
+import { Copy, Check, Loader2 } from 'lucide-react';
 
 type Inputs = {
   title: string;
@@ -10,6 +10,8 @@ type Inputs = {
 };
 
 const SecretMessageForm = () => {
+  const secretHostName = process.env.NEXT_PUBLIC_SECRETMESSAGE_HOSTNAME;
+
   const [url, setUrl] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -17,23 +19,20 @@ const SecretMessageForm = () => {
   const onSubmit = async (formData: Inputs) => {
     try {
       setIsLoading(true);
-      const response = await fetch(
-        "https://secret.williamarice.com/api/Secret",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      const response = await fetch(`https://${secretHostName}/api/Secret`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
       if (!response.ok) {
-        throw new Error("Failed to add secret message");
+        throw new Error('Failed to add secret message');
       }
       const data = await response.json();
       setUrl(data.url);
     } catch (error) {
-      console.error("Error adding secret message:", error);
+      console.error('Error adding secret message:', error);
     } finally {
       setIsLoading(false);
     }
@@ -75,7 +74,7 @@ const SecretMessageForm = () => {
             Title
           </label>
           <input
-            {...register("title", { required: true })}
+            {...register('title', { required: true })}
             id="title"
             type="text"
             placeholder="Enter a title for your message"
@@ -95,7 +94,7 @@ const SecretMessageForm = () => {
             Message
           </label>
           <textarea
-            {...register("message", { required: true })}
+            {...register('message', { required: true })}
             id="message"
             rows={6}
             placeholder="Enter your secret message"
