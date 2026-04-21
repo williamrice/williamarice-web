@@ -10,7 +10,7 @@ const SecretMessageSingleViewPage = async ({
   const secretHostName = process.env.NEXT_PUBLIC_SECRETMESSAGE_HOSTNAME;
   const { uuid } = await params;
   var secretMessage;
-  const response = await fetch(`https://${secretHostName}/api/Secret/${uuid}`, {
+  const response = await fetch(`${secretHostName}/api/Secret/${uuid}`, {
     cache: 'no-store',
   });
   const data = await response.json();

@@ -19,7 +19,7 @@ const SecretMessageForm = () => {
   const onSubmit = async (formData: Inputs) => {
     try {
       setIsLoading(true);
-      const response = await fetch(`https://${secretHostName}/api/Secret`, {
+      const response = await fetch(`${secretHostName}/api/Secret`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
