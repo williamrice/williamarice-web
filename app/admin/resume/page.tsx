@@ -1,138 +1,138 @@
-"use client";
+'use client';
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from 'react';
 import {
   useForm,
   useFieldArray,
   Controller,
   SubmitHandler,
-} from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { ResumeType } from "@/app/types/resume";
+} from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { ResumeType } from '@/app/types/resume';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { toast } from "@/components/ui/use-toast";
-import { PlusIcon, MinusIcon } from "@radix-ui/react-icons";
-import { ClipLoader } from "react-spinners";
+} from '@/components/ui/accordion';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { toast } from '@/components/ui/use-toast';
+import { PlusIcon, MinusIcon } from '@radix-ui/react-icons';
+import { ClipLoader } from 'react-spinners';
 import {
   Certificate,
   Education,
   ResumeProject,
   VolunteerExperience,
   WorkExperience,
-} from "@/prisma/generated/prisma/client";
+} from '@/prisma/generated/prisma/client';
 
 // Define the schema for form validation
 const resumeSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  label: z.string().min(1, "Label is required"),
-  image: z.string().min(1, "Image URL is required"), // Required in Prisma
-  email: z.string().email("Invalid email"),
-  phone: z.string().min(1, "Phone is required"),
-  url: z.string().min(1, "URL is required"), // Required in Prisma
-  summary: z.string().min(1, "Summary is required"),
+  name: z.string().min(1, 'Name is required'),
+  label: z.string().min(1, 'Label is required'),
+  image: z.string().min(1, 'Image URL is required'), // Required in Prisma
+  email: z.string().email('Invalid email'),
+  phone: z.string().min(1, 'Phone is required'),
+  url: z.string().min(1, 'URL is required'), // Required in Prisma
+  summary: z.string().min(1, 'Summary is required'),
   address: z
     .string()
     .nullable()
     .optional()
-    .transform((val) => (val === "" || val === null ? null : val)),
+    .transform((val) => (val === '' || val === null ? null : val)),
   postalCode: z
     .string()
     .nullable()
     .optional()
-    .transform((val) => (val === "" || val === null ? null : val)),
-  city: z.string().min(1, "City is required"),
-  countryCode: z.string().min(2, "Country code is required"),
-  region: z.string().min(1, "Region is required"),
+    .transform((val) => (val === '' || val === null ? null : val)),
+  city: z.string().min(1, 'City is required'),
+  countryCode: z.string().min(2, 'Country code is required'),
+  region: z.string().min(1, 'Region is required'),
   profiles: z.array(
     z.object({
-      network: z.string().min(1, "Network is required"),
-      username: z.string().min(1, "Username is required"),
-      url: z.string().min(1, "URL is required"), // Required in Prisma
+      network: z.string().min(1, 'Network is required'),
+      username: z.string().min(1, 'Username is required'),
+      url: z.string().min(1, 'URL is required'), // Required in Prisma
     }),
   ),
   skills: z.array(
     z.object({
-      name: z.string().min(1, "Skill name is required"),
-      level: z.string().min(1, "Skill level is required"),
+      name: z.string().min(1, 'Skill name is required'),
+      level: z.string().min(1, 'Skill level is required'),
       keywords: z.array(z.string()),
     }),
   ),
   work: z.array(
     z.object({
-      name: z.string().min(1, "Company name is required"),
-      location: z.string().min(1, "Location is required"),
-      position: z.string().min(1, "Position is required"),
-      startDate: z.string().min(1, "Start date is required"),
+      name: z.string().min(1, 'Company name is required'),
+      location: z.string().min(1, 'Location is required'),
+      position: z.string().min(1, 'Position is required'),
+      startDate: z.string().min(1, 'Start date is required'),
       endDate: z
         .string()
         .nullable()
         .optional()
-        .transform((val) => (val === "" || val === null ? null : val)),
-      summary: z.string().min(1, "Summary is required"),
+        .transform((val) => (val === '' || val === null ? null : val)),
+      summary: z.string().min(1, 'Summary is required'),
       highlights: z.array(z.string()),
     }),
   ),
   education: z.array(
     z.object({
-      institution: z.string().min(1, "Institution is required"),
-      area: z.string().min(1, "Area of study is required"),
-      studyType: z.string().min(1, "Study type is required"),
-      endDate: z.string().min(1, "End date is required"),
+      institution: z.string().min(1, 'Institution is required'),
+      area: z.string().min(1, 'Area of study is required'),
+      studyType: z.string().min(1, 'Study type is required'),
+      endDate: z.string().min(1, 'End date is required'),
       menuOrder: z.number().optional().default(0),
     }),
   ),
   certificates: z.array(
     z.object({
-      name: z.string().min(1, "Certificate name is required"),
-      date: z.string().min(1, "Date is required"),
-      issuer: z.string().min(1, "Issuer is required"),
+      name: z.string().min(1, 'Certificate name is required'),
+      date: z.string().min(1, 'Date is required'),
+      issuer: z.string().min(1, 'Issuer is required'),
     }),
   ),
   projects: z.array(
     z.object({
-      name: z.string().min(1, "Project name is required"),
+      name: z.string().min(1, 'Project name is required'),
       url: z
         .string()
         .nullable()
         .optional()
-        .transform((val) => (val === "" || val === null ? null : val)), // Optional in Prisma
-      startDate: z.string().min(1, "Start date is required"),
+        .transform((val) => (val === '' || val === null ? null : val)), // Optional in Prisma
+      startDate: z.string().min(1, 'Start date is required'),
       endDate: z
         .string()
         .nullable()
         .optional()
-        .transform((val) => (val === "" || val === null ? null : val)),
-      description: z.string().min(1, "Description is required"),
+        .transform((val) => (val === '' || val === null ? null : val)),
+      description: z.string().min(1, 'Description is required'),
       highlights: z.array(z.string()),
     }),
   ),
   volunteer: z.array(
     z.object({
-      organization: z.string().min(1, "Organization is required"),
-      position: z.string().min(1, "Position is required"),
-      startDate: z.string().min(1, "Start date is required"),
+      organization: z.string().min(1, 'Organization is required'),
+      position: z.string().min(1, 'Position is required'),
+      startDate: z.string().min(1, 'Start date is required'),
       endDate: z
         .string()
         .nullable()
         .optional()
-        .transform((val) => (val === "" || val === null ? null : val)),
-      summary: z.string().min(1, "Summary is required"),
+        .transform((val) => (val === '' || val === null ? null : val)),
+      summary: z.string().min(1, 'Summary is required'),
       highlights: z.array(z.string()),
     }),
   ),
   interests: z.array(
     z.object({
-      name: z.string().min(1, "Interest name is required"),
+      name: z.string().min(1, 'Interest name is required'),
       keywords: z.array(z.string()),
     }),
   ),
@@ -153,18 +153,18 @@ export default function ResumeForm() {
   } = useForm<ResumeFormData>({
     resolver: zodResolver(resumeSchema) as any,
     defaultValues: {
-      name: "",
-      label: "",
-      image: "",
-      email: "",
-      phone: "",
-      url: "",
-      summary: "",
+      name: '',
+      label: '',
+      image: '',
+      email: '',
+      phone: '',
+      url: '',
+      summary: '',
       address: null,
       postalCode: null,
-      city: "",
-      countryCode: "",
-      region: "",
+      city: '',
+      countryCode: '',
+      region: '',
       profiles: [],
       skills: [],
       work: [],
@@ -180,58 +180,58 @@ export default function ResumeForm() {
     fields: profileFields,
     append: appendProfile,
     remove: removeProfile,
-  } = useFieldArray({ control, name: "profiles" });
+  } = useFieldArray({ control, name: 'profiles' });
 
   const {
     fields: skillFields,
     append: appendSkill,
     remove: removeSkill,
-  } = useFieldArray({ control, name: "skills" });
+  } = useFieldArray({ control, name: 'skills' });
 
   const {
     fields: workFields,
     append: appendWork,
     remove: removeWork,
-  } = useFieldArray({ control, name: "work" });
+  } = useFieldArray({ control, name: 'work' });
 
   const {
     fields: educationFields,
     append: appendEducation,
     remove: removeEducation,
-  } = useFieldArray({ control, name: "education" });
+  } = useFieldArray({ control, name: 'education' });
 
   const {
     fields: certificateFields,
     append: appendCertificate,
     remove: removeCertificate,
-  } = useFieldArray({ control, name: "certificates" });
+  } = useFieldArray({ control, name: 'certificates' });
 
   const {
     fields: projectFields,
     append: appendProject,
     remove: removeProject,
-  } = useFieldArray({ control, name: "projects" });
+  } = useFieldArray({ control, name: 'projects' });
 
   const {
     fields: volunteerFields,
     append: appendVolunteer,
     remove: removeVolunteer,
-  } = useFieldArray({ control, name: "volunteer" });
+  } = useFieldArray({ control, name: 'volunteer' });
 
   const {
     fields: interestFields,
     append: appendInterest,
     remove: removeInterest,
-  } = useFieldArray({ control, name: "interests" });
+  } = useFieldArray({ control, name: 'interests' });
 
   // Extract fetchResume function to be reusable
 
   const fetchResume = useCallback(async () => {
     try {
-      const response = await fetch("/api/admin/resume", {
-        cache: "no-store",
+      const response = await fetch('/api/admin/resume', {
+        cache: 'no-store',
       });
-      if (!response.ok) throw new Error("Failed to fetch resume");
+      if (!response.ok) throw new Error('Failed to fetch resume');
       const data: ResumeType = await response.json();
 
       const formattedData: ResumeFormData = {
@@ -242,45 +242,45 @@ export default function ResumeForm() {
           data.work?.map((job: WorkExperience) => ({
             ...job,
             startDate: job.startDate
-              ? new Date(job.startDate).toISOString().split("T")[0]
-              : "",
+              ? new Date(job.startDate).toISOString().split('T')[0]
+              : '',
             endDate: job.endDate
-              ? new Date(job.endDate).toISOString().split("T")[0]
+              ? new Date(job.endDate).toISOString().split('T')[0]
               : null,
           })) || [],
         education:
           data.education?.map((edu: Education) => ({
             ...edu,
             endDate: edu.endDate
-              ? new Date(edu.endDate).toISOString().split("T")[0]
-              : "",
+              ? new Date(edu.endDate).toISOString().split('T')[0]
+              : '',
           })) || [],
         certificates:
           data.certificates?.map((cert: Certificate) => ({
             ...cert,
             date: cert.date
-              ? new Date(cert.date).toISOString().split("T")[0]
-              : "",
+              ? new Date(cert.date).toISOString().split('T')[0]
+              : '',
           })) || [],
         projects:
           data.projects?.map((proj: ResumeProject) => ({
             ...proj,
             url: proj.url ?? null,
             startDate: proj.startDate
-              ? new Date(proj.startDate).toISOString().split("T")[0]
-              : "",
+              ? new Date(proj.startDate).toISOString().split('T')[0]
+              : '',
             endDate: proj.endDate
-              ? new Date(proj.endDate).toISOString().split("T")[0]
+              ? new Date(proj.endDate).toISOString().split('T')[0]
               : null,
           })) || [],
         volunteer:
           data.volunteer?.map((vol: VolunteerExperience) => ({
             ...vol,
             startDate: vol.startDate
-              ? new Date(vol.startDate).toISOString().split("T")[0]
-              : "",
+              ? new Date(vol.startDate).toISOString().split('T')[0]
+              : '',
             endDate: vol.endDate
-              ? new Date(vol.endDate).toISOString().split("T")[0]
+              ? new Date(vol.endDate).toISOString().split('T')[0]
               : null,
           })) || [],
       };
@@ -288,11 +288,10 @@ export default function ResumeForm() {
       reset(formattedData);
       setIsLoading(false);
     } catch (error) {
-      console.error("Error fetching resume:", error);
       toast({
-        title: "Error",
-        description: "Failed to load resume data. Please try again.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to load resume data. Please try again.',
+        variant: 'destructive',
       });
       setIsLoading(false);
     }
@@ -303,7 +302,6 @@ export default function ResumeForm() {
   }, [fetchResume]);
 
   const onSubmit: SubmitHandler<ResumeFormData> = async (data) => {
-    console.log("Form submitted:", data);
     setIsSaving(true);
     try {
       const convertedData = {
@@ -333,27 +331,27 @@ export default function ResumeForm() {
         })),
       };
 
-      const response = await fetch("/api/admin/resume/update", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
+      const response = await fetch('/api/admin/resume/update', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(convertedData),
       });
 
-      if (!response.ok) throw new Error("Failed to update resume");
+      if (!response.ok) throw new Error('Failed to update resume');
 
       // Refetch the resume data after successful update
       await fetchResume();
 
       toast({
-        title: "Success",
-        description: "Resume updated successfully!",
+        title: 'Success',
+        description: 'Resume updated successfully!',
       });
     } catch (error) {
-      console.error("Error updating resume:", error);
+      console.error('Error updating resume:', error);
       toast({
-        title: "Error",
-        description: "Failed to update resume. Please try again.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to update resume. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsSaving(false);
@@ -382,7 +380,7 @@ export default function ResumeForm() {
                 <Label htmlFor="name" className="mb-2 block">
                   Name
                 </Label>
-                <Input id="name" {...register("name")} className="w-full" />
+                <Input id="name" {...register('name')} className="w-full" />
                 {errors.name && (
                   <p className="text-red-500">{errors.name.message}</p>
                 )}
@@ -391,7 +389,7 @@ export default function ResumeForm() {
                 <Label htmlFor="label" className="mb-2 block">
                   Label
                 </Label>
-                <Input id="label" {...register("label")} className="w-full" />
+                <Input id="label" {...register('label')} className="w-full" />
                 {errors.label && (
                   <p className="text-red-500">{errors.label.message}</p>
                 )}
@@ -400,7 +398,7 @@ export default function ResumeForm() {
                 <Label htmlFor="image" className="mb-2 block">
                   Image URL
                 </Label>
-                <Input id="image" {...register("image")} className="w-full" />
+                <Input id="image" {...register('image')} className="w-full" />
                 {errors.image && (
                   <p className="text-red-500">{errors.image.message}</p>
                 )}
@@ -409,7 +407,7 @@ export default function ResumeForm() {
                 <Label htmlFor="email" className="mb-2 block">
                   Email
                 </Label>
-                <Input id="email" {...register("email")} className="w-full" />
+                <Input id="email" {...register('email')} className="w-full" />
                 {errors.email && (
                   <p className="text-red-500">{errors.email.message}</p>
                 )}
@@ -418,7 +416,7 @@ export default function ResumeForm() {
                 <Label htmlFor="phone" className="mb-2 block">
                   Phone
                 </Label>
-                <Input id="phone" {...register("phone")} className="w-full" />
+                <Input id="phone" {...register('phone')} className="w-full" />
                 {errors.phone && (
                   <p className="text-red-500">{errors.phone.message}</p>
                 )}
@@ -427,7 +425,7 @@ export default function ResumeForm() {
                 <Label htmlFor="url" className="mb-2 block">
                   URL
                 </Label>
-                <Input id="url" {...register("url")} className="w-full" />
+                <Input id="url" {...register('url')} className="w-full" />
                 {errors.url && (
                   <p className="text-red-500">{errors.url.message}</p>
                 )}
@@ -438,7 +436,7 @@ export default function ResumeForm() {
                 </Label>
                 <Textarea
                   id="summary"
-                  {...register("summary")}
+                  {...register('summary')}
                   className="w-full"
                 />
                 {errors.summary && (
@@ -451,7 +449,7 @@ export default function ResumeForm() {
                 </Label>
                 <Input
                   id="address"
-                  {...register("address")}
+                  {...register('address')}
                   className="w-full"
                 />
                 {errors.address && (
@@ -464,7 +462,7 @@ export default function ResumeForm() {
                 </Label>
                 <Input
                   id="postalCode"
-                  {...register("postalCode")}
+                  {...register('postalCode')}
                   className="w-full"
                 />
                 {errors.postalCode && (
@@ -475,7 +473,7 @@ export default function ResumeForm() {
                 <Label htmlFor="city" className="mb-2 block">
                   City
                 </Label>
-                <Input id="city" {...register("city")} className="w-full" />
+                <Input id="city" {...register('city')} className="w-full" />
                 {errors.city && (
                   <p className="text-red-500">{errors.city.message}</p>
                 )}
@@ -486,7 +484,7 @@ export default function ResumeForm() {
                 </Label>
                 <Input
                   id="countryCode"
-                  {...register("countryCode")}
+                  {...register('countryCode')}
                   className="w-full"
                 />
                 {errors.countryCode && (
@@ -497,7 +495,7 @@ export default function ResumeForm() {
                 <Label htmlFor="region" className="mb-2 block">
                   Region
                 </Label>
-                <Input id="region" {...register("region")} className="w-full" />
+                <Input id="region" {...register('region')} className="w-full" />
                 {errors.region && (
                   <p className="text-red-500">{errors.region.message}</p>
                 )}
@@ -553,7 +551,7 @@ export default function ResumeForm() {
             <Button
               type="button"
               onClick={() =>
-                appendProfile({ network: "", username: "", url: "" })
+                appendProfile({ network: '', username: '', url: '' })
               }
             >
               <PlusIcon className="mr-2 h-4 w-4" /> Add Profile
@@ -591,13 +589,13 @@ export default function ResumeForm() {
                   control={control}
                   render={({ field }) => (
                     <Input
-                      value={field.value?.join(",") || ""}
+                      value={field.value?.join(',') || ''}
                       placeholder="Keywords (comma-separated)"
                       className="w-full"
                       onChange={(e) =>
                         field.onChange(
                           e.target.value
-                            ? e.target.value.split(",").map((k) => k.trim())
+                            ? e.target.value.split(',').map((k) => k.trim())
                             : [],
                         )
                       }
@@ -615,7 +613,7 @@ export default function ResumeForm() {
             ))}
             <Button
               type="button"
-              onClick={() => appendSkill({ name: "", level: "", keywords: [] })}
+              onClick={() => appendSkill({ name: '', level: '', keywords: [] })}
             >
               <PlusIcon className="mr-2 h-4 w-4" /> Add Skill
             </Button>
@@ -689,13 +687,13 @@ export default function ResumeForm() {
                   control={control}
                   render={({ field }) => (
                     <Input
-                      value={field.value?.join(",") || ""}
+                      value={field.value?.join(',') || ''}
                       placeholder="Highlights (comma-separated)"
                       className="w-full"
                       onChange={(e) =>
                         field.onChange(
                           e.target.value
-                            ? e.target.value.split(",").map((h) => h.trim())
+                            ? e.target.value.split(',').map((h) => h.trim())
                             : [],
                         )
                       }
@@ -715,12 +713,12 @@ export default function ResumeForm() {
               type="button"
               onClick={() =>
                 appendWork({
-                  name: "",
-                  location: "",
-                  position: "",
-                  startDate: "",
-                  endDate: "",
-                  summary: "",
+                  name: '',
+                  location: '',
+                  position: '',
+                  startDate: '',
+                  endDate: '',
+                  summary: '',
                   highlights: [],
                 })
               }
@@ -799,10 +797,10 @@ export default function ResumeForm() {
               type="button"
               onClick={() =>
                 appendEducation({
-                  institution: "",
-                  area: "",
-                  studyType: "",
-                  endDate: "",
+                  institution: '',
+                  area: '',
+                  studyType: '',
+                  endDate: '',
                   menuOrder: 0,
                 })
               }
@@ -860,7 +858,7 @@ export default function ResumeForm() {
             <Button
               type="button"
               onClick={() =>
-                appendCertificate({ name: "", date: "", issuer: "" })
+                appendCertificate({ name: '', date: '', issuer: '' })
               }
             >
               <PlusIcon className="mr-2 h-4 w-4" /> Add Certificate
@@ -925,13 +923,13 @@ export default function ResumeForm() {
                   control={control}
                   render={({ field }) => (
                     <Input
-                      value={field.value?.join(",") || ""}
+                      value={field.value?.join(',') || ''}
                       placeholder="Highlights (comma-separated)"
                       className="w-full"
                       onChange={(e) =>
                         field.onChange(
                           e.target.value
-                            ? e.target.value.split(",").map((h) => h.trim())
+                            ? e.target.value.split(',').map((h) => h.trim())
                             : [],
                         )
                       }
@@ -951,11 +949,11 @@ export default function ResumeForm() {
               type="button"
               onClick={() =>
                 appendProject({
-                  name: "",
-                  url: "",
-                  startDate: "",
-                  endDate: "",
-                  description: "",
+                  name: '',
+                  url: '',
+                  startDate: '',
+                  endDate: '',
+                  description: '',
                   highlights: [],
                 })
               }
@@ -1022,13 +1020,13 @@ export default function ResumeForm() {
                   control={control}
                   render={({ field }) => (
                     <Input
-                      value={field.value?.join(",") || ""}
+                      value={field.value?.join(',') || ''}
                       placeholder="Highlights (comma-separated)"
                       className="w-full"
                       onChange={(e) =>
                         field.onChange(
                           e.target.value
-                            ? e.target.value.split(",").map((h) => h.trim())
+                            ? e.target.value.split(',').map((h) => h.trim())
                             : [],
                         )
                       }
@@ -1049,11 +1047,11 @@ export default function ResumeForm() {
               type="button"
               onClick={() =>
                 appendVolunteer({
-                  organization: "",
-                  position: "",
-                  startDate: "",
-                  endDate: "",
-                  summary: "",
+                  organization: '',
+                  position: '',
+                  startDate: '',
+                  endDate: '',
+                  summary: '',
                   highlights: [],
                 })
               }
@@ -1083,13 +1081,13 @@ export default function ResumeForm() {
                   control={control}
                   render={({ field }) => (
                     <Input
-                      value={field.value?.join(",") || ""}
+                      value={field.value?.join(',') || ''}
                       placeholder="Keywords (comma-separated)"
                       className="w-full"
                       onChange={(e) =>
                         field.onChange(
                           e.target.value
-                            ? e.target.value.split(",").map((k) => k.trim())
+                            ? e.target.value.split(',').map((k) => k.trim())
                             : [],
                         )
                       }
@@ -1107,7 +1105,7 @@ export default function ResumeForm() {
             ))}
             <Button
               type="button"
-              onClick={() => appendInterest({ name: "", keywords: [] })}
+              onClick={() => appendInterest({ name: '', keywords: [] })}
             >
               <PlusIcon className="mr-2 h-4 w-4" /> Add Interest
             </Button>
@@ -1126,7 +1124,7 @@ export default function ResumeForm() {
             <span>Saving...</span>
           </>
         ) : (
-          "Save Resume"
+          'Save Resume'
         )}
       </Button>
     </form>

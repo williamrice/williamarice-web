@@ -51,7 +51,6 @@ export function ContactForm() {
   });
 
   function onSubmit(data: z.infer<typeof formSchema>) {
-    console.log('Form submitted:', data);
     // @ts-expect-error - grecaptcha is loaded by the Script component and is not available at compile time
     grecaptcha.enterprise.ready(async () => {
       // @ts-expect-error - grecaptcha is loaded by the Script component and is not available at compile time

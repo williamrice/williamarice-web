@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -12,52 +12,42 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
+} from '@/components/ui/form';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { useForm } from "react-hook-form";
-import { useTheme } from "next-themes";
-import { useEffect } from "react";
-import { useUser } from "@/hooks/useUser";
+} from '@/components/ui/select';
+import { useForm } from 'react-hook-form';
+import { useTheme } from 'next-themes';
+import { useEffect } from 'react';
+import { useUser } from '@/hooks/useUser';
 
 const formSchema = z.object({
   theme: z.string({
-    error: "Please select a preferred theme.",
+    error: 'Please select a preferred theme.',
   }),
 });
 
 async function onSubmit(
   values: z.infer<typeof formSchema>,
-  setThemeFunction: Function
+  setThemeFunction: Function,
 ) {
-  // Do something with the form values.
-  // ✅ This will be type-safe and validated.
-
   // using fetch, update the user's theme preference to the POST endpoint /api/user/settings
-  const response = await fetch("/api/user/settings", {
-    method: "POST",
+  const response = await fetch('/api/user/settings', {
+    method: 'POST',
     body: JSON.stringify(values),
   });
   setThemeFunction(values.theme);
 }
 
 export function UserSettingsForm() {
-  useEffect(() => {
-    console.log("UserSettingsForm mounted");
-    return () => {
-      console.log("UserSettingsForm unmounted");
-    };
-  }, []);
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      theme: "system",
+      theme: 'system',
     },
   });
   const { theme, setTheme } = useTheme();
