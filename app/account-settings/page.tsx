@@ -1,5 +1,4 @@
 import { UserSettingsForm } from "@/components/user-settings/UserSettingsForm";
-import React from "react";
 
 const AccountSettingsPage = () => {
   return (

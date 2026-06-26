@@ -1,6 +1,7 @@
 "use server";
 
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { getAllowedAdminSession } from "@/lib/auth-guards";
 
 const s3Client = new S3Client({
   region: process.env.AWS_REGION!,
@@ -16,6 +17,12 @@ export async function uploadFile(
   fileType: string,
   directory: string = "uploads"
 ) {
+  const session = await getAllowedAdminSession();
+
+  if (!session) {
+    return { success: false, error: "Unauthorized" };
+  }
+
   if (!fileName) {
     return { success: false, error: "No file name provided" };
   }

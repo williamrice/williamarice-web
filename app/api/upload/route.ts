@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { getAllowedAdminSession } from "@/lib/auth-guards";
 
 const s3Client = new S3Client({
   region: process.env.AWS_REGION!,
@@ -10,6 +11,15 @@ const s3Client = new S3Client({
 });
 
 export async function POST(request: NextRequest) {
+  const session = await getAllowedAdminSession();
+
+  if (!session) {
+    return NextResponse.json(
+      { success: false, error: "Unauthorized" },
+      { status: 401 },
+    );
+  }
+
   try {
     const formData = await request.formData();
     const file = formData.get("file") as File;

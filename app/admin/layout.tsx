@@ -1,8 +1,9 @@
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
-import AdminSidebar from "@/components/AdminSidebar";
-import Signin from "@/components/auth-helpers/Signin";
-import Signout from "@/components/auth-helpers/Signout";
+import { auth } from '@/lib/auth';
+import { headers } from 'next/headers';
+import AdminSidebar from '@/components/AdminSidebar';
+import Signin from '@/components/auth-helpers/Signin';
+import Signout from '@/components/auth-helpers/Signout';
+import { isAllowedAuthEmail } from '@/lib/auth-allowlist';
 
 export default async function AdminLayout({
   children,
@@ -21,7 +22,7 @@ export default async function AdminLayout({
           <p>
             This website doesn't currently support registering or signing in
             with user accounts. The sign-in button below is for the web
-            administrator only.{" "}
+            administrator only.{' '}
           </p>
           <Signin />
         </div>
@@ -29,7 +30,7 @@ export default async function AdminLayout({
     );
   }
 
-  if (!session.user?.isAdmin) {
+  if (!session.user?.isAdmin && !isAllowedAuthEmail(session.user.email)) {
     return (
       <div>
         <p>You are not authorized to access this page</p>

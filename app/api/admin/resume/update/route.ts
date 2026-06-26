@@ -1,18 +1,15 @@
 import { ResumeType } from "@/app/types/resume";
-import { auth } from "@/lib/auth";
+import { getAllowedAdminSession } from "@/lib/auth-guards";
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
 export async function PUT(
   request: Request,
 ): Promise<NextResponse<ResumeType | { error: string }>> {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+  const session = await getAllowedAdminSession();
 
-  if (!session?.user?.isAdmin) {
+  if (!session) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

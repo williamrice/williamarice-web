@@ -1,18 +1,11 @@
 import { redirect } from "next/navigation";
 import AddProjectForm from "../../../components/AddProjectForm";
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
+import { getAllowedAdminSession } from "@/lib/auth-guards";
 
 export default async function AddProjectPage() {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+  const session = await getAllowedAdminSession();
 
-  if (
-    !session ||
-    !session.user?.email ||
-    session.user.email !== "william.rice192@gmail.com"
-  ) {
+  if (!session) {
     redirect("/");
   }
 

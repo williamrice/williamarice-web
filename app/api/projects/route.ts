@@ -1,7 +1,14 @@
 import prisma from "@/lib/prisma";
+import { getAllowedAdminSession } from "@/lib/auth-guards";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
+  const session = await getAllowedAdminSession();
+
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   const data = await request.json();
 
   try {

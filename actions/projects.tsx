@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { DeleteObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import prisma from "@/lib/prisma";
+import { getAllowedAdminSession } from "@/lib/auth-guards";
 
 interface GalleryImage {
   imagePath: string;
@@ -31,6 +32,12 @@ export async function getAllProjects() {
 }
 
 export async function createProject(data: ProjectData) {
+  const session = await getAllowedAdminSession();
+
+  if (!session) {
+    return { success: false, error: "Unauthorized" };
+  }
+
   try {
     const { galleryImages, ...projectData } = data;
 
@@ -69,6 +76,12 @@ export async function createProject(data: ProjectData) {
 }
 
 export async function deleteProject(id: number) {
+  const session = await getAllowedAdminSession();
+
+  if (!session) {
+    return { success: false, error: "Unauthorized" };
+  }
+
   try {
     const galleryImages = await prisma.galleryImage.findMany({
       where: { projectId: id },
@@ -122,6 +135,12 @@ export async function getProjectById(id: number) {
 }
 
 export async function updateProject(data: ProjectData & { id: number }) {
+  const session = await getAllowedAdminSession();
+
+  if (!session) {
+    return { success: false, error: "Unauthorized" };
+  }
+
   try {
     const { id, galleryImages, ...projectData } = data;
 
