@@ -4,136 +4,135 @@ import Link from "next/link";
 import { Skill } from "@/lib/types";
 import { SkillCategory } from "./SkillCategory";
 
-const skills: Skill[] = [
-  {
-    name: "TypeScript",
-    iconClass: "devicon-typescript-plain colored",
-    category: "language",
-  },
+const frontend: Skill[] = [
   {
     name: "React",
     iconClass: "devicon-react-original colored",
-    category: "frontend",
-  },
-  {
-    name: "JavaScript",
-    iconClass: "devicon-javascript-plain colored",
-    category: "language",
   },
   {
     name: "CSS",
     iconClass: "devicon-css3-plain colored",
-    category: "frontend",
   },
   {
     name: "HTML",
     iconClass: "devicon-html5-plain colored",
-    category: "frontend",
-  },
-  {
-    name: "Docker",
-    iconClass: "devicon-docker-plain colored",
-    category: "tool",
   },
   {
     name: "Astro",
     iconClass: "devicon-astro-plain-wordmark colored",
-    category: "frontend",
-  },
-  { name: "PHP", iconClass: "devicon-php-plain colored", category: "language" },
-  {
-    name: "C#",
-    iconClass: "devicon-csharp-plain colored",
-    category: "language",
-  },
-  {
-    name: "Python",
-    iconClass: "devicon-python-plain colored",
-    category: "language",
-  },
-  { name: "Linux", iconClass: "devicon-linux-plain colored", category: "tool" },
-  {
-    name: "C++",
-    iconClass: "devicon-cplusplus-plain colored",
-    category: "language",
-  },
-  {
-    name: "Java",
-    iconClass: "devicon-java-plain colored",
-    category: "language",
-  },
-  {
-    name: "Lua",
-    iconClass: "devicon-lua-plain colored",
-    category: "language",
   },
   {
     name: "Next.js",
     iconClass: "devicon-nextjs-plain colored",
-    category: "frontend",
   },
   {
     name: "Tailwind CSS",
     iconClass: "devicon-tailwindcss-plain colored",
-    category: "frontend",
   },
+  {
+    name: "Blazor",
+    iconClass: "devicon-blazor-original colored",
+  },
+];
+
+const backend: Skill[] = [
   {
     name: "Node.js",
     iconClass: "devicon-nodejs-plain colored",
-    category: "backend",
   },
   {
-    name: "MongoDB",
-    iconClass: "devicon-mongodb-plain colored",
-    category: "backend",
+    name: "Symfony",
+    iconClass: "devicon-symfony-original",
+  },
+  {
+    name: "Laravel",
+    iconClass: "devicon-laravel-original colored",
   },
   {
     name: "MySQL",
     iconClass: "devicon-mysql-plain colored",
-    category: "backend",
   },
   {
     name: "PostgreSQL",
     iconClass: "devicon-postgresql-plain colored",
-    category: "backend",
-  },
-  {
-    name: "Java Spring",
-    iconClass: "devicon-spring-plain colored",
-    category: "backend",
   },
   {
     name: "ASP.NET",
     iconClass: "devicon-dotnetcore-plain colored",
-    category: "backend",
   },
   {
     name: "WordPress",
     iconClass: "devicon-wordpress-plain colored",
-    category: "backend",
   },
-  { name: "Git", iconClass: "devicon-git-plain colored", category: "tool" },
+];
+
+const languages: Skill[] = [
+  {
+    name: "TS",
+    iconClass: "devicon-typescript-plain colored",
+  },
+  {
+    name: "JS",
+    iconClass: "devicon-javascript-plain colored",
+  },
+  {
+    name: "PHP",
+    iconClass: "devicon-php-plain colored",
+  },
+  {
+    name: "C#",
+    iconClass: "devicon-csharp-plain colored",
+  },
+  {
+    name: "Python",
+    iconClass: "devicon-python-plain colored",
+  },
+  {
+    name: "C++",
+    iconClass: "devicon-cplusplus-plain colored",
+  },
+  {
+    name: "Bash",
+    iconClass: "devicon-bash-plain",
+  },
+  {
+    name: "Lua",
+    iconClass: "devicon-lua-plain colored",
+  },
+];
+
+const tools: Skill[] = [
+  {
+    name: "Docker",
+    iconClass: "devicon-docker-plain colored",
+  },
+  {
+    name: "Linux",
+    iconClass: "devicon-linux-plain colored",
+  },
+  {
+    name: "Git",
+    iconClass: "devicon-git-plain colored",
+  },
   {
     name: "GitHub",
     iconClass: "devicon-github-original colored",
-    category: "tool",
   },
   {
     name: "AWS",
     iconClass: "devicon-amazonwebservices-plain-wordmark colored",
-    category: "tool",
+  },
+  {
+    name: "Oracle",
+    iconClass: "devicon-oracle-original colored",
+  },
+  {
+    name: "Azure",
+    iconClass: "devicon-azure-plain colored",
   },
 ];
 
 const SkillsSection = () => {
-  // Group skills by category
-  const categories = {
-    frontend: skills.filter((skill) => skill.category === "frontend"),
-    backend: skills.filter((skill) => skill.category === "backend"),
-    language: skills.filter((skill) => skill.category === "language"),
-    tool: skills.filter((skill) => skill.category === "tool"),
-  };
-
   return (
     <div className="w-full py-24 bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -149,10 +148,10 @@ const SkillsSection = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <SkillCategory title="Frontend" skills={categories.frontend} />
-          <SkillCategory title="Backend" skills={categories.backend} />
-          <SkillCategory title="Languages" skills={categories.language} />
-          <SkillCategory title="Tools" skills={categories.tool} />
+          <SkillCategory title="Frontend" skills={frontend} />
+          <SkillCategory title="Backend" skills={backend} />
+          <SkillCategory title="Languages" skills={languages} />
+          <SkillCategory title="Tools" skills={tools} />
         </div>
 
         <div className="mt-16 text-center">

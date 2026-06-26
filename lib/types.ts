@@ -11,7 +11,6 @@ export interface SecretMessage {
 export interface Skill {
   name: string;
   iconClass: string;
-  category: 'frontend' | 'backend' | 'language' | 'tool';
 }
 
 export interface RecaptchaVerificationResponse {
