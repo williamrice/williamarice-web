@@ -1,6 +1,6 @@
-import Image from 'next/image';
-import { FaGithub, FaLinkedinIn, FaXTwitter, FaGitlab } from 'react-icons/fa6';
-import LinkButton from './MainButton';
+import Image from "next/image";
+import { FaGithub, FaLinkedinIn, FaXTwitter, FaGitlab } from "react-icons/fa6";
+import LinkButton from "./MainButton";
 
 const JumboTron = () => {
   return (
@@ -10,11 +10,11 @@ const JumboTron = () => {
         <div className="absolute top-20 left-10 w-64 h-64 bg-blue-400 rounded-full filter blur-3xl"></div>
         <div className="absolute bottom-20 right-10 w-80 h-80 bg-gray-600 rounded-full filter blur-3xl"></div>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-600 rounded-full filter blur-3xl"></div>
-      </div>{' '}
+      </div>{" "}
       {/* Content */}
       <div className="z-10 flex flex-col items-center justify-center h-full py-12 md:py-20 px-4 w-full">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 md:gap-12 w-full">
-          {' '}
+          {" "}
           {/* Image shown first on mobile, second on desktop */}
           <div className="md:w-1/2 md:order-2 flex justify-center md:justify-end mb-4 md:mb-0">
             <div className="relative">
@@ -36,16 +36,10 @@ const JumboTron = () => {
             </h1>
             <div>
               <h3 className="text-xl md:text-2xl font-semibold text-white">
-                {' '}
-                I build software and lead the teams that maintain it.
+                {" "}
+                Experienced Engineer. Natural Leader. Problem Solver.
               </h3>
             </div>
-            <p className="text-lg text-gray-200 mt-1 md:mt-2 mb-4 md:mb-8 max-w-xl">
-              From leading enterprise software teams to shipping production
-              code, I operate at both levels. Available for select consulting
-              engagements and web development projects. Let's build something
-              great together.
-            </p>{' '}
             <div className="flex gap-4">
               <LinkButton type="primary" text="View Resume" link="/resume" />
               <LinkButton type="secondary" text="Contact Me" link="/contact" />
