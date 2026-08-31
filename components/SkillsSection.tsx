@@ -31,7 +31,6 @@ export default function SkillsSection() {
     <section className="section-block" id="expertise">
       <div className="site-shell">
         <Reveal className="section-heading">
-          <p className="eyebrow">Three dimensions of the work</p>
           <h2>Expertise is more than a stack.</h2>
           <p>
             Strong software comes from the code, the decisions behind it, and

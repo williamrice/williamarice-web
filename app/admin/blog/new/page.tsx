@@ -25,7 +25,6 @@ export default function NewPostPage() {
   return (
     <div className="admin-page">
       <AdminPageHeader
-        eyebrow="Publishing"
         title="New post"
         description="Write and preview a new article."
         action={<Link href="/admin/blog" className="admin-button-secondary"><ArrowLeft className="size-4" /> Writing</Link>}

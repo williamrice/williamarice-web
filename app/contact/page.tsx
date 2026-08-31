@@ -10,7 +10,6 @@ export default function ContactPage() {
       <section className="section-block">
         <div className="site-shell grid gap-12 lg:grid-cols-[.7fr_1.3fr] lg:gap-20">
           <div>
-            <p className="eyebrow mb-7">Start a conversation</p>
             <h2 className="text-3xl font-medium tracking-[-.035em] sm:text-4xl">
               Bring the difficult part.
             </h2>

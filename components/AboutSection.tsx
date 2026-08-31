@@ -1,21 +1,35 @@
-import Link from "next/link";
-import { ArrowUpRight, Landmark, ShieldCheck, Waypoints } from "lucide-react";
-import { Reveal } from "./PortfolioMotion";
+import Link from 'next/link';
+import { ArrowUpRight, Landmark, ShieldCheck, Waypoints } from 'lucide-react';
+import { Reveal } from './PortfolioMotion';
 
 const principles = [
-  { icon: ShieldCheck, title: "Own the outcome", text: "Responsibility does not stop at the edge of a ticket." },
-  { icon: Waypoints, title: "Make context travel", text: "Good decisions compound when their reasoning is shared." },
-  { icon: Landmark, title: "Serve the whole", text: "Leadership means balancing urgency with long-term trust." },
+  {
+    icon: ShieldCheck,
+    title: 'Own the outcome',
+    text: 'Responsibility does not stop at the edge of a ticket.',
+  },
+  {
+    icon: Waypoints,
+    title: 'Make context travel',
+    text: 'Good decisions compound when their reasoning is shared.',
+  },
+  {
+    icon: Landmark,
+    title: 'Serve the whole',
+    text: 'Leadership means balancing urgency with long-term trust.',
+  },
 ];
 
 export default function AboutSection() {
   return (
-    <section className="section-block border-y border-border bg-card/30" id="about-section">
+    <section
+      className="section-block border-y border-border bg-card/30"
+      id="about-section"
+    >
       <div className="site-shell grid gap-12 lg:grid-cols-[.85fr_1.15fr] lg:gap-24">
         <Reveal className="lg:sticky lg:top-28 lg:self-start">
-          <p className="eyebrow mb-8">Leadership, earned in context</p>
           <p className="max-w-md text-balance text-3xl font-medium leading-tight tracking-[-.035em] text-foreground sm:text-4xl">
-            Judgment is built by being accountable for real outcomes.
+            Judgment is built by being accountable for outcomes.
           </p>
           <div className="mt-10 h-px w-full bg-border">
             <div className="h-px w-24 bg-primary" />
@@ -46,10 +60,17 @@ export default function AboutSection() {
               return (
                 <Reveal key={principle.title} delay={index * 0.06}>
                   <div className="grid grid-cols-[auto_1fr] gap-6 border-t border-border py-8">
-                    <Icon className="mt-1 size-5 text-primary" strokeWidth={1.5} />
+                    <Icon
+                      className="mt-1 size-5 text-primary"
+                      strokeWidth={1.5}
+                    />
                     <div>
-                      <h3 className="text-lg font-medium text-foreground">{principle.title}</h3>
-                      <p className="mt-1 text-muted-foreground">{principle.text}</p>
+                      <h3 className="text-lg font-medium text-foreground">
+                        {principle.title}
+                      </h3>
+                      <p className="mt-1 text-muted-foreground">
+                        {principle.text}
+                      </p>
                     </div>
                   </div>
                 </Reveal>

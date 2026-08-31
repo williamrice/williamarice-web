@@ -24,7 +24,6 @@ export default async function EditProjectPage({
   return (
     <div className="admin-page max-w-5xl">
       <AdminPageHeader
-        eyebrow="Portfolio"
         title={`Edit ${project.title}`}
         description="Edit project details, links, and media."
         action={<Link href="/admin/project-manager" className="admin-button-secondary"><ArrowLeft className="size-4" /> Projects</Link>}

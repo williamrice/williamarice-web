@@ -63,7 +63,6 @@ export default async function AdminPage() {
   return (
     <div className="admin-page">
       <AdminPageHeader
-        eyebrow="Owner workspace"
         title="Dashboard"
         description="Manage site content and settings."
         action={<Link href="/" className="admin-button-secondary">View public site</Link>}

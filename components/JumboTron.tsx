@@ -20,10 +20,6 @@ export default function JumboTron() {
       <div className="site-shell relative z-10 grid items-center gap-16 py-16 sm:py-20 lg:grid-cols-[1.12fr_.88fr] lg:gap-14 lg:py-24">
         <div className="text-left">
           <Reveal>
-            <p className="eyebrow mb-8">
-              <span className="status-dot" />
-              Software engineer · architect · leader
-            </p>
             <h1 className="display-title max-w-5xl">
               <span className="block whitespace-nowrap">I write code.</span>
               <span className="block whitespace-nowrap">I shape systems.</span>

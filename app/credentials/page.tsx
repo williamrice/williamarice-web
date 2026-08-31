@@ -25,7 +25,6 @@ export default function CredentialsPage() {
       <section className="section-block">
         <div className="site-shell">
           <div className="section-heading">
-            <p className="eyebrow mb-7">Continued development</p>
             <h2>Learning, verified.</h2>
             <p>Graduate education, professional certifications, and achievements that support a broad implementation practice.</p>
           </div>

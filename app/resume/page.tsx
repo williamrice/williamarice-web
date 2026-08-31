@@ -63,7 +63,6 @@ export default async function ResumePage() {
         <section className="section-block border-b border-border">
           <div className="site-shell grid gap-12 lg:grid-cols-[.65fr_1.35fr] lg:gap-24">
             <div>
-              <p className="eyebrow mb-7">Professional profile</p>
               <h2 className="text-3xl font-medium tracking-[-.04em]">{resume.name}</h2>
               <div className="mt-6 space-y-3 text-sm text-muted-foreground">
                 <p className="flex items-center gap-2"><MapPin className="size-4 text-primary" /> {resume.location}</p>
@@ -80,7 +79,7 @@ export default async function ResumePage() {
         {resume.positions.length > 0 && (
           <section className="section-block" id="experience">
             <div className="site-shell">
-              <div className="section-heading"><p className="eyebrow mb-7">Experience</p><h2>A record of building and leading.</h2></div>
+              <div className="section-heading"><h2>A record of building and leading.</h2></div>
               <div className="mt-16 border-t border-border">
                 {[...organizationGroups.values()].map((positions) => {
                   const organization = positions[0].organization;
@@ -126,7 +125,7 @@ export default async function ResumePage() {
         {resume.skills.length > 0 && (
           <section className="section-block border-y border-border bg-card/30">
             <div className="site-shell">
-              <div className="section-heading"><p className="eyebrow mb-7">Capabilities</p><h2>Depth across the system.</h2></div>
+              <div className="section-heading"><h2>Depth across the system.</h2></div>
               <div className="mt-16 grid gap-px border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
                 {[...skillGroups.entries()].map(([category, skills]) => (
                   <section key={category} className="bg-background p-7 sm:p-9">
@@ -142,7 +141,7 @@ export default async function ResumePage() {
         {projectsSetting.enabled && resume.projects.length > 0 && (
           <section className="section-block">
             <div className="site-shell">
-              <div className="section-heading"><p className="eyebrow mb-7">Selected implementation</p><h2>Systems in practice.</h2></div>
+              <div className="section-heading"><h2>Systems in practice.</h2></div>
               <div className="mt-16 grid gap-4 md:grid-cols-2">
                 {resume.projects.map(({ project, note }) => (
                   <Link href={`/projects/${project.id}`} key={project.id} className="group border border-border bg-card/40 p-7 hover:border-primary/50">
@@ -159,10 +158,10 @@ export default async function ResumePage() {
           <section className="section-block border-t border-border">
             <div className={`site-shell grid gap-14 ${resume.education.length > 0 && resume.credentials.length > 0 ? "md:grid-cols-2" : ""}`}>
               {resume.education.length > 0 && (
-                <div><p className="eyebrow mb-8">Education</p><div className="space-y-8">{resume.education.map((item) => <div key={item.id}><h3 className="text-lg font-medium">{item.credential} · {item.field}</h3><p className="mt-2 text-muted-foreground">{item.institution}{item.completedAt ? ` · ${item.completedAt.getUTCFullYear()}` : ""}</p></div>)}</div></div>
+                <div><h2 className="mb-8 text-2xl font-medium tracking-tight">Education</h2><div className="space-y-8">{resume.education.map((item) => <div key={item.id}><h3 className="text-lg font-medium">{item.credential} · {item.field}</h3><p className="mt-2 text-muted-foreground">{item.institution}{item.completedAt ? ` · ${item.completedAt.getUTCFullYear()}` : ""}</p></div>)}</div></div>
               )}
               {resume.credentials.length > 0 && (
-                <div><p className="eyebrow mb-8">Credentials</p><div className="space-y-5">{resume.credentials.map((item) => <div key={item.id} className="flex items-start justify-between gap-5 border-b border-border pb-5"><div><h3 className="font-medium">{item.name}</h3><p className="mt-1 text-sm text-muted-foreground">{item.issuer}</p></div>{item.url && <a href={item.url} target="_blank" rel="noreferrer" aria-label={`Verify ${item.name}`}><ArrowUpRight className="size-4 text-primary" /></a>}</div>)}</div></div>
+                <div><h2 className="mb-8 text-2xl font-medium tracking-tight">Credentials</h2><div className="space-y-5">{resume.credentials.map((item) => <div key={item.id} className="flex items-start justify-between gap-5 border-b border-border pb-5"><div><h3 className="font-medium">{item.name}</h3><p className="mt-1 text-sm text-muted-foreground">{item.issuer}</p></div>{item.url && <a href={item.url} target="_blank" rel="noreferrer" aria-label={`Verify ${item.name}`}><ArrowUpRight className="size-4 text-primary" /></a>}</div>)}</div></div>
               )}
             </div>
           </section>

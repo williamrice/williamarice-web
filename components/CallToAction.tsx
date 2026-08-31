@@ -9,7 +9,6 @@ export default function CallToAction() {
       <DeviconBackdrop />
       <div className="ambient-orb ambient-orb-two" aria-hidden="true" />
       <Reveal className="site-shell relative z-10">
-        <p className="eyebrow mb-8">Build what lasts</p>
         <div className="grid items-end gap-10 lg:grid-cols-[1fr_auto]">
           <h2 className="max-w-4xl text-balance text-[2.65rem] font-medium leading-[1.02] tracking-[-.055em] text-foreground sm:text-5xl md:text-7xl">
             Have a consequential problem worth solving?

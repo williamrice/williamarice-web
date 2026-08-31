@@ -23,7 +23,6 @@ const SettingsPage = async () => {
   return (
     <div className="admin-page max-w-4xl">
       <AdminPageHeader
-        eyebrow="Site"
         title="Settings"
         description="Manage public content and presentation settings."
       />

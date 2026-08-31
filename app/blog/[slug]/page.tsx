@@ -65,8 +65,8 @@ export default async function PostPage({
       <article className="pb-24 pt-32 sm:pb-32 sm:pt-40">
         <header className="site-shell">
           <Link href="/blog" className="text-link inline-flex"><ArrowLeft className="size-4" /> All writing</Link>
-          <p className="eyebrow mt-12">{formatLongDate(post.publishedAt)}</p>
-          <h1 className="mt-7 max-w-5xl text-balance text-[clamp(2.7rem,8vw,6.5rem)] font-medium leading-[.96] tracking-[-.06em]">
+          <p className="mt-12 text-sm text-muted-foreground">{formatLongDate(post.publishedAt)}</p>
+          <h1 className="mt-5 max-w-5xl text-balance text-[clamp(2.7rem,8vw,6.5rem)] font-medium leading-[.96] tracking-[-.06em]">
             {post.title}
           </h1>
           <p className="mt-8 max-w-3xl text-xl leading-8 text-muted-foreground sm:text-2xl sm:leading-9">{post.excerpt}</p>

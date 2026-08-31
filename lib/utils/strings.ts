@@ -8,12 +8,6 @@ export function slugify(value: string, maxLength = 160) {
     .slice(0, maxLength);
 }
 
-export function formatPathSegment(value: string) {
-  return decodeURIComponent(value)
-    .replace(/[-_]+/g, " ")
-    .replace(/\b\w/g, (character) => character.toUpperCase());
-}
-
 export function escapeHtml(value: string) {
   return value.replace(/[&<>"']/g, (character) => {
     const entities: Record<string, string> = {

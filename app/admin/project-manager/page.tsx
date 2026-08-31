@@ -9,7 +9,6 @@ export default async function ProjectManagerPage() {
   return (
     <div className="admin-page">
       <AdminPageHeader
-        eyebrow="Portfolio"
         title="Projects"
         description="Manage projects shown across the site."
         action={<AddProjectButton />}

@@ -24,7 +24,6 @@ export default async function BlogPage() {
       <section className="section-block">
         <div className="site-shell">
           <div className="section-heading">
-            <p className="eyebrow mb-7">Writing</p>
             <h2>Notes from the work.</h2>
             <p>Technical essays, practical lessons, and deeper context behind the systems I build.</p>
           </div>

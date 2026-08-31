@@ -94,15 +94,11 @@
   }
 
   .admin-page-header h1 {
-    @apply mt-2 text-3xl font-semibold tracking-[-.04em] text-gray-950 sm:text-4xl;
+    @apply text-3xl font-semibold tracking-[-.04em] text-gray-950 sm:text-4xl;
   }
 
   .admin-page-header > div:first-child > p:last-child {
     @apply mt-3 max-w-2xl text-sm leading-6 text-gray-600;
-  }
-
-  .admin-eyebrow {
-    @apply font-mono text-[10px] font-semibold uppercase tracking-[.2em] text-teal-700;
   }
 
   .admin-card {
@@ -255,10 +251,6 @@
 
   .section-block {
     @apply w-full py-24 text-left sm:py-28 md:py-36;
-  }
-
-  .eyebrow {
-    @apply flex items-center gap-3 font-mono text-[10px] font-medium uppercase tracking-[.22em] text-primary;
   }
 
   .display-title {

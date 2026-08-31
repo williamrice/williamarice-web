@@ -67,7 +67,6 @@ export default async function ResumeAdminPage({
     <div className="admin-page max-w-6xl">
       <div className="admin-page-header">
         <div>
-          <p className="admin-eyebrow">Professional narrative</p>
           <h1>Resume studio</h1>
           <p className="mt-3 max-w-2xl text-gray-600">Manage resume versions and career details.</p>
         </div>

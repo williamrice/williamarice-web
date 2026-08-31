@@ -27,7 +27,6 @@ export default async function ProjectsPage() {
       <section className="section-block">
         <div className="site-shell">
           <div className="section-heading">
-            <p className="eyebrow mb-7">Case studies</p>
             <h2>How the work gets built.</h2>
             <p>
               A closer look at constraints, technical decisions, and shipped

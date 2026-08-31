@@ -19,7 +19,6 @@ export default async function IndividualProjectPage({ params }: { params: Promis
   if (!project) {
     return (
       <section className="site-shell flex min-h-[70dvh] flex-col items-start justify-center pt-24">
-        <p className="eyebrow mb-7">404 / Project</p>
         <h1 className="text-5xl font-medium tracking-[-.05em]">Project not found.</h1>
         <p className="mt-5 text-muted-foreground">The case study may have moved or is not published.</p>
         <Link href="/projects" className="button-primary mt-8"><ArrowLeft className="size-4" /> Back to projects</Link>
@@ -75,8 +74,8 @@ export default async function IndividualProjectPage({ params }: { params: Promis
 
           {project.galleryImages.length > 0 && (
             <section className="py-14">
-              <p className="eyebrow mb-8">Gallery</p>
-              <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+              <h2 className="text-2xl font-medium tracking-tight">Gallery</h2>
+              <div className="mt-8 grid gap-4 sm:grid-cols-2 md:grid-cols-3">
                 {project.galleryImages.map((image, index) => (
                   <div key={image.id ?? index} className="relative aspect-[4/3] overflow-hidden border border-border">
                     <ImageLightbox src={image.imagePath} alt={`Gallery image ${index + 1}`} fill sizes="(max-width: 640px) 100vw, 33vw" className="object-cover" priority={false} />

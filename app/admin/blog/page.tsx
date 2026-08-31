@@ -10,7 +10,6 @@ export default async function BlogAdminPage() {
   return (
     <div className="admin-page">
       <AdminPageHeader
-        eyebrow="Publishing"
         title="Writing"
         description="Create, edit, and publish articles."
         action={<Link href="/admin/blog/new" className="admin-button"><Plus className="size-4" /> New post</Link>}

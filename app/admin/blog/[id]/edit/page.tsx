@@ -20,7 +20,6 @@ export default async function EditPostPage({
   return (
     <div className="admin-page">
       <AdminPageHeader
-        eyebrow="Publishing"
         title={`Edit ${post.title}`}
         description={`Revision ${post.revisions[0]?.version ?? 0} · Last saved ${post.updatedAt.toLocaleString("en-US")}`}
         action={

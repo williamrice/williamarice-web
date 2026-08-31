@@ -19,7 +19,6 @@ export default async function FeaturedProjects() {
       <div className="site-shell">
         <Reveal className="section-heading md:flex md:items-end md:justify-between">
           <div>
-            <p className="eyebrow mb-7">Selected systems</p>
             <h2>Proof, not a project gallery.</h2>
           </div>
           <Link className="text-link group mt-7 md:mt-0" href="/projects">
