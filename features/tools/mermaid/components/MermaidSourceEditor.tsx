@@ -121,7 +121,10 @@ export function MermaidSourceEditor({
   return (
     <section className="flex h-full min-h-0 flex-col overflow-hidden bg-card" aria-label="Mermaid source editor">
       <div className="flex min-h-14 flex-wrap items-center justify-between gap-3 border-b border-border bg-secondary/40 px-4">
-        <span className="inline-flex items-center gap-2 font-mono text-[10px] font-semibold uppercase tracking-[.16em] text-muted-foreground"><Code2 className="size-4 text-primary" /> Source</span>
+        <div className="flex items-center gap-2">
+          <MermaidToolbarButton label="Collapse source editor" onClick={onCollapse} className="hidden border-border hover:border-primary hover:text-primary xl:grid"><PanelLeftClose className="size-4" /></MermaidToolbarButton>
+          <span className="inline-flex items-center gap-2 font-mono text-[10px] font-semibold uppercase tracking-[.16em] text-muted-foreground"><Code2 className="size-4 text-primary" /> Source</span>
+        </div>
         <div className="flex items-center gap-2">
           <label className="flex items-center gap-2 text-xs text-muted-foreground">
             Theme
@@ -131,7 +134,6 @@ export function MermaidSourceEditor({
           </label>
           <MermaidToolbarButton label="Copy Mermaid source" disabled={!canExport} onClick={onCopySource} className="border-border hover:border-primary hover:text-primary"><Clipboard className="size-4" /></MermaidToolbarButton>
           <MermaidToolbarButton label="Download Mermaid source" disabled={!canExport} onClick={onDownloadSource} className="border-border hover:border-primary hover:text-primary"><FileDown className="size-4" /></MermaidToolbarButton>
-          <MermaidToolbarButton label="Collapse source editor" onClick={onCollapse} className="hidden border-border hover:border-primary hover:text-primary xl:grid"><PanelLeftClose className="size-4" /></MermaidToolbarButton>
         </div>
       </div>
       <div className="min-h-0 flex-1 overflow-hidden bg-[#07110f]" aria-label="Mermaid diagram source">
